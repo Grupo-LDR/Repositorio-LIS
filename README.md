@@ -15,7 +15,12 @@
 
 </div> 
   <div align="left">
-   <h2>Profesor Fernando Daniel Saez Bonilla</h2>
+   <ul><h2>Profesores: </h2>
+    <li> Fernando Daniel Saez Bonilla </li>
+    <li>Pedro Ernesto Blanco </li>
+    <li> Mariano Torres Quintero</li>
+ </ul>
+  
 </div>
 <div align="center">
 <div>
