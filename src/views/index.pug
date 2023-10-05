@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  include navSuperior.pug
+  div(class="w-100 h-100 position-relative") 
+    img(class="img-fluid" src="images/mano-primer-plano-sujetando-tubo-laboratorio.jpg" alt="" id="imagen")
+    div(class="position-absolute top-0 start-0 text-white p-5")
+       div(class="" id="textoprincipal" style="z-index:1;")
+        h1(class="letraTitulo") LDR LABORATORY
+        h4 Cuídate y vive mejor en nuestro centro
