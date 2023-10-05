@@ -4,3 +4,4 @@ ModeloDominio.ldb
 *.jpeg
 README.md
 *.ldb
+node_modules
