@@ -1,7 +1,6 @@
 ModeloDominio.ldb
-*.png
-*.jpg
-*.jpeg
+ulp.png
+img_listado.jpeg
 README.md
 *.ldb
 node_modules
