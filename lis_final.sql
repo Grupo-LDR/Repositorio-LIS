@@ -293,23 +293,8 @@ CREATE TABLE IF NOT EXISTS `test_types` (
   `comment` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo 1 activo',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar esudios disponibles';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar GRUPOS de  estudios disponibles';
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `type_tests`
---
-
-DROP TABLE IF EXISTS `type_tests`;
-CREATE TABLE IF NOT EXISTS `type_tests` (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `comment` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo 1 activo',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar esudios disponibles';
 
 -- --------------------------------------------------------
 
