@@ -1,154 +1,95 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 04-10-2023 a las 18:43:19
--- Versión del servidor: 8.0.31
--- Versión de PHP: 8.0.26
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `lis2`
---
-CREATE DATABASE IF NOT EXISTS `lis2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `lis2`;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `empleados`
---
-
-DROP TABLE IF EXISTS `empleados`;
-CREATE TABLE IF NOT EXISTS `empleados` (
-  `ultimo_acceso` datetime NOT NULL,
-  `id_user` int UNSIGNED NOT NULL,
-  `id_rol` tinyint UNSIGNED NOT NULL,
-  `estado` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id_user`),
-  UNIQUE KEY `id_rol` (`id_rol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estudios`
---
-
-DROP TABLE IF EXISTS `estudios`;
-CREATE TABLE IF NOT EXISTS `estudios` (
-  `id` int UNSIGNED NOT NULL,
-  `id_prestacion` int UNSIGNED NOT NULL,
-  `common` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_at` datetime DEFAULT NULL,
-  `id_empleado_create` int UNSIGNED NOT NULL,
-  `id_empleado_update` int UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `ordenes`
---
-
-DROP TABLE IF EXISTS `ordenes`;
-CREATE TABLE IF NOT EXISTS `ordenes` (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `id_user` int UNSIGNED NOT NULL,
-  `id_medico` int UNSIGNED NOT NULL,
-  `id_empleado_create` int UNSIGNED NOT NULL,
-  `id_empleado_update` int UNSIGNED NOT NULL,
-  `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `prestaciones`
---
-
-DROP TABLE IF EXISTS `prestaciones`;
-CREATE TABLE IF NOT EXISTS `prestaciones` (
-  `id` int UNSIGNED NOT NULL,
-  `detail` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `common` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_at` datetime DEFAULT NULL,
-  `id_empleado_create` int UNSIGNED NOT NULL,
-  `id_empleado_update` int UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `roles`
---
-
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE IF NOT EXISTS `roles` (
-  `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users`
---
+CREATE DATABASE IF NOT EXISTS `lis3` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `lis3`;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `apellido` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `genero` tinyint(1) NOT NULL,
-  `estado` tinyint(1) NOT NULL,
-  `documento` int NOT NULL,
-  `telefono` int NOT NULL,
+  `first_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `gender` tinyint(1) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo 1 activo',
+  `document` int NOT NULL,
+  `phone` int NOT NULL,
   `email` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `domicilio` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ciudad` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `date_birth_at` date DEFAULT NULL,
   `password` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_empleado_create` tinyint UNSIGNED NOT NULL,
-  `id_empleado_update` tinyint UNSIGNED NOT NULL,
   `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Restricciones para tablas volcadas
---
+DROP TABLE IF EXISTS `audit_record`;
+CREATE TABLE IF NOT EXISTS `audit_record` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_employee` int UNSIGNED NOT NULL,
+  `action`ENUM('create', 'update', 'delete'),
+  `table` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Registra tabla modificada',
+  `record` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'datos exitentes en el registro modificado JSON',
+  `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)	
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar auditorías de cambios en datos';
 
---
--- Filtros para la tabla `empleados`
---
-ALTER TABLE `empleados`
-  ADD CONSTRAINT `empleados_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE RESTRICT;
+DROP TABLE IF EXISTS `medical_conditions`;
+CREATE TABLE IF NOT EXISTS `medical_conditions` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Registra condion medica relevante',
+  `id_user` int UNSIGNED NOT NULL,
+  `id_employee` int UNSIGNED NOT NULL,
+  `condition` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo 1 activo',
+  `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar estados importantes de un paciente: embarazo, hipertension etc..';
 
---
--- Filtros para la tabla `roles`
---
-ALTER TABLE `roles`
-  ADD CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`id`) REFERENCES `empleados` (`id_rol`) ON DELETE RESTRICT;
+DROP TABLE IF EXISTS `citys`;
+CREATE TABLE IF NOT EXISTS `citys` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `date_update_at` datetime DEFAULT NULL,
+  `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)	
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar ciudades';
+
+DROP TABLE IF EXISTS `employees`;
+CREATE TABLE IF NOT EXISTS `employees` (
+  `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_user` int UNSIGNED NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo 1 activo',
+  `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_employee` INT NOT NULL,
+  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `access_permissions` (
+  `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_employee` INT NOT NULL, 
+  `resource` VARCHAR(255) NOT NULL,
+  `permission` ENUM('read', 'write', 'delete') NOT NULL, 
+  `date_create_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+ PRIMARY KEY(`id`,`id_employee`, `resource`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+DROP TABLE IF EXISTS `audits`;
+CREATE TABLE IF NOT EXISTS `audits` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_user` int UNSIGNED NOT NULL,
+  `id_studie` int UNSIGNED NOT NULL,
+  `action` ENUM('create', 'update', 'delete')  NOT NULL DEFAULT 'create',
+  `result`varchar (500) NOT NULL,
+  `comment`varchar (250) NOT NULL,
+  `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar roles';
+
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
