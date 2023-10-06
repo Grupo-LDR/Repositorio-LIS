@@ -91,5 +91,4 @@ CREATE TABLE IF NOT EXISTS `audits` (
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar roles';
-
 COMMIT;
