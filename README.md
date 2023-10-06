@@ -1,7 +1,6 @@
 <a name="readme-top"></a>
 <br/>
 <div align="center">
-
   <a href="https://github.com/Grupo-LDR/Repositorio-LIS">
     <img src="https://github.com/Grupo-LDR/Repositorio-LIS/blob/main/ulp.png" alt="Logo" width="200" height="200">
   </a>
@@ -33,7 +32,6 @@
 </div>
 <p align="right">((<a href="#readme-top"> Regresar al comienzo </a>))</p>
 <!--enlaces-->
-
+<!-- Prueba VSC -->
 [contributors-shield]: https://img.shields.io/badge/Contribuidores-11-orange?style=for-the-badge&logo=appveyor
-
 [contributors-url]: https://github.com/Grupo-LDR/Repositorio-LIS/graphs/contributors
