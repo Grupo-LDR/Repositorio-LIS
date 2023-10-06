@@ -32,6 +32,5 @@
 </div>
 <p align="right">((<a href="#readme-top"> Regresar al comienzo </a>))</p>
 <!--enlaces-->
-<!-- Prueba VSC -->
 [contributors-shield]: https://img.shields.io/badge/Contribuidores-11-orange?style=for-the-badge&logo=appveyor
 [contributors-url]: https://github.com/Grupo-LDR/Repositorio-LIS/graphs/contributors
