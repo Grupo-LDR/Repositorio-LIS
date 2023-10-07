@@ -7,12 +7,36 @@
 var app = require('../app');
 var debug = require('debug')('app:server');
 var http = require('http');
+//uso de vaibles de entorno
+require('dotenv').config();
+if (process.env.NODE_ENV == 'dev') {
+  require('dotenv').config({ path: '.env.dev' });
+} else {
+  require('dotenv').config({ path: '.env.prod' });
+}
+const CONFIG = JSON.parse(process.env.CONFIG);
+const conn = require('../controllers/conexion');
+
+async function verificarConexion() {
+  try {
+    await conn.conexion.authenticate();
+    console.log('La conexión a la base de datos se estableció correctamente.');
+  } catch (error) {
+    console.error('No se pudo conectar a la base de datos:', error);
+  } finally {
+    conn.conexion.close(); // Cierra la conexión después de verificarla
+  }
+}
+
+verificarConexion();
+
+
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(CONFIG.APP_PORT || '3000');
 app.set('port', port);
 
 /**
