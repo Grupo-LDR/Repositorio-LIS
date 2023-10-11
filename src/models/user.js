@@ -1,7 +1,7 @@
 const conexion = require("./config")
 const { Sequelize, DataTypes, Model } = require('sequelize');
 conexion.conectar();
-class User extends Model {}
+class User extends Model { }
 User.init(
   {
     first_name: {
@@ -16,7 +16,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    status: {
+    active: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 1,
@@ -38,10 +38,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    id_city: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
     date_birth_at: {
       type: DataTypes.DATE,
       allowNull: true,
@@ -55,9 +51,13 @@ User.init(
       allowNull: false,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
+    citys_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    }
   },
   {
-    sequelize:conexion.sequelize,
+    sequelize: conexion.sequelize,
     modelName: 'user',
     tableName: 'users',
     timestamps: false
