@@ -12,8 +12,8 @@ listarUsuarios = async (req, res) => {
 // Crear un nuevo usuario
 crearUsuario = async (req, res) => {
   try {
-    const { first_name, last_name, gender, email, status, document, phone, adress, id_city, password, } = req.body;
-    await User.create({ first_name, last_name, gender, email, status, document, phone, adress, id_city, t, password, });
+    const { first_name, last_name, gender, active, document, phone, email, address, date_birth_at, password, citys_id } = req.body;
+    await User.create({ first_name, last_name, gender, active, document, phone, email, address, date_birth_at, password, citys_id });
     res.redirect('login');
   } catch (error) {
     console.error('Error al crear un nuevo usuario:', error);
@@ -133,7 +133,7 @@ asignarRol = async (req, res) => {
   }
 };
 // generar estadisitica del total de usuarios
-obtenerEstadisticas = async (req, res) => {
+/*obtenerEstadisticas = async (req, res) => {
   try {
     // Obtener estadísticas - cantidad total de usuarios
     const totalUsers = await User.count();
@@ -142,7 +142,7 @@ obtenerEstadisticas = async (req, res) => {
     console.error('Error al obtener estadísticas de usuarios:', error);
     res.status(500).send('Error interno del servidor');
   }
-};
+};*/
 // envio de notificaciones al usuario
 enviarNotificacion = async (req, res) => {
   try {
@@ -206,7 +206,6 @@ exports.funcionesUsuarios = {
   actualizarUsuario,
   asignarRol,
   recuperarPass,
-  obtenerEstadisticas,
   enviarNotificacion,
   validarUsuario,
   getUserActivityHistory
