@@ -33,8 +33,8 @@ class AuthServer {
         // console.log(app_cookie);
         const isAuth = true;
         // console.clear();
-        // console.log(req);
-        if (isAuth) {
+        console.log(req.body);
+        if (!isAuth) {
             const alertMessage = 'Autorizado.';
             const htmlResponse = `
                    <html>
