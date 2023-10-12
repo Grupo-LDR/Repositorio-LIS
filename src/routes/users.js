@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {funcionesUsuarios} = require('../controllers/usuarios');
+const {funcionesUsuarios} = require('../controllers/user');
 router.get('/', funcionesUsuarios.listarUsuarios);
 
 // Crear un nuevo usuario
