@@ -1,14 +1,14 @@
 import { Sequelize } from 'sequelize';
 import config from "../config.js"
 
-class conexion {
+class Conexion {
   static sequelize = new Sequelize({
     dialect: config.DB_DIALECT,
     host: config.DB_HOST,
     port: config.DB_PORT,
     username: config.DB_USER,
     password: config.DB_PASS,
-    database: config.APP_NAME,
+    database: config.DB_DATABASE,
   });
 
   static async conectar() {
@@ -30,4 +30,4 @@ class conexion {
   }
 }
 
-export default conexion;
+export default Conexion;

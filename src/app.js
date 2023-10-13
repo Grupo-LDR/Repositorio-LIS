@@ -60,6 +60,8 @@ class App {
         // rutas que no requieren auth
         console.log("Cargando manejador de rutas");
         this.app.use('/', this.indexRouter.getRouter());
+        this.app.use('/user', this.userRouter.getRouter());
+        this.app.use('/users', this.userRouter.getRouter());
         // login
         this.app.use('/login', this.loginRouter.getRouter());
         this.app.use('/main', this.mainRouter.getRouter());
@@ -67,8 +69,8 @@ class App {
         // midlware de auth
         this.app.use(this.authServer.authUser);
         // rutas que requieren auth
-        this.app.use('/user', this.userRouter.getRouter());
-        this.app.use('/users', this.userRouter.getRouter());
+        //this.app.use('/user', this.userRouter.getRouter());
+        //this.app.use('/users', this.userRouter.getRouter());
         //this.app.use('/studie', this.studieRouter.getRouter());
         this.app.use((req, res) => {
             res.status(404).send('Error 404 - Página no encontrada');

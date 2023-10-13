@@ -1,6 +1,6 @@
-const conexion = require("./config")
-const { Sequelize, DataTypes, Model } = require('sequelize');
-conexion.conectar();
+import Conexion from "./config.js"
+import { Sequelize, DataTypes, Model } from 'sequelize';
+Conexion.conectar();
 class User extends Model { }
 User.init(
   {
@@ -57,11 +57,11 @@ User.init(
     }
   },
   {
-    sequelize: conexion.sequelize,
+    sequelize: Conexion.sequelize,
     modelName: 'user',
     tableName: 'users',
     timestamps: false
   }
 );
 
-module.exports = User;
+export default User;

@@ -1,16 +1,17 @@
-const User = require('../models/user');
+import User from '../models/user.js';
 // Mostrar lista de usuarios
-listarUsuarios = async (req, res) => {
+async function listarUsuarios() {
   try {
-    const users = await User.findAll();
-    res.render('usuarios', { users });
+      const users = await User.findAll();
+      console.log("Entró a listar usuarios"); // Añadido para verificar en la consola
+      return users;
   } catch (error) {
-    console.error('Error al obtener la lista de usuarios:', error);
-    res.status(500).send('Error interno del servidor');
+      console.error('Error al obtener la lista de usuarios:', error);
+      throw error; // Lanzar el error para que pueda ser manejado en la ruta
   }
-};
+}
 // Crear un nuevo usuario
-crearUsuario = async (req, res) => {
+ async function crearUsuario(req, res){
   try {
     const { first_name, last_name, gender, active, document, phone, email, address, date_birth_at, password, citys_id } = req.body;
     await User.create({ first_name, last_name, gender, active, document, phone, email, address, date_birth_at, password, citys_id });
@@ -21,7 +22,7 @@ crearUsuario = async (req, res) => {
   }
 };
 // Obtener informacion de un usuario por su ID
-usuarioById = async (req, res) => {
+async function usuarioById(req, res){
   try {
     const userId = req.params.id;
     const user = await User.findByPk(userId);
@@ -35,7 +36,7 @@ usuarioById = async (req, res) => {
   }
 };
 // Actualizar la informacion de un usuario por su ID
-actualizarUsuario = async (req, res) => {
+async function actualizarUsuario(req, res){
   try {
     const userId = req.params.id;
     const newDataUser = req.body;
@@ -51,26 +52,8 @@ actualizarUsuario = async (req, res) => {
   }
 };
 
-// Eliminar un usuario por su ID - este esta en evaluacion.
-/*
-borrarUsuario = async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(404).send('Usuario no encontrado');
-    }
-    user.status = 0;
-    await user.save();
-    res.status(204).send('Usuario eliminado con éxito');
-  } catch (error) {
-    console.error('Error al eliminar el usuario:', error);
-    res.status(500).send('Error interno del servidor');
-  }
-};*/
-
 //cambiar contraseña
-cambiarPass = async (req, res) => {
+async function cambiarPass(req, res){
   try {
     const userId = req.user.id;
     const { passActaul, nuevaPass } = req.body;
@@ -90,7 +73,7 @@ cambiarPass = async (req, res) => {
   }
 };
 // recuperar contraseña
-recuperarPass = async (req, res) => {
+async function recuperarPass(req, res){
   try {
     const { email } = req.body;
     const user = await User.findOne({ where: { email } });
@@ -111,7 +94,7 @@ recuperarPass = async (req, res) => {
   }
 };
 // asignar Rol de usuario
-asignarRol = async (req, res) => {
+async function asignarRol(req, res){
   try {
     const userId = req.params.id;
     const { roleId } = req.body;
@@ -132,19 +115,8 @@ asignarRol = async (req, res) => {
     res.status(500).send('Error interno del servidor');
   }
 };
-// generar estadisitica del total de usuarios
-/*obtenerEstadisticas = async (req, res) => {
-  try {
-    // Obtener estadísticas - cantidad total de usuarios
-    const totalUsers = await User.count();
-    res.status(200).json({ totalUsers });
-  } catch (error) {
-    console.error('Error al obtener estadísticas de usuarios:', error);
-    res.status(500).send('Error interno del servidor');
-  }
-};*/
 // envio de notificaciones al usuario
-enviarNotificacion = async (req, res) => {
+async function enviarNotificacion(req, res){
   try {
     const userId = req.params.id;
     const message = req.body.message;
@@ -161,7 +133,7 @@ enviarNotificacion = async (req, res) => {
   }
 };
 // validar usuario
-validarUsuario = async (req, res) => {
+async function validarUsuario(req, res){
   try {
     const userId = req.params.id;
     const user = await User.findByPk(userId);
@@ -182,7 +154,7 @@ validarUsuario = async (req, res) => {
   }
 };
 //generar un historico del usuario
-getUserActivityHistory = async (req, res) => {
+async function getUserActivityHistory(req, res){
   try {
     const userId = req.params.id;
     const user = await User.findByPk(userId);
@@ -198,7 +170,7 @@ getUserActivityHistory = async (req, res) => {
   }
 };
 
-exports.funcionesUsuarios = {
+export {
   listarUsuarios,
   crearUsuario,
   usuarioById,

@@ -1,6 +1,8 @@
-import { Sequelize as _Sequelize } from 'sequelize';
-export default function (sequelize, DataTypes) {
-  return sequelize.define('users', {
+import { Sequelize,DataTypes,Model } from 'sequelize';
+import Conexion from './config.js';
+Conexion.conectar();
+class User extends Model { }
+ User= Sequelize.define('users', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
@@ -53,7 +55,7 @@ export default function (sequelize, DataTypes) {
     date_create_at: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: _Sequelize.literal('CURRENT_TIMESTAMP')
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     },
     create_users_id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -75,7 +77,7 @@ export default function (sequelize, DataTypes) {
       primaryKey: true
     }
   }, {
-    sequelize,
+    Sequelize,
     tableName: 'users',
     timestamps: false,
     indexes: [
@@ -106,4 +108,3 @@ export default function (sequelize, DataTypes) {
       },
     ]
   });
-};
