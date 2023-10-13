@@ -66,6 +66,7 @@ class App {
         // rutas que requieren auth
         this.app.use('/user', this.userRouter.getRouter());
         this.app.use('/users', this.userRouter.getRouter());
+        //this.app.use('/studie', this.studieRouter.getRouter());
         this.app.use((req, res) => {
             res.status(404).send('Error 404 - Página no encontrada');
         });
