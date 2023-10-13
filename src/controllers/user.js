@@ -1,13 +1,14 @@
 import User from '../models/user.js';
+import Conexion from '../models/config.js';
 // Mostrar lista de usuarios
 async function listarUsuarios() {
   try {
       const users = await User.findAll();
-      console.log("Entró a listar usuarios"); // Añadido para verificar en la consola
+      console.log("Entró a listar usuarios");
       return users;
   } catch (error) {
       console.error('Error al obtener la lista de usuarios:', error);
-      throw error; // Lanzar el error para que pueda ser manejado en la ruta
+      throw error;
   }
 }
 // Crear un nuevo usuario

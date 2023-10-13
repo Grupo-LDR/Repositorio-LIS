@@ -1,5 +1,5 @@
 import express from "express";
-const menusValid = ['add', 'searchs', 'update'];
+const menusValid = ['add', 'search', 'update'];
 class PatientRouter {
 
     constructor() {

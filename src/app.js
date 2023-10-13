@@ -60,6 +60,7 @@ class App {
         // rutas que no requieren auth
         console.log("Cargando manejador de rutas");
         this.app.use('/', this.indexRouter.getRouter());
+        //tuve que cambiar de lugar las rutas para saltar el autenticado
         this.app.use('/user', this.userRouter.getRouter());
         this.app.use('/users', this.userRouter.getRouter());
         // login
