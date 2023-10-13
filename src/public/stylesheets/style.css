@@ -12,6 +12,7 @@
   color: #1f1d1d;
 }
 
+
 .update {
   color: #1f1d1d;
 }
@@ -41,6 +42,7 @@
 
 .fondoBoton {
   background-color: #3d566b;
+
 }
 
 .inputses {
@@ -52,19 +54,8 @@
   line-height: 35px;
   outline: none;
   background-color: #26282b2c;
-  border-radius: .2rem;
 }
 
-.inputses2 {
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 1px solid #3d566b;
-  color: rgb(70, 70, 70);
-  line-height: 35px;
-  outline: none;
-  background-color: transparent;
-}
 
 .letraChida {
   font-family: "Gabarito", cursive;
@@ -83,3 +74,5 @@
 .rounded-lg {
   border-radius: 1rem;
 }
+
+
