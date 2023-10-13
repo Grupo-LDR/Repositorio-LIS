@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  include navSuperior.pug
+  div(class="w-100 h-100 position-relative") 
+    img(class="img-fluid" src="images/mano-primer-plano-sujetando-tubo-laboratorio.jpg" alt="" id="imagen")
+    div(class="position-absolute top-0 start-0 text-white p-5 h-100 w-50 d-flex align-items-center")
+       div(class="" id="textoprincipal" style="z-index:1;")
+        h1(class="letraTitulo") LDR LABORATORY
+        h4(class="letraChida") Take care and live better in our center
+        button(class="btn bg-white my-3 rounded-0 shadow-sm")
+          a(class="enlace text-dark letraChida h6 w-100 h-100") More info...
+        button(class="btn bg-dark my-3 rounded-0 mx-3 shadow-sm")
+          a(class="enlace text-white letraChida h6 w-100 h-100") Log in

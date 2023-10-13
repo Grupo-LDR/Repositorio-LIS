@@ -1,0 +1,9 @@
+extends layout 
+block content
+      include navSuperiorMenu.pug 
+      include navLateralMenu.pug
+      div(class="position-absolute top-0 end-0 p-5 h-100 w-75 d-flex flex-column letraChida" id="contenido-derecho")
+        p(class="letraChida h4 pt-5") Welcome
+        span(class="letraChida h6 text-secondary") Integrated biochemical laboratory and analysis system.
+        div(class="position absolute top-0 d-flex justify-content-center w-100 h-100")
+          i(class="fa-solid fa-flask-vial logoGigante")
