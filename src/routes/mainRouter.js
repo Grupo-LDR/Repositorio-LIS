@@ -15,7 +15,7 @@ class MainRouter {
             console.log(menus);
             res.render(`menus/main${menus}.pug`);
         } else {
-            res.status(404).send('Error 404 - Página no encontrada');
+            res.status(404).send(`Error 404 -  Página  ${peticion} no encontrada`);
         }
     }
     getMenu(req, res) {
