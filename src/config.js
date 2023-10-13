@@ -1,12 +1,14 @@
 import dotenv from 'dotenv';
-
 dotenv.config();
+const config = {
+    APP_PORT: process.env.APP_PORT,
+    DB_HOST: process.env.DB_HOST,
+    DB_PORT: process.env.DB_PORT,
+    DB_USER: process.env.DB_USER,
+    DB_PASS: process.env.DB_PASS,
+    DB_DIALECT: process.env.DB_DIALECT,
+    DB_DATABASE: process.env.DB_DATABASE,
+    APP_NAME: process.env.APP_NAME
 
-class Config {
-    static config = {
-        // variables de entorno 
-        APP_PORT: process.env.APP_PORT || 3000,
-        DB_HOST: process.env.DB_HOST || 'localhost',
-    };
-}
-export default Config;
+};
+export default config;
