@@ -1,15 +1,14 @@
-const { Sequelize } = require('sequelize');
-const dotenv = require('dotenv');
-dotenv.config();
+import { Sequelize } from 'sequelize';
+import config from "../config.js"
 
 class conexion {
   static sequelize = new Sequelize({
-    dialect: process.env.DB_DIALECT,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    dialect: config.DB_DIALECT,
+    host: config.DB_HOST,
+    port: config.DB_PORT,
+    username: config.DB_USER,
+    password: config.DB_PASS,
+    database: config.APP_NAME,
   });
 
   static async conectar() {
@@ -31,4 +30,4 @@ class conexion {
   }
 }
 
-module.exports = conexion;
+export default conexion;
