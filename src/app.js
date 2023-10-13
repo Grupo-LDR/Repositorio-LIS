@@ -18,6 +18,7 @@ import AuthServer from './middlewares/authServer.js';
 // rutas  
 import IndexRouter from './routes/indexRouter.js';
 import MainRouter from './routes/mainRouter.js';
+import PatientRouter from './routes/patientRouter.js';
 import LoginRouter from './routes/loginRouter.js';
 import UserRouter from './routes/userRouter.js';
 // variables y constantes App
@@ -42,6 +43,7 @@ class App {
         this.app.use(cookieParser());
         this.indexRouter = new IndexRouter();
         this.mainRouter = new MainRouter();
+        this.patientRouter = new PatientRouter();
         this.authServer = new AuthServer();
         this.userRouter = new UserRouter();
         this.loginRouter = new LoginRouter();
@@ -61,6 +63,7 @@ class App {
         // login
         this.app.use('/login', this.loginRouter.getRouter());
         this.app.use('/main', this.mainRouter.getRouter());
+        this.app.use('/main/patient', this.patientRouter.getRouter());
         // midlware de auth
         this.app.use(this.authServer.authUser);
         // rutas que requieren auth
