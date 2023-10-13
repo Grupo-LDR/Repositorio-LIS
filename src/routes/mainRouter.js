@@ -1,5 +1,5 @@
 import express from "express";
-const menusValid = ['audit', 'exam', 'order', 'patients', 'result', 'sample', 'user'];
+const menusValid = ['audit', 'exam', 'order', 'patient', 'result', 'sample', 'user'];
 class MainRouter {
 
     constructor() {
