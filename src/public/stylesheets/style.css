@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Prompt:wght@400;800&family=Roboto+Mono:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Gabarito:wght@500&display=swap");
+
 .enlace {
   text-decoration: none;
   color: #ffffff;
@@ -10,6 +11,11 @@
   text-decoration: none;
   color: #1f1d1d;
 }
+
+.update {
+  color: #1f1d1d;
+}
+
 .sinPunto {
   list-style-type: none;
 }
@@ -46,6 +52,18 @@
   line-height: 35px;
   outline: none;
   background-color: #26282b2c;
+  border-radius: .2rem;
+}
+
+.inputses2 {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #3d566b;
+  color: rgb(70, 70, 70);
+  line-height: 35px;
+  outline: none;
+  background-color: transparent;
 }
 
 .letraChida {
@@ -53,3 +71,15 @@
   font-size: 30px;
 }
 
+.update:hover {
+  color: #14c417;
+}
+
+.logoGigante {
+  color: #30353947;
+  font-size: 200px;
+}
+
+.rounded-lg {
+  border-radius: 1rem;
+}
