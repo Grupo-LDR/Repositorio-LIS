@@ -5,3 +5,4 @@ README.md
 *.ldb
 node_modules
 .env
+*.pdf
