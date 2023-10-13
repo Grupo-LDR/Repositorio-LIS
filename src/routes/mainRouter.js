@@ -18,7 +18,6 @@ class MainRouter {
             res.status(404).send('Error 404 - Página no encontrada');
         }
     }
-
     getMenu(req, res) {
         res.render("menu");
     }
