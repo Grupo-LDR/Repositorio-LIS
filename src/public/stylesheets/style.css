@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Prompt:wght@400;800&family=Roboto+Mono:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gabarito:wght@500&display=swap");
+.enlace {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.enlaceMenu {
+  text-decoration: none;
+  color: #1f1d1d;
+}
+
+.update{
+  color: #1f1d1d;
+}
+.sinPunto {
+  list-style-type: none;
+}
+
+.letraPiola {
+  font-family: "Open Sans", sans-serif;
+  font-family: "Prompt", sans-serif;
+  font-family: "Roboto Mono", monospace;
+}
+
+.letraTitulo {
+  font-family: "Oswald", sans-serif;
+  font-size: 100px;
+}
+
+.enlace:hover {
+  color: #303539;
+}
+
+.enlaceMenu:hover {
+  color: #ff0000;
+}
+
+.fondoBoton {
+  background-color: #3d566b;
+}
+
+.inputses {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  color: rgb(70, 70, 70);
+  line-height: 35px;
+  outline: none;
+  background-color: #26282b2c;
+}
+.inputses2 {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #3d566b;
+  color: rgb(70, 70, 70);
+  line-height: 35px;
+  outline: none;
+  background-color: transparent;
+}
+
+.letraChida {
+  font-family: "Gabarito", cursive;
+  font-size: 30px;
+}
+
+.update:hover{
+  color: #14c417;
+}
+
+.logoGigante{
+  color: #30353947;
+  font-size: 200px;
+}

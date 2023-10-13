@@ -4,19 +4,25 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+
 import express_session from 'express-session';
 import morgan from 'morgan';
-
 import csurf from 'csurf';
-
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import path from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 /** modulos routes  */
 // autenticacion
 import AuthServer from './middlewares/authServer.js';
 // rutas  
-import LoginRoutes from './routes/loginRoute.js';
-import UserRoutes from './routes/userRoute.js';
+import IndexRouter from './routes/indexRouter.js';
+import MainRouter from './routes/mainRouter.js';
+import LoginRouter from './routes/loginRouter.js';
+import UserRouter from './routes/userRouter.js';
 
 dotenv.config();
 console.clear();
@@ -37,29 +43,38 @@ class App {
 
     configureServer() {
         console.log("Configurando Server");
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: true }));
         this.app.use(compression());
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.set('view engine', 'pug');
+        console.log(__dirname);
+        this.app.set('views', path.join(__dirname, 'views'));
         this.app.use(cookieParser());
-        this.authRoutes = new AuthServer();
-        this.userRoutes = new UserRoutes();
-        this.loginRoutes = new LoginRoutes();
+        this.indexRouter = new IndexRouter();
+        this.mainRouter = new MainRouter();
+        this.authServer = new AuthServer();
+        this.userRouter = new UserRouter();
+        this.loginRouter = new LoginRouter();
 
     }
     /**
      * Ruteo de peticiones  
      */
     appServerRoute() {
-        // rutas qu eno requieren auth
-        console.log("Cargando manejador de rutas");
+        this.app.use(morgan('dev'));
+        // ruta archvios estaticos
         this.app.use(express.static('./src/public'));
-        this.app.use(express.static('./src/public', { root: 'index.html' }));
-        this.app.use('/login', this.loginRoutes.getRouter());
+        // rutas que no requieren auth
+        console.log("Cargando manejador de rutas");
+        this.app.use('/', this.indexRouter.getRouter());
+        // login
+        this.app.use('/login', this.loginRouter.getRouter());
+        this.app.use('/main', this.mainRouter.getRouter());
         // midlware de auth
-        this.app.use(this.authRoutes.authUser);
+        this.app.use(this.authServer.authUser);
         // rutas que requieren auth
-        this.app.use('/user', this.userRoutes.getRouter());
-        this.app.use('/users', this.userRoutes.getRouter());
+        this.app.use('/user', this.userRouter.getRouter());
+        this.app.use('/users', this.userRouter.getRouter());
         this.app.use((req, res) => {
             res.status(404).send('Error 404 - Página no encontrada');
         });
