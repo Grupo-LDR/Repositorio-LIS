@@ -1,6 +1,6 @@
 import express from "express";
-const menusValid = ['audit', 'exam', 'order', 'patient', 'result', 'sample', 'user'];
-class MainRouter {
+const menusValid = ['add', 'searchs', 'update'];
+class PatientRouter {
 
     constructor() {
         this.router = express.Router();
@@ -9,12 +9,15 @@ class MainRouter {
     }
     getMenus(req, res) {
         const peticion = req.params.menu;
+        console.log(`menus/main${peticion}.pug`);
         if (menusValid.includes(peticion)) {
-            const menus = peticion.charAt(0).toUpperCase() + peticion.slice(1);
+            const menus = peticion;
+            //     const menus = peticion.charAt(0).toUpperCase() + peticion.slice(1);
             console.log(`main${menus}.pug`);
             console.log(menus);
-            res.render(`menus/main${menus}.pug`);
+            res.render(`menus/mainsPatient/${menus}Patient.pug`);
         } else {
+            //res.status(404).send(`Error 404 - Página no encontrada`);
             res.status(404).send(`Error 404 -  Página  ${peticion} no encontrada`);
         }
     }
@@ -29,4 +32,4 @@ class MainRouter {
 
 }
 
-export default MainRouter;
+export default PatientRouter;
