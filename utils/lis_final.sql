@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `lis_final_1`
 --
-CREATE DATABASE IF NOT EXISTS `lis_final_1` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `lis_final_1`;
+ CREATE DATABASE IF NOT EXISTS `lis_final_1` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+ USE `lis_final_1`;
 
 -- --------------------------------------------------------
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `action_records` (
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar muestras de pacientes';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar muestras de pacientes';
 
 -- --------------------------------------------------------
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `action_records` (
 DROP TABLE IF EXISTS `audit_orders`;
 CREATE TABLE IF NOT EXISTS `audit_orders` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `data_record` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'datos exitentes en el registro modificado JSON',
+  `data_record` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'datos exitentes en el registro modificado JSON',
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `users_id` int UNSIGNED NOT NULL,
   `orders_id` int UNSIGNED NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `audit_orders` (
   KEY `fk_audit_record_users1_idx` (`users_id`),
   KEY `fk_audit_orders_orders1_idx` (`orders_id`),
   KEY `fk_audit_orders_action_records1_idx` (`action_records_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar auditorías de cambios en datos de diferentes tablas';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar auditorías de cambios en datos de diferentes tablas';
 
 -- --------------------------------------------------------
 
@@ -67,15 +67,15 @@ CREATE TABLE IF NOT EXISTS `audit_orders` (
 DROP TABLE IF EXISTS `audit_result`;
 CREATE TABLE IF NOT EXISTS `audit_result` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `action_record` enum('create','update','delete') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `data_record` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'datos exitentes en el registro modificado JSON',
+  `action_record` enum('create','update','delete') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `data_record` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'datos exitentes en el registro modificado JSON',
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `users_id` int UNSIGNED NOT NULL,
   `studie_results_id` int UNSIGNED NOT NULL,
   PRIMARY KEY (`id`,`users_id`,`studie_results_id`),
   KEY `fk_audit_record_users1_idx` (`users_id`),
   KEY `fk_audit_record_studie_results1_idx` (`studie_results_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar auditorías de cambios en datos de diferentes tablas';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar auditorías de cambios en datos de diferentes tablas';
 
 -- --------------------------------------------------------
 
@@ -86,13 +86,13 @@ CREATE TABLE IF NOT EXISTS `audit_result` (
 DROP TABLE IF EXISTS `citys`;
 CREATE TABLE IF NOT EXISTS `citys` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `states_id` int UNSIGNED NOT NULL,
   `date_update_at` datetime DEFAULT NULL,
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`,`states_id`),
   KEY `fk_citys_states1_idx` (`states_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar ciudades';
+) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar ciudades';
 
 --
 -- Volcado de datos para la tabla `citys`
@@ -478,14 +478,14 @@ INSERT INTO `citys` (`id`, `name`, `states_id`, `date_update_at`, `date_create_a
 DROP TABLE IF EXISTS `doctors`;
 CREATE TABLE IF NOT EXISTS `doctors` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `first_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `last_name` varchar(45) DEFAULT NULL,
   `date_update_at` datetime DEFAULT NULL,
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `license` varchar(45) NOT NULL,
   `phone` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar ciudades';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar ciudades';
 
 -- --------------------------------------------------------
 
@@ -496,11 +496,11 @@ CREATE TABLE IF NOT EXISTS `doctors` (
 DROP TABLE IF EXISTS `medical_conditions`;
 CREATE TABLE IF NOT EXISTS `medical_conditions` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Registra condion medica relevante',
-  `condition` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `condition` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo 1 activo',
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar estados importantes de un paciente: embarazo, hipertension etc..';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar estados importantes de un paciente: embarazo, hipertension etc..';
 
 -- --------------------------------------------------------
 
@@ -515,7 +515,7 @@ CREATE TABLE IF NOT EXISTS `medical_conditions_has_users` (
   PRIMARY KEY (`medical_conditions_id`,`users_id`),
   KEY `fk_medical_conditions_has_users_users1_idx` (`users_id`),
   KEY `fk_medical_conditions_has_users_medical_conditions1_idx` (`medical_conditions_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -526,16 +526,16 @@ CREATE TABLE IF NOT EXISTS `medical_conditions_has_users` (
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `diagnostico` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `diagnostico` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'estados de ordenes TABLA',
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `comment` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `comment` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `users_id` int UNSIGNED NOT NULL,
   `doctors_id` int UNSIGNED NOT NULL,
   PRIMARY KEY (`id`,`users_id`,`doctors_id`),
   KEY `fk_orders_users1_idx` (`users_id`),
   KEY `fk_orders_doctors1_idx` (`doctors_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar ordenes estudio';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar ordenes estudio';
 
 -- --------------------------------------------------------
 
@@ -1864,7 +1864,7 @@ DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE IF NOT EXISTS `profiles` (
   `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
   `access_auth` tinyint UNSIGNED NOT NULL,
-  `type` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `type` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_update_at` datetime DEFAULT NULL,
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `license` varchar(45) DEFAULT NULL,
@@ -1872,7 +1872,7 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `users_id` int UNSIGNED NOT NULL,
   PRIMARY KEY (`id`,`users_id`),
   KEY `fk_profiles_users1_idx` (`users_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1887,7 +1887,7 @@ CREATE TABLE IF NOT EXISTS `samples` (
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `valid` tinyint DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar ciudades';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar ciudades';
 
 -- --------------------------------------------------------
 
@@ -1898,11 +1898,11 @@ CREATE TABLE IF NOT EXISTS `samples` (
 DROP TABLE IF EXISTS `states`;
 CREATE TABLE IF NOT EXISTS `states` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_update_at` datetime DEFAULT NULL,
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar ciudades';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar ciudades';
 
 --
 -- Volcado de datos para la tabla `states`
@@ -1945,7 +1945,7 @@ CREATE TABLE IF NOT EXISTS `studies` (
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'estados de estudio TABLA',
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_validate` date DEFAULT NULL,
-  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `orders_id` int UNSIGNED NOT NULL,
   `studie_results_id` int UNSIGNED NOT NULL,
   `tests_id` int UNSIGNED NOT NULL,
@@ -1953,7 +1953,7 @@ CREATE TABLE IF NOT EXISTS `studies` (
   KEY `fk_studies_orders1_idx` (`orders_id`),
   KEY `fk_studies_studie_results1_idx` (`studie_results_id`),
   KEY `fk_studies_tests1_idx` (`tests_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar estudios a relaizar en un paciente';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar estudios a relaizar en un paciente';
 
 -- --------------------------------------------------------
 
@@ -1965,13 +1965,13 @@ DROP TABLE IF EXISTS `studie_results`;
 CREATE TABLE IF NOT EXISTS `studie_results` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `status` tinyint(1) DEFAULT '2' COMMENT 'estados de resultado en 1 valido, 0 no valido 2 en proceso ',
-  `values` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `values_standard` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `values` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `values_standard` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_validate` date DEFAULT NULL,
-  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar estudios a relaizar';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar estudios a relaizar';
 
 -- --------------------------------------------------------
 
@@ -1982,11 +1982,11 @@ CREATE TABLE IF NOT EXISTS `studie_results` (
 DROP TABLE IF EXISTS `tests`;
 CREATE TABLE IF NOT EXISTS `tests` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `common_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `common_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo 1 activo',
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `time_process` int NOT NULL COMMENT 'en dias habiles',
   `results_id` int UNSIGNED NOT NULL,
   `tests_determination_id` int UNSIGNED NOT NULL,
@@ -1995,7 +1995,7 @@ CREATE TABLE IF NOT EXISTS `tests` (
   PRIMARY KEY (`id`,`results_id`,`tests_determination_id`,`samples_id`),
   KEY `fk_tests_tests_determination1_idx` (`tests_determination_id`),
   KEY `fk_tests_samples1_idx` (`samples_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar estudios disponibles';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar estudios disponibles';
 
 -- --------------------------------------------------------
 
@@ -2009,9 +2009,9 @@ CREATE TABLE IF NOT EXISTS `tests_determination` (
   `value_max` int NOT NULL,
   `value_min` int NOT NULL,
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar estudios disponibles';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar estudios disponibles';
 
 -- --------------------------------------------------------
 
@@ -2022,10 +2022,10 @@ CREATE TABLE IF NOT EXISTS `tests_determination` (
 DROP TABLE IF EXISTS `tests_reference_values`;
 CREATE TABLE IF NOT EXISTS `tests_reference_values` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `reference_value` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `reference_value` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo 1 activo',
   `gender` tinyint(1) DEFAULT NULL,
   `age_min` int DEFAULT NULL,
@@ -2037,7 +2037,7 @@ CREATE TABLE IF NOT EXISTS `tests_reference_values` (
   PRIMARY KEY (`id`,`medical_conditions_id`,`tests_id`),
   KEY `fk_tests_reference_values_medical_conditions1_idx` (`medical_conditions_id`),
   KEY `fk_tests_reference_values_tests1_idx` (`tests_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar valores standard de estudios';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar valores standard de estudios';
 
 -- --------------------------------------------------------
 
@@ -2048,14 +2048,14 @@ CREATE TABLE IF NOT EXISTS `tests_reference_values` (
 DROP TABLE IF EXISTS `test_groups`;
 CREATE TABLE IF NOT EXISTS `test_groups` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `observations` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo, 1: activo',
   `tests_id` int UNSIGNED NOT NULL,
   PRIMARY KEY (`id`,`tests_id`),
   KEY `fk_test_groups_tests1_idx` (`tests_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para registrar esudios disponibles';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar esudios disponibles';
 
 -- --------------------------------------------------------
 
@@ -2066,16 +2066,16 @@ CREATE TABLE IF NOT EXISTS `test_groups` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `last_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `first_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `gender` char(1) NOT NULL COMMENT 'M: masculino, F: femenino, X: gen x',
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: inactivo, 1: activo',
   `document` int NOT NULL,
   `phone` int NOT NULL,
-  `email` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `address` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_birth_at` date DEFAULT NULL,
-  `password` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `create_users_id` int UNSIGNED NOT NULL,
   `date_update_at` datetime NOT NULL,
@@ -2084,7 +2084,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`,`update_users_id`,`create_users_id`,`citys_id`),
   KEY `fk_users_citys1_idx` (`citys_id`),
   KEY `fk_users_users1_idx` (`update_users_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `users`
