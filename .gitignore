@@ -4,3 +4,6 @@ img_listado.jpeg
 README.md
 *.ldb
 node_modules
+src/package-lock.json
+diagrama DER.eapx
+sequilizeauto.pdf
