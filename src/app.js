@@ -38,7 +38,7 @@ class App {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(compression());
         this.app.set('view engine', 'pug');
-        console.log(__dirname);
+       // console.log(__dirname);
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.use(cookieParser());
         this.indexRouter = new IndexRouter();
@@ -61,8 +61,8 @@ class App {
         console.log("Cargando manejador de rutas");
         this.app.use('/', this.indexRouter.getRouter());
         //tuve que cambiar de lugar las rutas para saltar el autenticado
-        this.app.use('/user', this.userRouter.getRouter());
-        this.app.use('/users', this.userRouter.getRouter());
+        this.app.use('/main', this.userRouter.getRouter());
+        this.app.use('/main/patient/search', this.userRouter.getRouter());
         // login
         this.app.use('/login', this.loginRouter.getRouter());
         this.app.use('/main', this.mainRouter.getRouter());

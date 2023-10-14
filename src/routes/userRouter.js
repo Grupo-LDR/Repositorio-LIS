@@ -9,7 +9,8 @@ class UserRouter {
     async getUser(req, res, next) {
         try {
             const users = await listarUsuarios(); 
-            res.render('usuarios', { users });
+            //renderizar la tabla de pacientes/usuarios
+            res.render('menus/mainsPatient/searchPatient.pug', { users });
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');

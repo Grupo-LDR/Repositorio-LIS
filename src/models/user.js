@@ -1,6 +1,6 @@
 import Conexion from "./config.js"
 import { Sequelize, DataTypes, Model } from 'sequelize';
-// Conexion.conectar();
+ Conexion.conectar();
 class User extends Model { }
 User.init(
   {

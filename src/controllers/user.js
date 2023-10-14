@@ -1,5 +1,4 @@
 import User from '../models/user.js';
-import Conexion from '../models/config.js';
 // Mostrar lista de usuarios
 async function listarUsuarios() {
   try {
@@ -16,7 +15,6 @@ async function listarUsuarios() {
   try {
     const { first_name, last_name, gender, active, document, phone, email, address, date_birth_at, password, citys_id } = req.body;
     await User.create({ first_name, last_name, gender, active, document, phone, email, address, date_birth_at, password, citys_id });
-    res.redirect('login');
   } catch (error) {
     console.error('Error al crear un nuevo usuario:', error);
     res.status(500).send('Error interno del servidor');
