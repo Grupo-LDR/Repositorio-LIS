@@ -1,10 +1,10 @@
 import Express from "express";
-import { listarUsuarios } from "../controllers/user.js";
+import { listarUsuarios,crearUsuario } from "../controllers/user.js";
 class UserRouter {
     constructor() {
         this.router = Express.Router();
-        this.router.get('/', this.getUser);
-        this.router.post('/', this.createUser);
+        this.router.get('/patient/search', this.getUser);
+        this.router.post('/patient/add', this.createUser);
     }
     async getUser(req, res, next) {
         try {
@@ -17,8 +17,17 @@ class UserRouter {
         }
     }
 
-    createUser(req, res, next) {
-        res.send('Responder con POST user');
+    async createUser(req, res) {
+        console.log("Ruta createUser *****");
+        try {
+        const usuario = req.body;
+            await crearUsuario(usuario);
+            console.trace("Usuario Creado -> EXITOSO");
+            res.redirect('/main');
+        } catch (error) {
+            console.error('Error al crear un nuevo usuario:', error);
+            res.status(500).send('Error interno del servidor');
+        }
     }
 
     getRouter() {

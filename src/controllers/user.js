@@ -11,15 +11,17 @@ async function listarUsuarios() {
   }
 }
 // Crear un nuevo usuario
- async function crearUsuario(req, res){
+async function crearUsuario(user) {
   try {
-    const { first_name, last_name, gender, active, document, phone, email, address, date_birth_at, password, citys_id } = req.body;
+    const { first_name, last_name, gender, active, document, phone, email, address, date_birth_at, password, citys_id } = user;
     await User.create({ first_name, last_name, gender, active, document, phone, email, address, date_birth_at, password, citys_id });
+    console.log("Creación de nuevo usuario -> Exitosa");
   } catch (error) {
     console.error('Error al crear un nuevo usuario:', error);
-    res.status(500).send('Error interno del servidor');
+    throw error;
   }
 };
+
 // Obtener informacion de un usuario por su ID
 async function usuarioById(req, res){
   try {
