@@ -17,7 +17,7 @@
   <div align="left">
    <ul><h2>Profesores: </h2>
     <li> Fernando Daniel Saez Bonilla </li>
-    <li>Pedro Ernesto Blanco </li>
+    <li> Pedro Ernesto Blanco </li>
     <li> Mariano Torres Quintero</li>
  </ul>
   
@@ -27,7 +27,6 @@
 <div align="left">
   <ul><h2>Integrantes</h2>
     <li> Toloza Santiago Leonel </li>
-    <li> Pasquali Fabian Dario </li>
     <li> Lopez Enrique Rafael </li>
  </ul>
 </div>
