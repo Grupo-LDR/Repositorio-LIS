@@ -14,7 +14,6 @@ class LoginRouter {
         } else {
             res.render("login", { title: "Laboratorio" });
         }
-
         console.log(user, pass);
     }
     getLogin(req, res) {
