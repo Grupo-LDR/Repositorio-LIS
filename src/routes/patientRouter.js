@@ -1,49 +1,59 @@
 import express from "express";
-const menusValid = ['add', 'search', 'update'];
-import {crearUsuario} from "../controllers/user.js";
+import UserController from "../controllers/userController.js";
+import config from "../config.js";
+const routerValid = config.USER_VALID.split(',');
 class PatientRouter {
-
     constructor() {
         this.router = express.Router();
         this.router.get('/', this.getMenu);
         this.router.get('/:menu', this.getMenus);
-        this.router.post('/:menu', this.createUser);
+        this.router.get('/edit/:menu', this.getMenus);
     }
-    getMenus(req, res) {
+
+    /**
+     controller {
+     id: 37,
+     first_name: 'Michael',
+     last_name: 'Johnson',
+     gender: 'M',
+     active: 1,
+     document: 345678901,
+     phone: 2147483647,
+     email: 'michael.johnson@example.com',
+     address: '789 Oak St',
+     date_birth_at: '1992-07-17',
+     password: 'password3',
+     date_create_at: 2023-10-11T09:40:30.000Z,
+     citys_id: 3,
+     edad: 31
+   }
+   */
+    async getMenus(req, res) {
         const peticion = req.params.menu;
-        //console.log(`menus/main${peticion}.pug`);
-        if (menusValid.includes(peticion)) {
+        if (routerValid.some(ruta => ruta === peticion)) {
+            console.log('linea 14: ', peticion);
             const menus = peticion;
-            // console.log("peticion ->"+peticion)
-            //    const menus = peticion.charAt(0).toUpperCase() + peticion.slice(1);
-            // console.log("REQUEST ->"+req.body);
-           // console.log(`----->main${menus}.pug`);
-            // console.log("MENUS: "+menus);
-            res.render(`menus/mainsPatient/${menus}Patient.pug`);
+            const usuarios = await UserController.listarUsuarios();
+            console.log(typeof usuarios);
+            const dataArray = usuarios.map(item => item.get({ plain: true }));
+
+            // res.render('usuarios', { usuarios: dataArray });
+
+            res.render(`menus/mainsPatient/${menus}Patient.pug`, { usuarios: dataArray });
         } else {
-            //res.status(404).send(`Error 404 - Página no encontrada`);
-            res.status(404).send(`Error 404 -  Página  ${peticion} no encontrada`);
+            res.render('error', {
+                message: 'Sitio no encontrado. ',
+                error: {
+                    status: 404,
+                    stack: 'Noe se encuentra la ruta solicitada',
+                },
+            });
         }
     }
     getMenu(req, res) {
         res.render("menu");
     }
-    async createUser(req, res) {
-        try {
-            const usuario = req.body;
-            console.log("Ruta createUser *****");
-            console.log("--->" + usuario);
-            await crearUsuario(usuario); // Llama a crearUsuario con el objeto de usuario
-            console.log("Usuario Creado -> EXITOSO");
-            res.redirect('/main/patient/search');
-        } catch (error) {
-            console.error('Error al crear un nuevo usuario:', error);
-            res.status(500).send('Error interno del servidor');
-        }
-    }
-    
     getRouter() {
-        console.log("getRouter");
         return this.router;
     }
 

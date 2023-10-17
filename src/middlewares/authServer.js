@@ -9,18 +9,18 @@ class AuthServer {
 
     }
     authUser(req, res, next) {
-        console.log(req.connection.remoteAddress);
-        console.log(hrtime.hrtime()[1]);
-        console.log(Date.now());
+        //  console.log(req.connection.remoteAddress);
+        //  console.log(hrtime.hrtime()[1]);
+        //  console.log(Date.now());
         const semilla = req.connection.remoteAddress + hrtime.hrtime()[0] + Date.now();
-        console.log(semilla);
+        //  console.log(semilla);
         const hash = crypto.createHash('sha256').update(semilla).digest();
         const firma = hash.toString('hex');
 
 
 
         //const firma = crypto.createHash('sha256').update(req.connection.remoteAddress + hrtime.hrtime()[0] + Date.now()).digest();
-        console.log(firma);
+        //     console.log(firma);
         // verifico cookie
         const app_cookie = req.cookies.app_cookie;
         if (app_cookie) {

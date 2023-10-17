@@ -1,7 +1,7 @@
 import express from "express";
-const menusValid = ['audit', 'exam', 'order', 'patient', 'result', 'sample', 'user'];
+import config from "../config.js";
+const routerValid = config.MAIN_VALID.split(',');
 class MainRouter {
-
     constructor() {
         this.router = express.Router();
         this.router.get('/', this.getMenu);
@@ -9,20 +9,23 @@ class MainRouter {
     }
     getMenus(req, res) {
         const peticion = req.params.menu;
-        if (menusValid.includes(peticion)) {
+        if (routerValid.some(ruta => ruta === peticion)) {
             const menus = peticion.charAt(0).toUpperCase() + peticion.slice(1);
-            console.log(`main${menus}.pug`);
-            console.log(menus);
             res.render(`menus/main${menus}.pug`);
         } else {
-            res.status(404).send(`Error 404 -  Página  ${peticion} no encontrada`);
+            res.render('error', {
+                message: 'Sitio no encontrado. ',
+                error: {
+                    status: 404,
+                    stack: 'Noe se encuentra la ruta solicitada',
+                },
+            });
         }
     }
     getMenu(req, res) {
         res.render("menu");
     }
     getRouter() {
-        console.log("getRouter");
         return this.router;
     }
 

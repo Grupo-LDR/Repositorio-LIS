@@ -10,11 +10,10 @@ class LoginRouter {
     postLogin(req, res) {
         const { user, pass } = req.body;
         if (user == 'root' && pass == '1234') {
-            res.redirect('/main');
+            res.redirect('/usersView.pug');
         } else {
             res.render("login", { title: "Laboratorio" });
         }
-
         console.log(user, pass);
     }
     getLogin(req, res) {
