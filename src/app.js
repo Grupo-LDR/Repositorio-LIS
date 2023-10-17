@@ -52,7 +52,7 @@ class App {
         this.app.use(morgan('dev'));
         // ruta archvios estaticos
         this.app.use(express.static('./src/public'));
-        this.app.use('/login', this.loginRouter.getRouter());
+        this.app.use('/', this.loginRouter.getRouter());
         this.app.use('/user', this.userRouter.getRouter());
         //this.app.use('/users', this.userRouter.getRouter());
 
