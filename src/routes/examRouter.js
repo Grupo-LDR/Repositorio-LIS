@@ -11,7 +11,7 @@ class ExamRouter {
         try {
             const examenes = await ExamController.listExams();
             console.log('examenes');
-            res.render('examView.pug', { examenes: examenes });
+            res.render('examsView.pug', { examenes: examenes });
         } catch (error) {
             console.error('Error al obtener examenes:', error);
             res.status(500).send('Error interno del servidor');

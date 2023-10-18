@@ -1,5 +1,6 @@
-import Citys from "../models/citysModel.js";
-class CitysController {
+import City from "../models/cityModel.js";
+import State from "../models/stateModel.js";
+class CityController {
     static async listCitys() {
         try {
             const citys = await Citys.findAll();
@@ -11,4 +12,4 @@ class CitysController {
     }
 }
 
-export default CitysController;
+export default CityController;

@@ -1,10 +1,10 @@
-import Conexion from '../models/conexion.js';
+import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
-class Citys extends Model {
+class City extends Model {
 
 }
-Citys.init({
+City.init({
     id: {
         autoIncrement: true,
         type: DataTypes.INTEGER.UNSIGNED,
@@ -52,4 +52,4 @@ Citys.init({
         },
     ]
 });
-export default Citys;
+export default City;

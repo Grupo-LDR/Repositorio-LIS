@@ -1,6 +1,6 @@
 import express from "express";
 import UserController from "../controllers/userController.js";
-import CitysController from "../controllers/citysController.js";
+import CitysController from "../controllers/cityController.js";
 import config from "../config.js";
 class UserRouter {
     constructor() {
