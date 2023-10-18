@@ -9,10 +9,10 @@ class LoginRouter {
     }
     postLogin(req, res) {
         const { user, pass } = req.body;
-        console.log("--------------->"+user)
-        console.log("--------------->"+pass)
-        if (user == 'root' && pass == '1234') {
-            console.log("ENTREE AL POSTLOGIN")
+        console.log("--------------->" + user)
+        console.log("--------------->" + pass)
+        if (user == 'root@example.com' && pass == '1234') {
+            console.log("ENTREE AL POST-LOGIN")
             res.redirect('/user');
         } else {
             res.render("login", { title: "Laboratorio" });
@@ -21,7 +21,7 @@ class LoginRouter {
     }
     getLogin(req, res) {
         console.log("ENTRE A GET LOGIN")
-        console.log("Get Login ->"+req.body)
+        console.log("Get Login ->" + req.body)
         res.render("login", { title: "Laboratorio" });
     }
     getRouter() {

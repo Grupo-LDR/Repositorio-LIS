@@ -12,13 +12,16 @@ import { dirname } from 'path';
 import path from 'path';
 /** modulos routes  */
 // autenticacion
-import AuthServer from './middlewares/authServer.js';
+//import AuthServer from './middlewares/authServer.js';
 // rutas  
-import IndexRouter from './routes/indexRouter.js';
-import MainRouter from './routes/mainRouter.js';
-import PatientRouter from './routes/patientRouter.js';
 import LoginRouter from './routes/loginRouter.js';
 import UserRouter from './routes/userRouter.js';
+import ExamRouter from './routes/examRouter.js';
+import CityRouter from './routes/cityRouter.js';
+// import IndexRouter from './routes/indexRouter.js';
+// import MainRouter from './routes/mainRouter.js';
+// import PatientRouter from './routes/patientRouter.js';
+
 // variables y constantes App
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -37,12 +40,16 @@ class App {
         console.log(__dirname);
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.use(cookieParser());
-        this.indexRouter = new IndexRouter();
-        this.mainRouter = new MainRouter();
-        this.patientRouter = new PatientRouter();
-        this.authServer = new AuthServer();
-        this.userRouter = new UserRouter();
         this.loginRouter = new LoginRouter();
+        this.userRouter = new UserRouter();
+        this.examRouter = new ExamRouter();
+        this.cityRouter = new CityRouter();
+
+        // this.indexRouter = new IndexRouter();
+        // this.mainRouter = new MainRouter();
+        // this.patientRouter = new PatientRouter();
+        // this.authServer = new AuthServer();
+
 
     }
     /**
@@ -53,6 +60,14 @@ class App {
         // ruta archvios estaticos
         this.app.use(express.static('./src/public'));
         this.app.use('/', this.loginRouter.getRouter());
+        this.app.use('/user', this.userRouter.getRouter());
+        // ruteo Examenes 
+        this.app.use('/exam', this.examRouter.getRouter());
+        // ruteo Examenes 
+        this.app.use('/city', this.cityRouter.getRouter());
+
+
+
         //this.app.use('/user', this.userRouter.getRouter());
         //this.app.use('/users', this.userRouter.getRouter());
         // // rutas que no requieren auth
@@ -62,11 +77,11 @@ class App {
         // login
         // this.app.use('/main', this.mainRouter.getRouter());
         // this.app.use('/main/patient', this.patientRouter.getRouter());
-        
+
         ///neworder/1
         // // midlware de auth
         // this.app.use(this.authServer.authUser);
-        this.app.use('/user', this.userRouter.getRouter());
+
         // // rutas que requieren auth
         // this.app.use('/user', this.userRouter.getRouter());
         // // this.app.use('/users', this.userRouter.getRouter());

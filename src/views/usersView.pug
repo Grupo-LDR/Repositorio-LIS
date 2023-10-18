@@ -1,5 +1,5 @@
 include head
-include navbar
+//- include navbar
 div(class="container mt-5")
     div(class="row justify-content-center")
         div(class="col-12")
@@ -38,7 +38,6 @@ dialog(id="useredit")
         h1 cacanene    
         button(type="button" class="btn btn-primary" id="botondialog")
         button(onClick="document.getElementById('useredit').close()") Aceptar
-include footer
-script.
-    const users = !{JSON.stringify(usuarios)};  
+//- script(src="/assets/js/utiles.js" )    
+script(src="/assets/js/tableUser.js")  
 
