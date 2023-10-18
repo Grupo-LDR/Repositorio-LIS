@@ -3,7 +3,7 @@ import State from "../models/stateModel.js";
 class CityController {
     static async listCitys() {
         try {
-            const citys = await Citys.findAll();
+            const citys = await City.findAll();
             return citys;
         }
         catch (error) {
