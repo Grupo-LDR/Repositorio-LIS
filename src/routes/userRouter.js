@@ -17,7 +17,7 @@ class UserRouter {
     async getUsers(req, res) {
         try {
             const usuarios = await UserController.listUsers();
-            res.render('usersView.pug', { usuarios });
+            res.render('usersView.pug', { usuarios});
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');

@@ -1,23 +1,30 @@
 import User from '../models/userModel.js';
+import City from "../models/cityModel.js"
 //const usuario = new User();
 class UserController {
     static async listUsers() {
         try {
-            const users = await User.findAll();
+            const users = await User.findAll({
+                include:City
+            });
             const usersConEdad = users.map(user => {
                 user.dataValues.edad = this.calcularEdad(user.dataValues.date_birth_at);
                 return user;
             });
-            const usersArray = usersConEdad.map(item => item.get({ plain: true }));
+            const usersArray = usersConEdad.map(user => {
+                const userPlain = user.get({ plain: true });
+                userPlain.cityName = user.City ? user.City.name : null;
+                return userPlain;
+            });
             console.log('tipo  ', typeof usersArray);
-            return usersConEdad;
-        }
-        catch (error) {
+            return usersArray;
+        } catch (error) {
             console.log(error);
+            return [];
         }
     }
-
-    /*
+    
+/*
     Usuario.findByPk(userId)
   .then((usuario) => {
     if (usuario) {

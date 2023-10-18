@@ -67,35 +67,30 @@ User.init({
         type: DataTypes.STRING(80),
         allowNull: true
     },
-    date_create_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
+   
     create_users_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true,
         primaryKey: true
-    },
-    date_update_at: {
-        type: DataTypes.DATE,
-        allowNull: true
     },
     update_users_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true,
         primaryKey: true
     },
-    citys_id: {
+    cityId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true,
-        primaryKey: true
+        references: {
+            model: 'City',
+            key: 'id'
+        }
     }
 }, {
     sequelize: Conexion.sequelize,
     modelName: 'user',
     tableName: 'users',
-    timestamps: false,
+    timestamps: true,
     indexes: [
         {
             name: "PRIMARY",
@@ -105,14 +100,13 @@ User.init({
                 { name: "id" },
                 { name: "update_users_id" },
                 { name: "create_users_id" },
-                { name: "citys_id" },
             ]
         },
         {
             name: "fk_users_citys1_idx",
             using: "BTREE",
             fields: [
-                { name: "citys_id" },
+                { name: "cityId" },
             ]
         },
         {

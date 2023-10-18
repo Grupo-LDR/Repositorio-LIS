@@ -32,6 +32,7 @@ City.init({
 }, {
     sequelize: Conexion.sequelize,
     tableName: 'citys',
+    tableModel:'city',
     timestamps: false,
     indexes: [
         {

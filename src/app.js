@@ -4,7 +4,6 @@ import compression from 'compression';
 //import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import config from './config.js';
-
 //import express_session from 'express-session';
 import morgan from 'morgan';
 import { fileURLToPath } from 'url';
