@@ -6,21 +6,10 @@ class UserRouter {
     constructor() {
         this.router = express.Router();
         this.router.get('/', this.getUsers);
-        this.router.get('/test', this.getTestUsers);
         this.router.get('/edit/:id', this.getEditUser);
         this.router.get('/new', this.getNewUser);
         this.router.post('/new', this.postNewUser);
         this.router.post('/edit/:id', this.postEditUser);
-    }
-
-    async getTestUsers(req, res) {
-        try {
-            const usuarios = await UserController.listUsers();
-            res.render('usersViewTest.pug', { usuarios });
-        } catch (error) {
-            console.error('Error al obtener usuarios:', error);
-            res.status(500).send('Error interno del servidor');
-        }
     }
     /**
      *  responde peticion /users con listado de usuarios

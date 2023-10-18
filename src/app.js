@@ -52,28 +52,21 @@ class App {
         this.app.use(morgan('dev'));
         // ruta archvios estaticos
         this.app.use(express.static('./src/public'));
-        this.app.post('/user', (req, res, next) => {
-            console.log(req.body);
-            next();
-        })
-        this.app.use('/user', this.userRouter.getRouter());
+        this.app.use('/', this.loginRouter.getRouter());
+        //this.app.use('/user', this.userRouter.getRouter());
         //this.app.use('/users', this.userRouter.getRouter());
-
-
-
-
         // // rutas que no requieren auth
         // console.log("Cargando manejador de rutas");
         //this.app.use('/', this.indexRouter.getRouter());
         //        this.app.use('/order', this.orderRouter.getRouter());
-        // // login
-        // this.app.use('/login', this.loginRouter.getRouter());
+        // login
         // this.app.use('/main', this.mainRouter.getRouter());
         // this.app.use('/main/patient', this.patientRouter.getRouter());
-
+        
         ///neworder/1
         // // midlware de auth
         // this.app.use(this.authServer.authUser);
+        this.app.use('/user', this.userRouter.getRouter());
         // // rutas que requieren auth
         // this.app.use('/user', this.userRouter.getRouter());
         // // this.app.use('/users', this.userRouter.getRouter());

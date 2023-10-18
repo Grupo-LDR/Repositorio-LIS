@@ -22,8 +22,7 @@ div(class="container mt-5")
                                 td(class="text-center align-middle")  #{user.id}
                                 td(class="text-center align-middle")
                                     a(href="/user/edit/"+user.id name=user.id  class="text-dark")
-                                        i(class="fa-solid fa-eye fa-beat px-1 text-dark fs-6")
-                                        //- i(class="fa-solid fa-pen-to-square fa-beat px-1 text-dark fs-6")
+                                        i(class="fa-solid fa-pen-to-square fa-beat px-1 text-dark fs-6")
                                 td(class="text-center align-middle")
                                     a(href="/order/new/"+user.id name=user.id  class="text-dark")
                                         i(class="fa-solid fa-file fa-beat  px-1 text-dark fs-6")
@@ -34,12 +33,11 @@ div(class="container mt-5")
                                 td(class="text-center align-middle") #{user.phone}
                                 td(class="text-center align-middle") #{user.address}
                                 //- td(class="text-center align-middle") #{user.edad}
-button(type="button" class="btn btn-primary d-none" id="botondialog") NUEVO PACIENTE
 dialog(id="useredit")
     div(id="contenido")
         h1 cacanene    
-        //- button(type="button" class="btn btn-primary" id="botondialog")
-        //- button(onClick="document.getElementById('useredit').close()") Aceptar
+        button(type="button" class="btn btn-primary" id="botondialog")
+        button(onClick="document.getElementById('useredit').close()") Aceptar
 include footer
 script.
     const users = !{JSON.stringify(usuarios)};  

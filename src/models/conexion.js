@@ -11,6 +11,7 @@ class Conexion {
         password: config.DB_PASS,
         database: config.DB_DATABASE,
         //  logging: false,
+
     });
     static async conectar() {
         try {
@@ -21,6 +22,7 @@ class Conexion {
             console.error('Error al conectar a la base de datos:', error);
         }
     }
+
     // static async conectar() {
     //     return this.sequelize;
     // }

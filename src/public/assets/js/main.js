@@ -1,7 +1,6 @@
 const userTable = document.getElementById('usersTd');
 const userFiles = userTable.getElementsByTagName('tr');
 const userRows = userTable.getElementsByTagName('td');
-const userNewBoton = document.getElementById('botondialog');
 //console.log(userRows);
 $(document).ready(function () {
     const table = $('#usersTable').DataTable({
@@ -30,16 +29,12 @@ $(document).ready(function () {
     });
 
 
-
     //  table.on('search.dt', function () {
     table.on('draw.dt', function () {
         console.log(userFiles.length);
         if (userFiles.length === 1) {
-            userNewBoton.classList.remove('d-none');
-            //            alert('No se ncontro debe ingresa paciente NUEVO');
+            // alert('No s encontro debe ingresa paciente NUEVO');
             console.log('Búsqueda realizada o resultados filtrados.', userFiles.length);
-        } else {
-            userNewBoton.classList.add('d-none');
         }
     });
 });
