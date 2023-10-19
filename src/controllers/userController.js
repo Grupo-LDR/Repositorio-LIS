@@ -46,10 +46,10 @@ class UserController {
                 }
             });
             if (user) {
-                console.log('User encontrado:', user);
+               // console.log('User encontrado:', user);
                 return user;
             } else {
-                console.log('User o encontrado');
+                console.log('User no encontrado');
             }
         } catch (error) {
             console.error('Error user:', error);

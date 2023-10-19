@@ -10,6 +10,19 @@ class CityController {
             console.log(error);
         }
     }
+    static async findCity(id){
+        try {
+           const city=await City.findByPk(id);
+            if(city){
+                return city;
+            }else{
+                console.log('City no encontrada'); 
+            }
+        } catch (error) {
+            
+        }
+
+    }
 }
 
 export default CityController;
