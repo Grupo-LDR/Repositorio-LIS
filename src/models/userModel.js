@@ -80,11 +80,7 @@ User.init({
     },
     cityId: {
         type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: true,
-        references: {
-            model: 'City',
-            key: 'id'
-        }
+        allowNull: true
     }
 }, {
     sequelize: Conexion.sequelize,

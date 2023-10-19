@@ -1,7 +1,12 @@
 import User from "./userModel.js"
 import City from "./cityModel.js"
-
-User.hasOne(City, {
-    foreignKey: 'cityId', // Nombre de la columna en el modelo User
-    sourceKey: 'id' // Nombre de la columna en el modelo City que se relaciona con User
+/**
+ * esto lo hice asi solo, pero si lo queres hacer con clases, ya es otro bardo, te dejo que te rompas la cabeza vos con las clases.
+ */
+function relaciones() {
+  User.belongsTo(City, {
+    foreignKey: 'cityId',
   });
+}
+relaciones();
+export { User, City };
