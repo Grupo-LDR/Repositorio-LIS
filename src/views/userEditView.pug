@@ -49,10 +49,10 @@ div(class="container mt-5")
                                     input(type="text" class="form-control" id="address" name="address" placeholder="Address" readonly value=user.address)
                             div(class="form-group col-md-4")
                                 label(for="city_select") City:
-                                select(name="city" class="form-control" id="city" placeholder="City" readonly)
-                                    each cit in citys
-                                        option(value=cit.id, selected=(cit.id === user.citys_id))= cit.name
-                                        //- option(value=cit.id)= cit.name           
+                                input(type="text" class="form-control" id="city_name" name="city_name" placeholder="City" readonly value=nombreCiudad)
+                                    //- each cit in citys
+                                    //-     option(value=cit.id, selected=(cit.id === user.citys_id))= cit.name
+                                    //-     option(value=cit.id)= cit.name           
                             div(class="form-group col-md-4")
                                 label(for="phone") Date birth:
                                 input(type="date" class="form-control" id="date_birdth" name="date_birdth" placeholder="Date birth" readonly value=user.date_birth_at)
@@ -84,7 +84,6 @@ script.
         for (let i = 0; i < elementosForm.length; i++) {
             const elemento = elementosForm[i];
                 if (elemento.tagName === "INPUT" || elemento.tagName === "TEXTAREA") {
-                    // Habilita el elemento para edición
                         elemento.removeAttribute("readonly");
                         elemento.removeAttribute("disabled");
                     }

@@ -1,48 +1,50 @@
 // import User from '../models/userModel.js'; no es necesario importar
 // import City from "../models/cityModel.js"
-import {User,City} from "../models/relationShip.js";
+import { User, City } from "../models/relationShip.js";
 //const usuario = new User();
 class UserController {
     static async listUsers() {
         try {
             const users = await User.findAll({
-                include:City
+                include: {
+                    model: City,
+                    attributes: ['name'],
+                    as: 'City'
+                }
             });
-            const usersConEdad = users.map(user => {
-                user.dataValues.edad = this.calcularEdad(user.dataValues.date_birth_at);
-                return user;
-            });
-            const usersArray = usersConEdad.map(user => {
-                const userPlain = user.get({ plain: true });
-                userPlain.cityName = user.City ? user.City.name : null;
-                return userPlain;
-            });
-            console.log('tipo  ', typeof usersArray);
-            return usersArray;
+
+            console.log('tipo  ', typeof users);
+            return users;
         } catch (error) {
             console.log(error);
             return [];
         }
     }
-    
-/*
-    Usuario.findByPk(userId)
-  .then((usuario) => {
-    if (usuario) {
-      // El usuario fue encontrado
-      console.log('Usuario encontrado:', usuario.toJSON());
-    } else {
-      // El usuario no fue encontrado
-      console.log('Usuario no encontrado');
-    }
-  })
-  .catch((error) => {
-    console.error('Error al buscar el usuario:', error);
-  });
-    */
+
+    /*
+        Usuario.findByPk(userId)
+      .then((usuario) => {
+        if (usuario) {
+          // El usuario fue encontrado
+          console.log('Usuario encontrado:', usuario.toJSON());
+        } else {
+          // El usuario no fue encontrado
+          console.log('Usuario no encontrado');
+        }
+      })
+      .catch((error) => {
+        console.error('Error al buscar el usuario:', error);
+      });
+        */
     static async findUser(id) {
         try {
-            const user = User.findByPk(id);
+            const user = await User.findByPk(id, {
+                include: {
+                    model: City,
+                    attributes: ['name'],
+                    as: 'City'
+                }
+            });
             if (user) {
                 console.log('User encontrado:', user);
                 return user;
@@ -52,7 +54,6 @@ class UserController {
         } catch (error) {
             console.error('Error user:', error);
         }
-
     }
     static calcularEdad(date_birth_at) {
         if (date_birth_at) {

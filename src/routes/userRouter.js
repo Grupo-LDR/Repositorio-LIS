@@ -30,11 +30,12 @@ class UserRouter {
         try {
             const id = req.params.id;
             const user = await UserController.findUser(id);
-            const citys = await CitysController.listCitys();
             if (!user) {
                 return res.status(404).send('Usuario no encontrado');
             }
-            res.render('userEditView.pug', { user: user, citys: citys });
+            const nombreCiudad = user.City ? user.City.name : null;
+
+            res.render('userEditView.pug', {user, nombreCiudad});
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
