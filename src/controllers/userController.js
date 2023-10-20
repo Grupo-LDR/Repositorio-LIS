@@ -1,6 +1,6 @@
 // import User from '../models/userModel.js'; no es necesario importar
 // import City from "../models/cityModel.js"
-import { User, City } from "../models/relationShip.js";
+import { User , City } from "../models/relationShip.js";
 //const usuario = new User();
 class UserController {
     static async listUsers() {
@@ -20,22 +20,6 @@ class UserController {
             return [];
         }
     }
-
-    /*
-        Usuario.findByPk(userId)
-      .then((usuario) => {
-        if (usuario) {
-          // El usuario fue encontrado
-          console.log('Usuario encontrado:', usuario.toJSON());
-        } else {
-          // El usuario no fue encontrado
-          console.log('Usuario no encontrado');
-        }
-      })
-      .catch((error) => {
-        console.error('Error al buscar el usuario:', error);
-      });
-        */
     static async findUser(id) {
         try {
             const user = await User.findByPk(id, {

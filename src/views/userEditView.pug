@@ -73,12 +73,12 @@ script.
     let editable = false;
     console.log("->"+editable)
     function enableEditing() {
+        editable = true;
         botonEdit.classList.add('d-none');
         botonConfirm.classList.remove('d-none');
         botonCancel.classList.remove('d-none');
         formEdit.onclick = null;
         removeReadOnly(formEdit);
-        editable = true;
         console.log("ACA PASO ESTO:"+editable)
         }
     function cancelEditing() {

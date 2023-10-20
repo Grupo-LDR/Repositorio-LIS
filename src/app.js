@@ -17,6 +17,7 @@ import LoginRouter from './routes/loginRouter.js';
 import UserRouter from './routes/userRouter.js';
 import ExamRouter from './routes/examRouter.js';
 import CityRouter from './routes/cityRouter.js';
+import orderRouter from './routes/orderRouter.js';
 // import IndexRouter from './routes/indexRouter.js';
 // import MainRouter from './routes/mainRouter.js';
 // import PatientRouter from './routes/patientRouter.js';
@@ -43,6 +44,7 @@ class App {
         this.userRouter = new UserRouter();
         this.examRouter = new ExamRouter();
         this.cityRouter = new CityRouter();
+        this.orderRouter = new orderRouter();
 
         // this.indexRouter = new IndexRouter();
         // this.mainRouter = new MainRouter();
@@ -64,6 +66,8 @@ class App {
         this.app.use('/exam', this.examRouter.getRouter());
         // ruteo Examenes 
         this.app.use('/city', this.cityRouter.getRouter());
+        // ruteo de ordenes de trabajo
+        this.app.use('/order',this.orderRouter.getRouter());
 
 
 

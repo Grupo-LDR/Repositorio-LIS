@@ -1,5 +1,5 @@
 import Express from "express";
-import OrderController from "../controllers/orderController.js";
+import orderController from "../controllers/orderController.js";
 class OrderRouter {
     constructor() {
         this.router = Express.Router();
@@ -10,15 +10,10 @@ class OrderRouter {
 
     async getUser(req, res, next) {
         console.log('mierda');
-        const usuarios = await UserController.listarUsuarios();
-        //console.log(usuarios);
-        //    usuarios.forEach(element => {
-        //        console.log(element.dataValues);
-        //    });
-        const dataArray = usuarios.map(item => item.get({ plain: true }));
+        const usuarios = await orderController.crearNuevoRegistro();
+        //const dataArray = usuarios.map(item => item.get({ plain: true }));
         // console.log(dataArray);
-        res.render('usersView', { usuarios: dataArray });
-        //res.send('Responder con GET users');
+        res.render('usersView');
     }
 
     createUser(req, res, next) {
@@ -30,4 +25,4 @@ class OrderRouter {
     }
 }
 
-export default UserRouter;
+export default OrderRouter;

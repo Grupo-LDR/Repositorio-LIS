@@ -1,7 +1,9 @@
 import express from "express";
 import UserController from "../controllers/userController.js";
 import CitysController from "../controllers/cityController.js";
+import Exam from "../models/examModel.js";
 import config from "../config.js";
+import ExamController from "../controllers/examController.js";
 class UserRouter {
     constructor() {
         this.router = express.Router();
