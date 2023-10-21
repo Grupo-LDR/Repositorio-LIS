@@ -1,6 +1,5 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
-
 class State extends Model {
 
 }
@@ -17,7 +16,7 @@ State.init(
             allowNull: false
         },
         date_update_at: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATE('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
             allowNull: true
         },
         date_create_at: {
@@ -30,16 +29,8 @@ State.init(
         sequelize: Conexion.sequelize,
         modelName: 'state',
         tableName: 'states',
-        timestamps: false,
-        indexes: [
-            {
-                name: "PRIMARY",
-                unique: true,
-                using: "BTREE",
-                fields: [
-                    { name: "id" },
-                ]
-            },
-        ]
+        timestamps: true,
+        createdAt: 'date_create_at', // Nombre de la columna de creación
+        updatedAt: 'date_update_at',// Nombre de la columna de actualización
     });
 export default State;

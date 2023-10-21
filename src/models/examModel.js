@@ -23,23 +23,15 @@ Exam.init({
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
   },
   update_at: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATE('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
     allowNull: true
   }
 }, {
   sequelize: Conexion.sequelize,
   modelName: 'exam',
   tableName: 'exams',
-  timestamps: false,
-  indexes: [
-    {
-      name: "PRIMARY",
-      unique: true,
-      using: "BTREE",
-      fields: [
-        { name: "id" },
-      ]
-    },
-  ]
+  timestamps: true,
+  createdAt: 'create_at', // Nombre de la columna de creación
+  updatedAt: 'update_at',// Nombre de la columna de actualización
 });
 export default Exam;

@@ -3,6 +3,7 @@ import City from './cityModel.js';
 import Order from './orderModel.js';
 import Exam from './examModel.js';
 import Doctor from './doctorModel.js';
+import State from './stateModel.js';
 
 /**
  * esto lo hice asi solo, pero si lo queres hacer con clases, ya es otro bardo, te dejo que te rompas la cabeza vos con las clases.
@@ -13,6 +14,14 @@ class Relaciones {
     //una ciudad le PERTENECE A UN usuario
     User.belongsTo(City, {
       foreignKey: 'cityId',
+    });
+    State.hasMany(City, {
+      foreignKey: 'states_id', 
+      as: 'ciudades',
+    })
+    City.belongsTo(State, {
+      foreignKey: 'states_id',
+      as: 'Pronvincia',
     });
     // relacion de un usuario con ordenes
     // un usuarios tiene muchas ordenes
@@ -49,6 +58,8 @@ class Relaciones {
     //Order.sync();
     //Exam.sync();
     //Doctor.sync();
+    //State.sync()
+
   }
 }
 Relaciones.relaciones();
