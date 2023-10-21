@@ -1,5 +1,4 @@
-import Doctor from "../models/doctorModel.js";
-import { Order, User } from "../models/relationShip.js";
+import { Order, User,Doctor } from "../models/relationShip.js";
 class orderController {
   static async crearNuevaOrden(orden) {
     try {

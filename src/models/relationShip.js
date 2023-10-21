@@ -54,4 +54,4 @@ class Relaciones {
 Relaciones.relaciones();
 Relaciones.syncModels();
 
-export { User, City, Order};
+export { User, City, Order,Doctor};
