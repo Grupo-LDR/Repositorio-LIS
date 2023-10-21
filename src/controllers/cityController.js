@@ -1,9 +1,14 @@
-import City from "../models/cityModel.js";
-import State from "../models/stateModel.js";
+import {City,State} from '../models/relationShip.js'
 class CityController {
     static async listCitys() {
         try {
-            const citys = await City.findAll();
+            const citys = await City.findAll({
+                include:{
+                    model: State,
+                    attributes: ['name'],
+                    as: 'Pronvincia'
+                }
+            });
             return citys;
         }
         catch (error) {

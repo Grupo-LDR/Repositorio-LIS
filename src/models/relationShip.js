@@ -15,10 +15,12 @@ class Relaciones {
     User.belongsTo(City, {
       foreignKey: 'cityId',
     });
+    //relacion de ciudad con Pronvincia
     State.hasMany(City, {
       foreignKey: 'states_id', 
       as: 'ciudades',
     })
+    //relaicon de provincia con ciudad
     City.belongsTo(State, {
       foreignKey: 'states_id',
       as: 'Pronvincia',
@@ -59,10 +61,9 @@ class Relaciones {
     //Exam.sync();
     //Doctor.sync();
     //State.sync()
-
   }
 }
 Relaciones.relaciones();
 Relaciones.syncModels();
 
-export { User, City, Order,Doctor};
+export { User, City, Order,Doctor,State};
