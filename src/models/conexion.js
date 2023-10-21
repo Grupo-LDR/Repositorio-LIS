@@ -10,11 +10,10 @@ class Conexion {
         username: config.DB_USER,
         password: config.DB_PASS,
         database: config.DB_DATABASE,
-        //  logging: false,
-
     });
+
     static async conectar() {
-        await this.sequelize.sync(); //metodo para sincronizar los modelos con la BD
+        //await this.sequelize.sync(); //metodo para sincronizar los modelos con la BD
         try {
             //await this.sequelize.authenticate();
             console.log('Conexión exitosa a la base de datos');
