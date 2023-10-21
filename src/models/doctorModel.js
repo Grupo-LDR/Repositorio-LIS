@@ -1,48 +1,46 @@
-import Conexion from '../models/conexion.js';
+import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
 
-class Order extends Model { }
-Order.init({
+class Doctor extends Model { }
+Doctor.init({
     id: {
         autoIncrement: true,
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         primaryKey: true
     },
-    diagnostico: {
-        type: DataTypes.STRING(250),
+    first_name: {
+        type: DataTypes.STRING(100),
         allowNull: false
     },
-    status: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: 1,
-        comment: "0: inactivo, 1: activo"
+    last_name: {
+        type: DataTypes.STRING(100),
+        allowNull: false
     },
     date_create_at: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     },
-    user_id: {
+    date_update_at: {
+        type: DataTypes.DATE('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+        allowNull: false,
+    },
+   license: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
     },
-    employee_id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-    },
-
-    doctor_id: {
+    phone: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
     }
-
 }, {
     sequelize: Conexion.sequelize,
-    modelName: 'Order',
-    tableName: 'orders',
-    timestamps:false
+    modelName: 'Doctor',
+    tableName: 'doctors',
+    timestamps:true,
+    createdAt: 'date_create_at', // Nombre de la columna de creación
+    updatedAt: 'date_update_at'// Nombre de la columna de actualización
 });
-export default Order;
+export default Doctor;
