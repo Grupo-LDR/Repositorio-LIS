@@ -3,7 +3,7 @@ import Conexion from '../models/conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
 class User extends Model {
-    edad = '';
+    edad = '';//por esta linea imprime edad como vacio
     calcularEdad() {
         if (this.date_birth_at) {
             const hoy = new Date();
