@@ -50,20 +50,24 @@ class Relaciones {
     Order.belongsTo(Doctor,{
       foreignKey: 'doctor_id',
       as: 'Doctor'
-    })
+    });
+    /**
+     * ver relaciones de ordenes para mostrar en las vistas
+     */
+
 
   }
 
   static syncModels() {
-    //User.sync();
-    //City.sync();
-    //Order.sync();
-    //Exam.sync();
-    //Doctor.sync();
-    //State.sync()
+    // User.sync();
+    // City.sync();
+    // Order.sync();
+    // Exam.sync();
+    // Doctor.sync();
+    // State.sync()
   }
 }
 Relaciones.relaciones();
 Relaciones.syncModels();
 
-export { User, City, Order,Doctor,State};
+export { User,City,Order,Doctor,State};

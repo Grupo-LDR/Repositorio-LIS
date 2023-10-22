@@ -14,6 +14,10 @@ Order.init({
         type: DataTypes.STRING(250),
         allowNull: false
     },
+    comment:{
+        type: DataTypes.STRING(250),
+        allowNull: false
+    },
     status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
