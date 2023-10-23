@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    let tableOrder = $('#orderTable').DataTable({
+    const tableOrder = $('#orderTable').DataTable({
         "responsive": true,
         "paging": false,
         "lengthChange": true,
@@ -9,7 +9,7 @@ $(document).ready(function () {
         "autoWidth": true,
         "fixedHeader": true,
         //"dom": '<"custom-content"l>frt<"bottom"ip><"clear">',
-        "dom": '<"top">frt<"bottom"ip><"clear">',
+        // "dom": '<"top">frt<"bottom"ip><"clear">',
         "language": {
             //  "search": "Buscar:",
             "searchPlaceholder": "Search...",
@@ -36,12 +36,8 @@ $(document).ready(function () {
         //     }
         // ]
     });
-
     //$("div.custom-content").html('<h1 class="btn btn-primary m-2" id="btnFiltrar"> View Selected</h1>');
     //    $("div.top").html('<div class="custom-content">Contenido Personalizado</div>');
-
-
-
     let verSeleccionados = false;
     $('#btnFiltrar').click(function () {
         if (verSeleccionados) {

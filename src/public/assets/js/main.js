@@ -32,7 +32,7 @@ async function consultaLink(menuLink) {
 }
 //TODO: crea datatables de usuarios
 function userList() {
-    var tableUser = $('#usersTable').DataTable({
+    const tableUser = $('#usersTable').DataTable({
         "responsive": true,
         "autoWidth": false,
         "paging": true,
