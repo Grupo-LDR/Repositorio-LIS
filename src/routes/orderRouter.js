@@ -43,11 +43,11 @@ class OrderRouter {
             }
             console.log(orderData);
             // creacion orden
-            const order = await orderController.crearNuevaOrden(orderData);
+            await orderController.crearNuevaOrden(orderData);
             // verificacion orden
             const orderNewId = await orderController.lastNewOrder(orderData.employee_id);
             console.log(orderNewId);
-            StudiesController.registerStudies(orderNewId.id, orderData);
+            StudiesController.registerStudies(orderNewId.id, req.body);
             res.status(200).json(orderNewId);
         } catch (error) {
             // Manejo de errores

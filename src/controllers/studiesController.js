@@ -1,12 +1,21 @@
-import Studies from "../models/studiesModel";
+// ESTO NO ANDA DEBERIA SER
+import Studie from "../models/studiesModel.js";
 
 class StudiesController {
-    static async registerStudies(employeeId, order_id, studies) {
+    static async registerStudies(order_id, studies) {
+
         try {
-            const estudios = studies.orderNew.map(order => ({
+            const studiesData = studies.orderNew.map(order => ({
                 order_id: order_id,
+                exams_id: order
             }));
-            console.log(estudios);
+            await Studie.bulkCreate(studiesData);
+
+            // const estudios = studies.orderNew.map(order => ({
+            //     order_id: order_id,
+            // }));
+
+            console.trace(studiesData);
         } catch (error) {
             console.error('Error al insertar estudios:', error);
         }

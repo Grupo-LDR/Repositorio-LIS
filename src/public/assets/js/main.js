@@ -34,13 +34,13 @@ async function consultaLink(menuLink) {
 function userList() {
     const tableUser = $('#usersTable').DataTable({
         "responsive": true,
-        "autoWidth": false,
+        "autoWidth": true,
         "paging": true,
         "lengthChange": true,
         "searching": true,
         "ordering": true,
         "info": true,
-        "autoWidth": true,
+        // "fixedHeader": true,
         "language": {
             "search": "Buscar:",
             "searchPlaceholder": "Escribe para buscar",
@@ -130,5 +130,5 @@ function accionEventoUser(link) {
     const ventanaAlto = (pantallaALto * altoVentna) / 100;
     const top = (pantallaALto / 2) - (ventanaAlto / 2);
     const left = (pantallaAncho / 2) - (ventanaAncho / 2);
-    window.open(`/${link}`, "blank", `toolbar=no, width=${ventanaAncho}, height=${ventanaAlto}, top=${top}, left=${left}, scrollbars=no`);
+    window.open(`/${link}`, link, "_blank", `toolbar=no, width=${ventanaAncho}, height=${ventanaAlto}, top=${top}, left=${left}, scrollbars=no`);
 }

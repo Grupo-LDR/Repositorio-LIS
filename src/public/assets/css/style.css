@@ -134,3 +134,33 @@ body {
   color: var(--color-primary);
   font-size: 1.5rem;
 }
+
+/* estilo para botones datables*/
+.userLink {
+  font-size: 16px;
+  /* Tamaño de fuente predeterminado */
+  color: var(--color-hover);
+  /* Color predeterminado */
+  transition: color 0.3s, font-size 0.3s;
+  /* Transición suave de color y tamaño de fuente */
+}
+
+.userLink:hover {
+  font-size: 20px;
+  /* Tamaño de fuente al hacer hover */
+  color: var(--color-primary);
+  /* Color al hacer hover */
+}
+
+@media (max-width: 1050px) {
+  .userEdit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userEdit i {
+    margin: 5px 0;
+    /* Espacio entre los íconos en posición vertical */
+  }
+}
