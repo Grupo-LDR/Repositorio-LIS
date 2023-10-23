@@ -1,0 +1,47 @@
+include head
+include head2
+- const examDate = new Date();
+div(class="container mt-5")
+    div(class="row justify-content-center")
+        div(class="col-12")
+            div(class="rounded p-1 border ") 
+                h1 New Order  for Patient: #{user.last_name}, #{user.first_name} 
+                p Date:  #{examDate.toLocaleDateString()} 
+                div(class="block")
+                    button(class="btn btn-primary m-2" id="btnFiltrar") PreView 
+                    button(class="btn btn-primary m-2" id="sendButton") Send
+                form( action="/order" method ="post" id="form_new_order") 
+                    div
+                        //- button(class="btn btn-primary m-2" id="") Send 
+                        input(type="text" name="user" class="" value=user.id readonly hidden)   
+                        input(type="text" name="user_name" class="" value=user.last_name  readonly hidden)   
+                        input(type="text" name="user_employee" class="" value=2  readonly hidden)   
+                    div    
+                        //- button(type="submit" class="btn btn-primary m-2" name="button_confirm" id="button_confirm" onclick="event.preventDefault();") Send                      
+                        table(class="table " id="orderTable" )                    
+                            thead(class="table-primary")
+                                tr
+                                    td(class="text-center align-middle fs-6") Select
+                                    td(class="text-center align-middle fs-6") #
+                                    td(class="text-center align-middle fs-6") Description
+                            tbody()      
+                                each exam in exams
+                                    tr(class="row-exam " id="tr#{exam.id}")
+                                        td(class="text-center align-middle fs-5") 
+                                            input(class="seleccion" type="checkbox" id="orderNew"+exam.id name="miCheckbox" value=exam.id)
+                                        td(class="text-center align-middle fs-6")  #{exam.id}
+                                        td(class="align-middle  fs-6")  #{exam.detail}
+script(src="/assets/js/exam.js" defer )    
+//- script.
+//-     document.getElementById("sendButton").addEventListener("click", function() {
+//-         var form = document.getElementById("form_new_order");
+//-         form.submit();
+//-     });
+script.
+    document.getElementById("sendButton").addEventListener("click", function() {
+        var confirm = window.confirm("¿Seguro de que deseas enviar el formulario?");
+        if (confirm) {
+            var form = document.getElementById("form_new_order");
+            form.submit();
+        }
+    });

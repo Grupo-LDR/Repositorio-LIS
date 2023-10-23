@@ -1,0 +1,40 @@
+include head
+//- include navbar
+div(class="container mt-5")
+    div(class="row justify-content-center")
+        div(class="col-12")
+            div(class="rounded p-1 border table-container")
+                table(class="table table-striped table-hoverdisplay display responsive nowrap justify-content-center" id="usersTable" )                    
+                    thead(class="table-primary")
+                        tr
+                            td(class="text-center align-middle fs-6") #
+                            td(class="text-center align-middle fs-6") Edit Patient
+                            td(class="text-center align-middle fs-6") New Order
+                            td(class="text-center align-middle fs-6") View Orders                           
+                            td(class="text-center align-middle fs-6") User
+                            td(class="text-center align-middle fs-6") Email
+                            td(class="text-center align-middle fs-6") Document
+                            td(class="text-center align-middle fs-6") Phone
+                    tbody()      
+                        each user in usuarios
+                            tr(class="")
+                                td(class="text-center align-middle fs-5")  #{user.id}
+                                td(class="text-center align-middle userEdit")
+                                    i(class="fa-solid fa-pen-to-square fa-beat px-1 text-dark fs-6"  name=user.id accion="editUser")
+                                td(class="text-center align-middle userOrder" )
+                                    i(class="fa-solid fa-folder-plus fa-beat  px-1 text-dark fs-6" name=user.id accion="newOrderUser")
+                                td(class="text-center align-middle userOrders" )    
+                                    i(class="fa-regular fa-folder-open fa-beat  px-1 text-dark fs-6" name=user.id accion="viewOrdersUser")                                                            
+                                td 
+                                    p(class="w-100 h-100 -usuario" id="search"+user.id name=user.id) #{user.first_name}, #{user.last_name}
+                                td(class="fs-6 " ) #{user.email}
+                                td(class="text-center align-middle fs-6") #{user.document}
+                                td(class="text-center align-middle fs-6") #{user.phone}
+dialog(id="useredit")
+    div(id="contenido")
+        h1 cacanene    
+        button(type="button" class="btn btn-primary" id="botondialog")
+        button(onClick="document.getElementById('useredit').close()") Aceptar
+//- script(src="/assets/js/utiles.js" )    
+
+//-  //BUG falla al momento editar y falla mostrnado ciudad

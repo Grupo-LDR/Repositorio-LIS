@@ -1,0 +1,107 @@
+include head
+//- include navbar
+form
+    //- div(class="row")
+    //-     div(class="col")
+    //-         input(type="text" class="form-control" placeholder="First name")
+    //-     div(class="col")
+    //-         input(type="text" class="form-control" placeholder="Last name")
+
+div(class="container mt-5")
+    div(class="row justify-content-center")
+
+        div(class="col-10")
+            div(class="rounded p-4 border table-container")
+                h2 Modificacion datos Usuario
+                form( accion="" method ="post" onsubmit="return verifyForm();" id="form_edit")
+                    div(class="row")
+                        div(class="form-group col-md-4")
+                            label(for="first_name ") First Name:
+                            input(type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" readonly value=user.first_name)
+                        div(class="form-group col-md-4")
+                            label(for="last_name") Last Name:
+                            input(type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" readonly value=user.last_name)
+                        div(class="form-group col-md-4")
+                            label(for="email") Email:
+                            input(type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico" readonly value=user.email)    
+                        div(class="form-group col-md-4 p-2")
+                            label(class="p2 m-2") Gender:                     
+                            div(class="form-check form-check-inline")
+                                input(type="radio" class="form-check-input" id="male" name="gender" value="M" checked=user.gender === 'M' disabled)
+                                label(class="form-check-label" for="male" ) Male
+                            div(class="form-check form-check-inline")
+                                input(type="radio" class="form-check-input " id="female" name="gender" value="F" checked=user.gender === 'F' disabled)
+                                label(class="form-check-label " for="female" ) Female
+                            div(class="form-check form-check-inline")
+                                input(type="radio" class="form-check-input " id="other" name="gender" value="X" checked=user.gender === 'X' disabled)
+                                label(class="form-check-label" for="other" ) Other
+                        div(class="form-group col-md-4 p-2")
+                            label(class="p2 m-2") Active:                     
+                            div(class="form-check form-check-inline")
+                                input(type="radio" class="form-check-input" id="active" name="active" value=true checked=user.active === true disabled)
+                                label(class="form-check-label" for="male") Active
+                            div(class="form-check form-check-inline")
+                                input(type="radio" class="form-check-input" id="inactive" name="active" value=false checked=user.active === false disabled)
+                                label(class="form-check-label" for="female") Inactive        
+                    div(class="row")            
+                        div(class="form-group col-md-4")
+                            label(for="document ") Document:
+                                input(type="text" class="form-control" id="document" name="document" placeholder="Document" readonly value=user.document)
+                        div(class="form-group col-md-4")
+                            label(for="phone") Phone:
+                            input(type="text" class="form-control" id="phone" name="phone" placeholder="Phone" readonly value=user.phone)
+                        div(class="row")            
+                            div(class="form-group col-md-4")
+                                label(for="address ") Address:
+                                    input(type="text" class="form-control" id="address" name="address" placeholder="Address" readonly value=user.address)
+                            div(class="form-group col-md-4")
+                                label(for="city_select") City:
+                                select(name="city" class="form-control" id="city" placeholder="City" disabled)
+                                    each cit in ciudades
+                                        option(value=cit.id, selected=(cit.id === user.cityId)) = cit.name                                        
+                            div(class="form-group col-md-4")
+                                label(for="phone") Date birth:
+                                input(type="date" class="form-control" id="date_birdth" name="date_birdth" placeholder="Date birth" readonly value=user.date_birth_at)
+
+                            div(class="form-group p-2" id="div_button")    
+                                input(hidden="true" id="id_user" name="id" value=user.id)    
+                                label(for="button_confirm" class="p-4") Edit User:
+                                button(type="" class="btn btn-primary" name="button_edit" id="button_edit" ) Edit
+                            button(type="submit" class="btn btn-primary d-none m-2" name="button_confirm" id="button_confirm" onclick="event.preventDefault();" hidden) Send
+                            button(type="" class="btn btn-warning d-none m-2" name="button_cancel" id="button_cancel") Cancel
+//- include footer 
+script.
+    const botonEdit = document.getElementById("button_edit");
+    const botonConfirm = document.getElementById("button_confirm");
+    const botonCancel = document.getElementById("button_cancel");
+    const divButton = document.getElementById("div_button");
+    const formEdit = document.getElementById("form_edit");
+
+    //- botonCancel.addEventListener("click", function (e){
+    //-     //  e.preventDefault();
+    //-         window.opener.location.reload(true);
+    //-         this.close();
+    //- })    
+
+    botonEdit.addEventListener("click", function() {
+        botonEdit.classList.add('d-none');
+        botonConfirm.classList.remove('d-none');
+        botonConfirm.onclick = null;
+        botonCancel.classList.remove('d-none');
+        formEdit.onclick = null;
+        removeReadOnly(formEdit);
+    })
+    function removeReadOnly(element){
+        const elementosForm = element.elements;
+        for (let i = 0; i < elementosForm.length; i++) {
+            const elemento = elementosForm[i];
+                if (elemento.tagName === "INPUT" || elemento.tagName === "TEXTAREA") {
+                    // Habilita el elemento para edición
+                        elemento.removeAttribute("readonly");
+                        elemento.removeAttribute("disabled");
+                    }
+    }
+    }
+    function verifyForm(){
+//        alert('caca');
+    }       

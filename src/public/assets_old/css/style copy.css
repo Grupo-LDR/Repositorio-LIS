@@ -1,0 +1,47 @@
+:root {
+    --main: #b3aeae;
+    --secondary: #222121;
+    --secondary-color: #222121;
+    --dark: rgb(9, 9, 9);
+    --ligth: rgb(247, 243, 243);
+
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--main);
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.table-container thead th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    /* Establece el fondo del encabezado a blanco */
+    z-index: 1;
+    /* Asegura que el encabezado quede encima del contenido desplazable */
+}
+
+.table {
+    border-radius: 10px;
+    /* Bordes redondeados */
+}
+
+.table-container .table {
+    border-radius: 0;
+    /* Quita los bordes redondeados del contenedor */
+}
+
+.table-container {
+    margin-top: 10px;
+    /* Margen superior de 10px */
+}

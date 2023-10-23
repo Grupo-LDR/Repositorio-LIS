@@ -1,0 +1,21 @@
+include head
+script(type="text/javascript" src="/assets/js/main.js" defer)
+body
+    div(class="sidebar")
+        div(class="menu-contenedor")
+            a(href="")
+                img(src="./assets/img/lis1.png" alt="Logo" width="50" height="50")
+                h4 #{title}
+        hr 
+        div(class="menu")
+            p(class="menu-link" id="/user") 
+                i(class="fa-solid fa-users m-4")  Pacientes
+            p(class="menu-link" id="/order")
+                i(class="fa-solid fa-folder-tree m-4")  Ordenes
+            p(class="menu-link" id="/doctor")
+                i(class="fa-solid fa-user-doctor m-4")  Medicos
+            p(class="menu-link" id="/admin") 
+                i(class="fa-solid fa-gear m-4")  Admin
+    div(class="contenido" id="contenido")
+//- <i class="fa-solid fa-gear"></i>
+//- script(type="text/javascript" src="../assets/js/main.js" defer)
