@@ -14,7 +14,7 @@ Order.init({
         type: DataTypes.STRING(250),
         allowNull: false
     },
-    comment:{
+    comment: {
         type: DataTypes.STRING(250),
         allowNull: false
     },
@@ -47,6 +47,6 @@ Order.init({
     sequelize: Conexion.sequelize,
     modelName: 'Order',
     tableName: 'orders',
-    timestamps:false
+    timestamps: false
 });
 export default Order;

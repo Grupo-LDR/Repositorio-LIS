@@ -1,13 +1,15 @@
-import { Order, User,Doctor } from "../models/relationShip.js";
+import { Order, User, Doctor } from "../models/relationShip.js";
 class orderController {
   static async crearNuevaOrden(orden) {
     try {
-      const { diagnostico, status, user_id, employee_id, doctor_id } = orden;
-      await Order.create({ diagnostico, status, user_id, employee_id, doctor_id });
+      const { diagnostico, comment, user_id, employee_id, doctor_id } = orden;
+      await Order.create({ diagnostico, comment, user_id, employee_id, doctor_id });
       console.log("Creación de nueva orden -> Exitosa");
+      return true;
     } catch (error) {
       console.error('Error al crear una nueva orden:', error);
       throw error;
+
     }
   }
   static async listarRegistros() {
@@ -25,9 +27,9 @@ class orderController {
             as: 'creadoPor'
           },
           {
-            model:Doctor,
-            attributes:['first_name', 'last_name'],
-            as:'Doctor'
+            model: Doctor,
+            attributes: ['first_name', 'last_name'],
+            as: 'Doctor'
           }
         ]
       });
@@ -38,7 +40,25 @@ class orderController {
     }
   }
 
+  static async lastNewOrder(userId) {
+    try {
+      const lastNewOrder = await Order.findOne({
+        where: { employee_id: userId },
+        order: [['id', 'DESC']],
+        attributes: ['id'],
+        limit: 1,
+      });
+      if (lastNewOrder) {
+        console.log('Última orden:', lastNewOrder.toJSON());
+        return lastNewOrder;
+      } else {
+        console.log('No se encontraron registros para el usuario especificado.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
 
+  }
 }
 
 export default orderController;
