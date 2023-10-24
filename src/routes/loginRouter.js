@@ -20,8 +20,8 @@ class LoginRouter {
         console.log(user, pass);
     }
     getLogin(req, res) {
-        console.log("ENTRE A GET LOGIN")
-        console.log("Get Login ->" + req.body)
+        // console.log("ENTRE A GET LOGIN")
+        // console.log("Get Login ->" + req.body)
         res.render("login", { title: "Laboratorio" });
     }
     getRouter() {
