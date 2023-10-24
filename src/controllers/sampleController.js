@@ -18,5 +18,20 @@ class SampleController {
             throw error;
         }
     }
+    static async updateSample(sample) {
+        try {
+            const { id, valid } = sample;
+             sample = await Sample.findByPk(id);
+            if (!id) {
+                console.log('Muestra no encontrada');
+                return;
+            }
+            sample.valid = valid;
+            await sample.save();
+            console.log('Muestra actualizada con exito.');
+        } catch (error) {
+            console.error('Error al actualizar la muestra:', error);
+        }
+    }
 }
 export default SampleController
