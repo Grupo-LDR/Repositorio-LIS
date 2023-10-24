@@ -1,0 +1,53 @@
+include head
+nav(class="navbar navbar-expand-lg bg-body-tertiary")
+    div(class="container-fluid")
+        button(class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation")
+            span(class="navbar-toggler-icon")
+        div(class="collapse navbar-collapse" id="navbarTogglerDemo01")
+            a(class="navbar-brand" href="#") Hidden brand
+            ul(class="navbar-nav me-auto mb-2 mb-lg-0")
+                li(class="nav-item")
+                    a(class="nav-link active" aria-current="page" href="#") Home
+                li(class="nav-item")
+                    a(class="nav-link" href="#") Link
+                li(class="nav-item")
+                    a(class="nav-link disabled" aria-disabled="true") Disabled  
+div(class="container mt-4")
+    div(class="row justify-content-center")
+        div(class="col-12")
+            div(class="rounded p-4 border table-container")
+                table(class="table table-striped table-hover" id="usersTable" )                    
+                    thead(class="table-primary")
+                        tr
+                            th #
+                            th User
+                            th Email
+                            th Document
+                            th Phone
+                            th Gender
+                            th Age
+                    tbody(id="usersTd")      
+                        each user in usuarios
+                            tr
+                                td #{user.id}
+                                td 
+                                    a(class="w-100 h-100 enlace-usuario" href="" id="search" name=user.id data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever=user.id ) #{user.first_name}, #{user.last_name}
+                                td #{user.email}
+                                td #{user.document}
+                                td #{user.phone}
+                                td #{user.gender}
+                                td #{user.edad}
+div(class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true")
+    div(class="modal-dialog")
+        div(class="modal-content")
+            div(class="modal-header")
+                h1(class="modal-title fs-5" id="exampleModalLabel") Modal title
+                button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+            div(class="modal-body")
+                h2 ...
+            div(class="modal-footer")
+                button(type="button" class="btn btn-secondary" data-bs-dismiss="modal") Close
+                button(type="button" class="btn btn-primary") SAve changes
+
+    
+
