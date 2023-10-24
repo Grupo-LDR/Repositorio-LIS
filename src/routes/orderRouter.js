@@ -11,8 +11,13 @@ class OrderRouter {
     }
     async listOrder(req, res, next) {
         try {
-            const order = await orderController.listarRegistros();
-            res.status(200).json(order);
+            const orders = await orderController.listarRegistros();
+            //console.log(orders);
+            //  const or = JSON.stringify(orders);
+            res.render('orderView.pug', { orders });
+            //, { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
+
+            // res.status(200).json(order);
         } catch (error) {
             // Manejo de errores
             console.error(error);

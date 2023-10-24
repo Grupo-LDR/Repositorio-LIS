@@ -71,12 +71,10 @@ User.init({
     create_users_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true,
-        primaryKey: true
     },
     update_users_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true,
-        primaryKey: true
     },
     cityId: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -86,33 +84,8 @@ User.init({
     sequelize: Conexion.sequelize,
     modelName: 'user',
     tableName: 'users',
-    timestamps: true,
-    indexes: [
-        {
-            name: "PRIMARY",
-            unique: true,
-            using: "BTREE",
-            fields: [
-                { name: "id" },
-                { name: "update_users_id" },
-                { name: "create_users_id" },
-            ]
-        },
-        {
-            name: "fk_users_citys1_idx",
-            using: "BTREE",
-            fields: [
-                { name: "cityId" },
-            ]
-        },
-        {
-            name: "fk_users_users1_idx",
-            using: "BTREE",
-            fields: [
-                { name: "update_users_id" },
-            ]
-        },
-    ]
+    timestamps: true
+    
 });
 
 export default User;

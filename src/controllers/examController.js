@@ -1,11 +1,11 @@
-import Exam from '../models/examModel.js';
+import {Exam,Studie} from '../models/relationShip.js'
 class ExamController {
     static async listExams() {
         try {
             const exams = await Exam.findAll({
-                where: { status: true}
+                where: { status: true }
             });
-            console.log("EXAMENES: ", exams)
+            // console.log("EXAMENES: ", exams)
             return exams;
         }
         catch (error) {
@@ -33,13 +33,18 @@ class ExamController {
             console.log('Error al modificar el examen:', error);
         }
     }
-    static async deleteExam(exam) {
-        // Activar/Desactivar examenes
+    static async deleteExam(examId) {
         try {
-            const examen= exam.findByPk(exam.id);
-
+            const exam = await Exam.findByPk(examId);
+            if (!exam) {
+                console.log('Examen no encontrado');
+                return;
+            }
+            exam.status = false; // false desactiva el examen
+            await exam.save();
+            console.log('Examen marcado como eliminado');
         } catch (error) {
-            
+            console.error('Error al marcar el examen como eliminado:', error);
         }
     }
 }

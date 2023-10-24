@@ -4,7 +4,10 @@ import Order from './orderModel.js';
 import Exam from './examModel.js';
 import Doctor from './doctorModel.js';
 import State from './stateModel.js';
-
+import Studie from './studiesModel.js';
+import Sample from './sampleModel.js'
+import Profile from './profileModel.js';
+import StudieResult from './studie_results.js'
 /**
  * esto lo hice asi solo, pero si lo queres hacer con clases, ya es otro bardo, te dejo que te rompas la cabeza vos con las clases.
  */
@@ -17,7 +20,7 @@ class Relaciones {
     });
     //relacion de ciudad con Pronvincia
     State.hasMany(City, {
-      foreignKey: 'states_id', 
+      foreignKey: 'states_id',
       as: 'ciudades',
     })
     //relaicon de provincia con ciudad
@@ -45,17 +48,34 @@ class Relaciones {
     //Una Orden solo la CREA UN USUARIO
     Order.belongsTo(User, {
       foreignKey: 'user_id',
-      as:'creadoPor'
+      as: 'creadoPor'
     });
-    Order.belongsTo(Doctor,{
+    Order.belongsTo(Doctor, {
       foreignKey: 'doctor_id',
       as: 'Doctor'
     });
-    /**
-     * ver relaciones de ordenes para mostrar en las vistas
-     */
+    Studie.belongsTo(Order, {
+      foreignKey: 'order_id'
+    });
+    // Una Studie pertenece a un Exam
+    Studie.belongsTo(Exam, {
+      foreignKey: 'exams_id'
+    });
+    // Una Studie pertenece a un Sample
+    Studie.belongsTo(Sample, {
+      foreignKey: 'samples_id'
+    });
+    Profile.belongsTo(User, {
+      foreignKey: 'users_id',
+    });
+    Profile.belongsTo(User, {
+      foreignKey: 'users_update_users_id',
+    });
+    StudieResult.belongsTo(Studie, {
+      foreignKey: 'studies_id'
+    });
 
-
+    
   }
 
   static syncModels() {
@@ -70,4 +90,4 @@ class Relaciones {
 Relaciones.relaciones();
 Relaciones.syncModels();
 
-export { User,City,Order,Doctor,State};
+export { User, City, Order, Doctor, State, Sample, Profile,Exam,Studie,StudieResult };
