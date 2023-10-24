@@ -25,6 +25,11 @@ Exam.init({
   update_at: {
     type: DataTypes.DATE('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
     allowNull: true
+  },
+  status:{
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: 1
   }
 }, {
   sequelize: Conexion.sequelize,
