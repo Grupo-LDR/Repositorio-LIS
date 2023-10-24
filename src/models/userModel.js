@@ -84,8 +84,7 @@ User.init({
     sequelize: Conexion.sequelize,
     modelName: 'user',
     tableName: 'users',
-    timestamps: true,
-    createdAt: 'date_create_at',
+    timestamps: true
     
 });
 

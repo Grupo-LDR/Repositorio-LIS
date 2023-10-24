@@ -54,9 +54,6 @@ class Relaciones {
       foreignKey: 'doctor_id',
       as: 'Doctor'
     });
-    /**
-     * ver relaciones de ordenes para mostrar en las vistas
-     */
     Studie.belongsTo(Order, {
       foreignKey: 'order_id'
     });
@@ -93,4 +90,4 @@ class Relaciones {
 Relaciones.relaciones();
 Relaciones.syncModels();
 
-export { User, City, Order, Doctor, State, Sample, Profile };
+export { User, City, Order, Doctor, State, Sample, Profile,Exam,Studie,StudieResult };

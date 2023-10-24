@@ -5,7 +5,7 @@ class ExamController {
             const exams = await Exam.findAll({
                 where: { status: true }
             });
-            console.log("EXAMENES: ", exams)
+            // console.log("EXAMENES: ", exams)
             return exams;
         }
         catch (error) {
