@@ -5,6 +5,7 @@
   --color-dark: rgb(9, 9, 9);
   --color-ligth: rgb(247, 243, 243);
   --color-hover: #f8b66a;
+  --color-hover-icon: #9cec09;
 }
 
 body {
@@ -137,19 +138,14 @@ body {
 
 /* estilo para botones datables*/
 .userLink {
-  font-size: 16px;
-  /* Tamaño de fuente predeterminado */
-  color: var(--color-hover);
-  /* Color predeterminado */
-  transition: color 0.3s, font-size 0.3s;
-  /* Transición suave de color y tamaño de fuente */
+  font-size: 20px;
+  color: var(--color-primary);
+  transition: color 0.5s, font-size 0.5s;
 }
 
 .userLink:hover {
-  font-size: 20px;
-  /* Tamaño de fuente al hacer hover */
-  color: var(--color-primary);
-  /* Color al hacer hover */
+  font-size: 32px;
+  color: var(--color-hover-icon);
 }
 
 @media (max-width: 1050px) {
