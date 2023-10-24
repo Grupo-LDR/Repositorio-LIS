@@ -34,7 +34,7 @@ async function consultaLink(menuLink) {
 function userList() {
     const tableUser = $('#usersTable').DataTable({
         "responsive": true,
-        "autoWidth": true,
+        //  "autoWidth": true,
         "paging": true,
         "lengthChange": true,
         "searching": true,
@@ -132,3 +132,14 @@ function accionEventoUser(link) {
     const left = (pantallaAncho / 2) - (ventanaAncho / 2);
     window.open(`/${link}`, link, "_blank", `toolbar=no, width=${ventanaAncho}, height=${ventanaAlto}, top=${top}, left=${left}, scrollbars=no`);
 }
+/* munu colapsable*/
+const menuLinks = document.querySelectorAll('.menu-link');
+
+menuLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+        menuLinks.forEach((otherLink) => {
+            otherLink.classList.remove('active');
+        });
+        link.classList.toggle('active');
+    });
+});
