@@ -8,6 +8,7 @@ import Studie from './studiesModel.js';
 import Sample from './sampleModel.js'
 import Profile from './profileModel.js';
 import StudieResult from './studie_results.js'
+import Determination from './determination.js';
 /**
  * esto lo hice asi solo, pero si lo queres hacer con clases, ya es otro bardo, te dejo que te rompas la cabeza vos con las clases.
  */
@@ -43,6 +44,7 @@ class Relaciones {
     //un usuario puede crear muchas ordenes
     User.hasMany(Order, {
       foreignKey: 'employee_id',
+      as:'empleado'
     });
     //relacion de ordenes con usuarios
     //Una Orden solo la CREA UN USUARIO
@@ -74,7 +76,7 @@ class Relaciones {
     StudieResult.belongsTo(Studie, {
       foreignKey: 'studies_id'
     });
-
+    // Determination.belongsTo()
     
   }
 

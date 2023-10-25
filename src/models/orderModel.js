@@ -47,6 +47,8 @@ Order.init({
     sequelize: Conexion.sequelize,
     modelName: 'Order',
     tableName: 'orders',
-    timestamps: false
+    timestamps: true,
+    createdAt:'date_create_at',
+    updatedAt: true
 });
 export default Order;

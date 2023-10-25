@@ -21,8 +21,9 @@ City.init({
         primaryKey: true
     },
     date_update_at: {
-        type: DataTypes.DATE('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-        allowNull: true
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
     },
     date_create_at: {
         type: DataTypes.DATE,

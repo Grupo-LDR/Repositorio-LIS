@@ -79,6 +79,9 @@ User.init({
     cityId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true
+    },
+    pregnant:{
+        type:DataTypes.BOOLEAN
     }
 }, {
     sequelize: Conexion.sequelize,

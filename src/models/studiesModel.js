@@ -78,7 +78,9 @@ Studie.init({
     sequelize: Conexion.sequelize,
     modelName: 'Studies',
     tableName: 'studies',
-    timestamps: false
+    timestamps: true,
+    createdAt:'date_create_at',
+    updatedAt: 'update_at'
 });
 export default Studie;
 
