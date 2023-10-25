@@ -9,6 +9,7 @@ div(class="container mt-5")
                         tr
                             td(class="text-center align-middle fs-6") #
                             td(class="text-center align-middle fs-6") Edit Patient
+                            td(class="text-center align-middle fs-6") status order
                             //- td(class="text-center align-middle fs-6") New Order
                             //- td(class="text-center align-middle fs-6") View Orders                           
                             td(class="text-center align-middle fs-6") User
@@ -27,6 +28,7 @@ div(class="container mt-5")
                                     i(class="fa-solid fa-folder-plus fa-beat  px-1 text-dark fs-6" name=user.id accion="newOrderUser")
                                 //- td(class="text-center align-middle userOrders" )    
                                     i(class="fa-regular fa-folder-open fa-beat  px-1 text-dark fs-6" name=user.id accion="viewOrdersUser")                                                            
+                                td(class="text-center align-middle userEdit")    
                                 td 
                                     p(class="w-100 h-100 -usuario" id="search"+user.id name=user.id) #{user.first_name}, #{user.last_name}
                                 td(class="fs-6 " ) #{user.email}

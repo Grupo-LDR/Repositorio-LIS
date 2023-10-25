@@ -2,7 +2,7 @@
  * a modificar
  */
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('audit_orders', {
     id: {
       autoIncrement: true,
@@ -20,15 +20,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: Sequelize.Sequelize.fn('current_timestamp')
     },
-    employee_id: {
+    id_employee: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
     },
-    orders_id: {
+    id_order: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
     },
-    action_records_id: {
+    id_action_record: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false
     }
@@ -49,21 +49,21 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_audit_record_users1_idx",
         using: "BTREE",
         fields: [
-          { name: "employee_id" },
+          { name: "id_employee" },
         ]
       },
       {
         name: "fk_audit_orders_orders1_idx",
         using: "BTREE",
         fields: [
-          { name: "orders_id" },
+          { name: "id_order" },
         ]
       },
       {
         name: "fk_audit_orders_action_records1_idx",
         using: "BTREE",
         fields: [
-          { name: "action_records_id" },
+          { name: "id_action_records" },
         ]
       },
     ]

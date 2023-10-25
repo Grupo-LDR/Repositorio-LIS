@@ -5,9 +5,14 @@ class Exam extends Model {
 
 Exam.init({
   id: {
+    autoIncrement: true,
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
     primaryKey: true
+  },
+  nbu: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false
   },
   detail: {
     type: DataTypes.STRING(250),
@@ -20,16 +25,23 @@ Exam.init({
   create_at: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+    defaultValue: Sequelize.Sequelize.fn('current_timestamp')
   },
   update_at: {
-    type: DataTypes.DATE('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+    type: DataTypes.DATE,
     allowNull: true
   },
-  status:{
+  status: {
     type: DataTypes.BOOLEAN,
+    allowNull: false
+  },
+  id_exam_group: {
+    type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
-    defaultValue: 1
+    references: {
+      model: 'exam_groups',
+      key: 'id'
+    }
   }
 }, {
   sequelize: Conexion.sequelize,

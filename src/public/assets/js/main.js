@@ -34,7 +34,7 @@ async function consultaLink(menuLink) {
 function userList() {
     const tableUser = $('#usersTable').DataTable({
         "responsive": true,
-        "autoWidth": true,
+        //  "autoWidth": true,
         "paging": true,
         "lengthChange": true,
         "searching": true,
@@ -43,9 +43,9 @@ function userList() {
         // "fixedHeader": true,
         "language": {
             "search": "Buscar:",
-            "searchPlaceholder": "Escribe para buscar",
-            "lengthMenu": "Mostrar _MENU_ entradas por página",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            "searchPlaceholder": "Escribe para buscar Paciente",
+            "lengthMenu": "Pacientes por página _MENU_",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Pacientes",
             "infoEmpty": "No se encontraron entradas",
             "infoFiltered": "(filtrado de un total de _MAX_ entradas)",
             "zeroRecords": "No se encontraron registros coincidentes",
@@ -124,11 +124,23 @@ function accionEventoUser(link) {
     // window.open(`/${link}`, "blank", "toolbar=no, width=600, height=720, top=30, left=300, scrollbars=no");
     const pantallaAncho = window.screen.availWidth;
     const pantallaALto = window.screen.availHeight;
-    const anchoVentana = 60; // porcentaje
-    const altoVentna = 60; // porcentaje     
+    const anchoVentana = 80; // porcentaje
+    const altoVentna = 80; // porcentaje     
     const ventanaAncho = (pantallaAncho * anchoVentana) / 100;
     const ventanaAlto = (pantallaALto * altoVentna) / 100;
     const top = (pantallaALto / 2) - (ventanaAlto / 2);
     const left = (pantallaAncho / 2) - (ventanaAncho / 2);
     window.open(`/${link}`, link, "_blank", `toolbar=no, width=${ventanaAncho}, height=${ventanaAlto}, top=${top}, left=${left}, scrollbars=no`);
 }
+/* munu colapsable*/
+const menuLinks = document.querySelectorAll('.menu-link');
+
+menuLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+        console.log()
+        menuLinks.forEach((otherLink) => {
+            otherLink.classList.remove('active');
+        });
+        link.classList.toggle('active');
+    });
+});

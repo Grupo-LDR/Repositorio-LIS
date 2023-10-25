@@ -11,36 +11,36 @@ Doctor.init({
         primaryKey: true
     },
     first_name: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(80),
         allowNull: false
     },
     last_name: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(45),
         allowNull: false
     },
-    date_create_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    date_update_at: {
-        type: DataTypes.DATE('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-        allowNull: false,
-    },
-   license: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
+    license: {
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     phone: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    create_at: {
+        type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: Sequelize.Sequelize.fn('current_timestamp')
+    },
+    update_at: {
+        type: DataTypes.DATE,
+        allowNull: true
     }
 }, {
     sequelize: Conexion.sequelize,
     modelName: 'Doctor',
     tableName: 'doctors',
-    timestamps:true,
-    createdAt: 'date_create_at', // Nombre de la columna de creación
-    updatedAt: 'date_update_at'// Nombre de la columna de actualización
+    timestamps: true,
+    createdAt: 'create_at', // Nombre de la columna de creación
+    updatedAt: 'update_at'// Nombre de la columna de actualización
 });
 export default Doctor;

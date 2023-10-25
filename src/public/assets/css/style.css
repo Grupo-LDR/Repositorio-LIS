@@ -61,6 +61,25 @@ body {
   transition: font-size 0.2s;
 }
 
+/* menu colapsed */
+ul li a {
+  text-decoration: none;
+  color: inherit;
+  margin-left: 5px;
+}
+
+ul.menu li {
+  list-style: none;
+}
+
+ul.dropdown-content {
+  display: none;
+}
+
+li.menu-link.active ul.dropdown-content {
+  display: block;
+}
+
 /* contenido  */
 .contenido {
   width: 70%;

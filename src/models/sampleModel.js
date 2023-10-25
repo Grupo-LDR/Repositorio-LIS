@@ -2,7 +2,7 @@ import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
 
-class Sample extends Model{};
+class Sample extends Model { };
 Sample.init({
   id: {
     autoIncrement: true,
@@ -10,25 +10,29 @@ Sample.init({
     allowNull: false,
     primaryKey: true
   },
-  date_update_at: {
-    type: DataTypes.DATE,
+  valid: {
+    type: DataTypes.BOOLEAN,
     allowNull: true
   },
-  date_create_at: {
+  observation: {
+    type: DataTypes.STRING(150),
+    allowNull: true
+  },
+  create_at: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: Sequelize.fn('current_timestamp')
+    defaultValue: Sequelize.Sequelize.fn('current_timestamp')
   },
-  valid: {
-    type: DataTypes.TINYINT,
+  update_at: {
+    type: DataTypes.DATE,
     allowNull: true
   }
 }, {
   sequelize: Conexion.sequelize,
   tableName: 'samples',
   timestamps: true,
-  createdAt: 'date_create_at', // Nombre de la columna de creación
-    updatedAt: 'date_update_at',// Nombre de la columna de actualización
+  createdAt: 'create_at', // Nombre de la columna de creación
+  updatedAt: 'update_at',// Nombre de la columna de actualización
 });
-   
+
 export default Sample;
