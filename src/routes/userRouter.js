@@ -49,6 +49,7 @@ class UserRouter {
     async getUsers(req, res) {
         try {
             const usuarios = await UserController.listUsers();
+            console.log(usuarios);
             res.render('usersView.pug', { usuarios });
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
@@ -67,10 +68,13 @@ class UserRouter {
             }
             //aca la idea es que me haga una lista desplegable para que al momento
             //de editar, me muestre la lista y el usuario elija la ciudad desde el desplegable
-            const nombreCiudad = user.City ? user.City.name : null;
+            //            const nombreCiudad = user.City ? user.City.name : null;
+            console.log(user);
             const ciudades = await CitysController.listCitys();
             console.log("CIUDADES: ->", ciudades[0].name, ' - ', ciudades[0].id)
-            res.render('userEditView.pug', { user, ciudades });
+            console.log('ciudad--->>> ', ciudades[0]);
+            let ciudad = ciudades[0];
+            res.render('userEditView.pug', { user, ciudades: ciudades });
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -89,16 +93,10 @@ class UserRouter {
 
     async postEditUser(req, res) {
         try {
-            const idCity = req.params.usuario.idCity
-            const city = await CitysController.findCity(idCity)
             const usuario = req.body;
-            const cityId = req.body.cityId;
-            console.log("ID CITY: -> " + idCity);
-            console.log("CITY ID: -> " + cityId);
-            usuario.city_id = cityId;
-            console.log(usuario.id);
             await UserController.updateUsuario(usuario);
-            res.redirect('/user')
+            //res.redirect('/user')
+            res.redirect(`/user/edit/${usuario.id}`)
         } catch (error) {
             console.clear;
             console.error('Error al obtener actualizar user:', error);

@@ -4,10 +4,10 @@ import Order from './orderModel.js';
 import Exam from './examModel.js';
 import Doctor from './doctorModel.js';
 import State from './stateModel.js';
-import Studie from './studiesModel.js';
+import Studie from './studieModel.js';
 import Sample from './sampleModel.js'
 import Profile from './profileModel.js';
-import StudieResult from './studie_results.js'
+import StudieResult from './studieResultModel.js'
 /**
  * esto lo hice asi solo, pero si lo queres hacer con clases, ya es otro bardo, te dejo que te rompas la cabeza vos con las clases.
  */
@@ -16,17 +16,14 @@ class Relaciones {
     //relacion de usuario con ciudad
     //una ciudad le PERTENECE A UN usuario
     User.belongsTo(City, {
-      foreignKey: 'cityId',
+      foreignKey: 'city_id',
     });
     //relacion de ciudad con Pronvincia
-    State.hasMany(City, {
-      foreignKey: 'states_id',
-      as: 'ciudades',
-    })
+
     //relaicon de provincia con ciudad
     City.belongsTo(State, {
       foreignKey: 'states_id',
-      as: 'Pronvincia',
+      as: 'Provincia',
     });
     // relacion de un usuario con ordenes
     // un usuarios tiene muchas ordenes
@@ -36,13 +33,13 @@ class Relaciones {
     //relacion de ordenes con usuarios
     //Una Orden le PERTENECE a UN usuario
     Order.belongsTo(User, {
-      foreignKey: 'user_id',
+      foreignKey: 'user_is',
       as: 'perteneceA'
     });
     //relacion de usuarios con CREACION DE ORDENES
     //un usuario puede crear muchas ordenes
     User.hasMany(Order, {
-      foreignKey: 'employee_id',
+      foreignKey: 'employee_is',
     });
     //relacion de ordenes con usuarios
     //Una Orden solo la CREA UN USUARIO
@@ -66,7 +63,7 @@ class Relaciones {
       foreignKey: 'samples_id'
     });
     Profile.belongsTo(User, {
-      foreignKey: 'users_id',
+      foreignKey: 'user_id',
     });
     Profile.belongsTo(User, {
       foreignKey: 'users_update_users_id',
@@ -75,7 +72,7 @@ class Relaciones {
       foreignKey: 'studies_id'
     });
 
-    
+
   }
 
   static syncModels() {
@@ -90,4 +87,4 @@ class Relaciones {
 Relaciones.relaciones();
 Relaciones.syncModels();
 
-export { User, City, Order, Doctor, State, Sample, Profile,Exam,Studie,StudieResult };
+export { User, City, Order, Doctor, State, Sample, Profile, Exam, Studie, StudieResult };

@@ -18,56 +18,37 @@ Profile.init({
     type: DataTypes.STRING(80),
     allowNull: false
   },
-  date_update_at: {
-    type: DataTypes.DATE('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+  update_at: {
+    type: DataTypes.DATE,
     allowNull: true
   },
-  date_create_at: {
-    type: DataTypes.DATE('current_timestamp'),
-    allowNull: false
+  create_at: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.Sequelize.fn('current_timestamp')
   },
   license: {
     type: DataTypes.STRING(45),
     allowNull: true
   },
-  date_delete_at: {
-    type: DataTypes.STRING(45),
+  delete_at: {
+    type: DataTypes.DATE,
     allowNull: true
   },
-  users_id: {
+  id_user: {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
-    // references: {
-    //   model: 'users',
-    //   key: 'id'
-    // }
-  },
-  users_update_users_id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
-    // references: {
-    //   model: 'users',
-    //   key: 'update_users_id'
-    // }
-  },
-  users_create_users_id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
-    // references: {
-    //   model: 'users',
-    //   key: 'create_users_id'
-    // }
-  },
-  name: {
-    type: DataTypes.STRING(45),
-    allowNull: true
+    references: {
+      model: 'users',
+      key: 'id'
+    }
   }
 }, {
   sequelize: Conexion.sequelize,
   tableName: 'profiles',
   modelName: 'Profile',
   timestamps: true,
-  createdAt: 'date_create_at', // Nombre de la columna de creación
+  createdAt: 'create_at', // Nombre de la columna de creación
   updatedAt: 'update_at',// Nombre de la columna de actualización
 }
 )

@@ -1,6 +1,6 @@
 import Express from "express";
 import orderController from "../controllers/orderController.js";
-import StudiesController from "../controllers/studiesController.js";
+import StudiesController from "../controllers/studieController.js";
 class OrderRouter {
     constructor() {
         this.router = Express.Router();

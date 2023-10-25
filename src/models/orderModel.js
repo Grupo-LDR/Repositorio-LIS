@@ -10,11 +10,11 @@ Order.init({
         allowNull: false,
         primaryKey: true
     },
-    diagnostico: {
+    diagnosis: {
         type: DataTypes.STRING(250),
         allowNull: false
     },
-    comment: {
+    observation: {
         type: DataTypes.STRING(250),
         allowNull: false
     },
@@ -24,25 +24,38 @@ Order.init({
         defaultValue: 1,
         comment: "0: inactivo, 1: activo"
     },
-    date_create_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    user_id: {
+    id_doctor: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
+        references: {
+            model: 'doctors',
+            key: 'id'
+        }
     },
-    employee_id: {
+    id_patient: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
+        references: {
+            model: 'users',
+            key: 'id'
+        }
     },
-
-    doctor_id: {
+    create_user_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
+        references: {
+            model: 'users',
+            key: 'id'
+        }
+    },
+    update_user_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: true,
+        references: {
+            model: 'users',
+            key: 'id'
+        }
     }
-
 }, {
     sequelize: Conexion.sequelize,
     modelName: 'Order',

@@ -6,7 +6,7 @@ class CityController {
                 include:{
                     model: State,
                     attributes: ['name'],
-                    as: 'Pronvincia'
+                    as: 'Provincia'
                 }
             });
             return citys;

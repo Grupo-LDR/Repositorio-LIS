@@ -43,9 +43,9 @@ function userList() {
         // "fixedHeader": true,
         "language": {
             "search": "Buscar:",
-            "searchPlaceholder": "Escribe para buscar",
-            "lengthMenu": "Mostrar _MENU_ entradas por página",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            "searchPlaceholder": "Escribe para buscar Paciente",
+            "lengthMenu": "Pacientes por página _MENU_",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Pacientes",
             "infoEmpty": "No se encontraron entradas",
             "infoFiltered": "(filtrado de un total de _MAX_ entradas)",
             "zeroRecords": "No se encontraron registros coincidentes",

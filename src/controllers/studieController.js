@@ -1,30 +1,31 @@
 // ESTO NO ANDA DEBERIA SER
-import Studie from "../models/studiesModel.js";
+import Studie from "../models/studieModel.js";
 
-class StudiesController {static async registerStudies(order_id, studies) {
-  try {
+class StudiesController {
+  static async registerStudies(order_id, studies) {
+    try {
       let studiesData = [];
       if (Array.isArray(studies.orderNew)) {
-              studiesData = studies.orderNew.map(order => ({
-              order_id: order_id,
-              exams_id: order
-          }));
+        studiesData = studies.orderNew.map(order => ({
+          order_id: order_id,
+          exams_id: order
+        }));
       } else {
-          studiesData = {
-              order_id: order_id,
-              exams_id: studies.orderNew
-          };
+        studiesData = {
+          order_id: order_id,
+          exams_id: studies.orderNew
+        };
       }
       if (studiesData.length > 0) {
-          await Studie.bulkCreate(studiesData);
-          //console.trace(studiesData);
+        await Studie.bulkCreate(studiesData);
+        //console.trace(studiesData);
       } else {
-          console.error('La variable studiesData está vacía.');
+        console.error('La variable studiesData está vacía.');
       }
-  } catch (error) {
+    } catch (error) {
       console.error('Error al insertar estudios:', error);
+    }
   }
-}
 
 }
 export default StudiesController;

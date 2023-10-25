@@ -18,23 +18,26 @@ City.init({
     states_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
-        primaryKey: true
+        references: {
+            model: 'states',
+            key: 'id'
+        }
     },
-    date_update_at: {
-        type: DataTypes.DATE('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+    update_at: {
+        type: DataTypes.DATE,
         allowNull: true
     },
-    date_create_at: {
+    create_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.Sequelize.fn('current_timestamp')
     }
 }, {
     sequelize: Conexion.sequelize,
     tableName: 'citys',
-    tableModel:'city',
+    tableModel: 'city',
     timestamps: true,
-    createdAt: 'date_create_at', // Nombre de la columna de creación
-    updatedAt: 'date_update_at',// Nombre de la columna de actualización
+    createdAt: 'create_at', // Nombre de la columna de creación
+    updatedAt: 'update_at',// Nombre de la columna de actualización
 });
 export default City;
