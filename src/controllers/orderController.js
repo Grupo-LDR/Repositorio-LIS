@@ -3,7 +3,7 @@ class orderController {
   static async crearNuevaOrden(orden) {
     try {
       const { diagnosis, observation, patient_id, employee_id, doctor_id } = orden;
-      await Order.create({ diagnosis,observation, patient_id, employee_id, doctor_id });
+      await Order.create({ diagnosis, observation, patient_id, employee_id, doctor_id });
       console.log("Creación de nueva orden -> Exitosa");
       return true;
     } catch (error) {
@@ -70,18 +70,18 @@ class orderController {
       throw error;
     }
   }
-  
-  static async lastNewOrder(userId) {
+
+  static async ultimaOrden(userId) {
     try {
-      const lastNewOrder = await Order.findOne({
+      const ultimaOrden = await Order.findOne({
         where: { employee_id: userId },
         order: [['id', 'DESC']],
         attributes: ['id'],
         limit: 1,
       });
-      if (lastNewOrder) {
-        console.log('Última orden:', lastNewOrder.toJSON());
-        return lastNewOrder;
+      if (ultimaOrden) {
+        console.log('Última orden:', ultimaOrden.toJSON());
+        return ultimaOrden;
       } else {
         console.log('No se encontraron registros para el usuario especificado.');
       }
@@ -90,6 +90,51 @@ class orderController {
     }
 
   }
+  /**
+   * PENDIENTES:
+   * Ingreso de una nueva Orden de trabajo. ✔ ✔ ✔ 
+  Actualización de Orden de Trabajo (siempre y cuando todavía este en los estado "ingresada" y "esperando toma de muestra" y "Analítica") ✔
+  Cancelación de Orden de Trabajo con el motivo de cancelación (se permite en cualquier estado)
+  Aviso de Fecha de entrega de resultados
+  Visualización de Faltante de muestra
+  Ingreso de muestra pendiente y si estan todas las muestras pendientes el cambio de estado a "Analítica"
+  Impresión de etiquetas
+   *
+   */
+
+  static async actualizarOrdenDeTrabajo(orderId, newState) { //REVISAR
+    try {
+      // Define los estados válidos en los que puedes actualizar la orden.
+      const estadosValidos = ["ingresada", "esperando toma de muestra", "Analítica"];
+  
+      if (estadosValidos.includes(newState)) {
+        // Busca la orden por su ID y asegúrate de que esté en uno de los estados válidos.
+        const order = await Order.findByPk(orderId);
+  
+        if (order && estadosValidos.includes(order.status)) {
+          // Realiza la actualización de estado aquí.
+          order.status = newState;
+          await order.save();
+  
+          console.log(`Orden actualizada a estado "${newState}"`);
+          return true;
+        } else {
+          console.log("La orden no existe o no se puede actualizar en este estado.");
+          return false;
+        }
+      } else {
+        console.log("Estado no válido para la actualización.");
+        return false;
+      }
+    } catch (error) {
+      console.error('Error al actualizar la orden de trabajo:', error);
+      throw error;
+    }
+  }
+  
+
+
+
 }
 
 export default orderController;

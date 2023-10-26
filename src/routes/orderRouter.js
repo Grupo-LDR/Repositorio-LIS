@@ -50,7 +50,7 @@ class OrderRouter {
             // creacion orden
             await orderController.crearNuevaOrden(orderData);
             // verificacion orden
-            const orderNewId = await orderController.lastNewOrder(orderData.employee_id);
+            const orderNewId = await orderController.ultimaOrden(orderData.employee_id);
             console.log(orderNewId);
             StudiesController.registerStudies(orderNewId.id, req.body);
             res.status(200).json(orderNewId);
