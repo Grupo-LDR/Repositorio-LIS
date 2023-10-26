@@ -5,6 +5,7 @@ import Exam from './examModel.js';
 import State from './stateModel.js';
 import Studie from './studieModel.js';
 import Sample from './sampleModel.js';
+import Sample from './sampleTypeModel.js';
 import Profile from './profileModel.js';
 import StudieResult from './studieResultModel.js';
 
@@ -41,7 +42,7 @@ class Relaciones {
       foreignKey: 'patient_id',
       as: 'perteneceA',
     });
-
+    //BUG OJO LEO ACA LA ORDEN L CREA LA RECEPCIONISTA : 'employee_id'
     // Relación de órdenes con usuarios como creador
     // Una Orden solo la CREA UN USUARIO como doctor
     Order.belongsTo(User, {
@@ -64,6 +65,12 @@ class Relaciones {
 
     Studie.belongsTo(Sample, {
       foreignKey: 'samples_id',
+    });
+
+    // Relación de typo mueestra con exam 
+    // Se requeir para identificar grupso de muetras
+    SampleType.hasMany(Exam, {
+      foreignKey: 'sample_type_id',
     });
 
     Profile.belongsTo(User, {
@@ -91,4 +98,4 @@ class Relaciones {
 Relaciones.relaciones();
 Relaciones.syncModels();
 
-export { User, City, Order, State, Sample, Profile, Exam, Studie, StudieResult };
+export { User, City, Order, State, Sample, SampleType, Profile, Exam, Studie, StudieResult };
