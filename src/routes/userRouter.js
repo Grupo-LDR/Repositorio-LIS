@@ -28,10 +28,12 @@ class UserRouter {
                 return res.status(404).send('Usuario no encontrado');
             }
             const baseUrl = req.protocol + '://' + req.get('host');
+
             // console.log(baseUrl);
 
             //            res.render('examsView.pug', { user });
             const exams = await ExamController.listExams();
+            console.log(exams);
             // res.render('examsView.pug', { exams: exams });
             //            console.log(exams);
             res.render('orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });

@@ -14,13 +14,13 @@ div(class="container mt-5")
                         div(class="col-md-6 text-right")
                             div(class="form-group p-2")
                                 label(for="diagnostico") Diagnostico
-                                input(id="diagnostico" name="diagnostico" class="form-control" type="text" placeholder="Diagnostico" required)
+                                input(id="diagnostico" name="diagnosis" class="form-control" type="text" placeholder="Diagnostico" required)
                             div(class="form-group p-2")
                                 label(for="doctor") Doctor
                                 input(id="doctor" name="doctor_id" class="form-control" type="text" placeholder="Doctor" value="1" required)    
                             div(class="form-group p-2")     
                                 label(for="comment") Comments
-                                textarea(id="comment" name="comment" class="form-control" type="text" placeholder="Comentarios"  required)
+                                textarea(id="comment" name="observation" class="form-control" type="text" placeholder="Comentarios"  required)
                                 input(type="text" name="user_id" class="" value=user.id readonly hidden)   
                                 input(type="text" name="user_name" class="" value=user.last_name  readonly hidden)   
                                 input(type="text" name="employee_id" class="" value=employee_id  readonly hidden)   

@@ -35,14 +35,14 @@ Exam.init({
     type: DataTypes.BOOLEAN,
     allowNull: false
   },
-  id_exam_group: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
-    references: {
-      model: 'exam_groups',
-      key: 'id'
-    }
-  }
+  // exam_group_id: {
+  //   type: DataTypes.INTEGER.UNSIGNED,
+  //   allowNull: false,
+  //   references: {
+  //     model: 'exam_groups',
+  //     key: 'id'
+  //   }
+  // }
 }, {
   sequelize: Conexion.sequelize,
   modelName: 'exam',

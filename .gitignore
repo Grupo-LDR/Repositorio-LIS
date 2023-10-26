@@ -16,3 +16,4 @@ utils/EEM.mwb
 *.mwb
 *.mwb
 utils/EEM.mwb
+src/config.js
