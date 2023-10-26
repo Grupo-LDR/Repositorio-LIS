@@ -33,9 +33,13 @@ User.init({
     allowNull: false
   },
   gender: {
-    type: DataTypes.ENUM('M', 'F'),
+    type: DataTypes.ENUM('M', 'F','X'),
     allowNull: false,
     comment: "M: masculino, F: femenino"
+  },
+  sex: {
+    type: DataTypes.ENUM('M', 'F'),
+    allowNull: false
   },
   active: {
     type: DataTypes.BOOLEAN,

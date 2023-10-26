@@ -13,7 +13,7 @@ class UserController {
                 }
             });
 
-            console.log('tipo  ', typeof users);
+            // console.log('tipo  ', typeof users);
             return users;
         } catch (error) {
             console.log(error);
@@ -32,7 +32,7 @@ class UserController {
 
             if (user) {
                 user.dataValues.edad = this.calcularEdad(user.dataValues.date_birth_at);
-                console.log('User encontrado:', user);
+                // console.log('User encontrado:', user);
                 return user;
             } else {
                 console.log('User no encontrado');

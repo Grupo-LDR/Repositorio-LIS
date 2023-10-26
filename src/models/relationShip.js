@@ -2,77 +2,81 @@ import User from './userModel.js';
 import City from './cityModel.js';
 import Order from './orderModel.js';
 import Exam from './examModel.js';
-import Doctor from './doctorModel.js';
 import State from './stateModel.js';
 import Studie from './studieModel.js';
-import Sample from './sampleModel.js'
+import Sample from './sampleModel.js';
 import Profile from './profileModel.js';
-import StudieResult from './studieResultModel.js'
-/**
- * esto lo hice asi solo, pero si lo queres hacer con clases, ya es otro bardo, te dejo que te rompas la cabeza vos con las clases.
- */
+import StudieResult from './studieResultModel.js';
+
 class Relaciones {
   static relaciones() {
-    //relacion de usuario con ciudad
-    //una ciudad le PERTENECE A UN usuario
+    // Relación de usuario con ciudad
+    // Una ciudad le PERTENECE A UN usuario
     User.belongsTo(City, {
       foreignKey: 'city_id',
     });
-    //relacion de ciudad con Pronvincia
-
-    //relaicon de provincia con ciudad
+    // Relación de ciudad con provincia
     City.belongsTo(State, {
       foreignKey: 'states_id',
       as: 'Provincia',
     });
-    // relacion de un usuario con ordenes
-    // un usuarios tiene muchas ordenes
+
+    // Relación de un usuario con órdenes como paciente
+    // Un usuario tiene muchas órdenes como paciente
     User.hasMany(Order, {
-      foreignKey: 'user_id',
+      foreignKey: 'patient_id',
+      as: 'PatientOrders',
     });
-    //relacion de ordenes con usuarios
-    //Una Orden le PERTENECE a UN usuario
-    Order.belongsTo(User, {
-      foreignKey: 'user_is',
-      as: 'perteneceA'
-    });
-    //relacion de usuarios con CREACION DE ORDENES
-    //un usuario puede crear muchas ordenes
+
+    // Relación de un usuario con órdenes como creador
+    // Un usuario puede crear muchas órdenes
     User.hasMany(Order, {
-      foreignKey: 'employee_is',
+      foreignKey: 'employee_id',
+      as: 'EmployeeOrders',
     });
-    //relacion de ordenes con usuarios
-    //Una Orden solo la CREA UN USUARIO
+
+    // Relación de órdenes con usuarios como paciente
+    // Una Orden le PERTENECE a UN usuario como paciente
     Order.belongsTo(User, {
-      foreignKey: 'user_id',
-      as: 'creadoPor'
+      foreignKey: 'patient_id',
+      as: 'perteneceA',
     });
-    Order.belongsTo(Doctor, {
+
+    // Relación de órdenes con usuarios como creador
+    // Una Orden solo la CREA UN USUARIO como doctor
+    Order.belongsTo(User, {
       foreignKey: 'doctor_id',
-      as: 'Doctor'
+      as: 'creadoPor',
     });
+
+    Order.belongsTo(User, {
+      foreignKey: 'doctor_id',
+      as: 'Doctor',
+    });
+
     Studie.belongsTo(Order, {
-      foreignKey: 'order_id'
+      foreignKey: 'order_id',
     });
-    // Una Studie pertenece a un Exam
+
     Studie.belongsTo(Exam, {
-      foreignKey: 'exams_id'
+      foreignKey: 'exams_id',
     });
-    // Una Studie pertenece a un Sample
+
     Studie.belongsTo(Sample, {
-      foreignKey: 'samples_id'
+      foreignKey: 'samples_id',
     });
+
     Profile.belongsTo(User, {
       foreignKey: 'user_id',
     });
+
     Profile.belongsTo(User, {
       foreignKey: 'users_update_users_id',
     });
+
     StudieResult.belongsTo(Studie, {
-      foreignKey: 'studies_id'
+      foreignKey: 'studies_id',
     });
-
-
   }
 
   static syncModels() {
@@ -80,11 +84,11 @@ class Relaciones {
     // City.sync();
     // Order.sync();
     // Exam.sync();
-    // Doctor.sync();
     // State.sync()
   }
 }
+
 Relaciones.relaciones();
 Relaciones.syncModels();
 
-export { User, City, Order, Doctor, State, Sample, Profile, Exam, Studie, StudieResult };
+export { User, City, Order, State, Sample, Profile, Exam, Studie, StudieResult };

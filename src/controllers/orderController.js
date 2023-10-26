@@ -1,9 +1,9 @@
-import { Order, User, Doctor } from "../models/relationShip.js";
+import { Order, User } from "../models/relationShip.js";
 class orderController {
   static async crearNuevaOrden(orden) {
     try {
-      const { diagnostico, comment, user_id, employee_id, doctor_id } = orden;
-      await Order.create({ diagnostico, comment, user_id, employee_id, doctor_id });
+      const { diagnosis, observation, patient_id, employee_id, doctor_id } = orden;
+      await Order.create({ diagnosis,observation, patient_id, employee_id, doctor_id });
       console.log("Creación de nueva orden -> Exitosa");
       return true;
     } catch (error) {
@@ -27,7 +27,7 @@ class orderController {
             as: 'creadoPor'
           },
           {
-            model: Doctor,
+            model: User,
             attributes: ['first_name', 'last_name'],
             as: 'Doctor'
           }
@@ -39,7 +39,38 @@ class orderController {
       throw error;
     }
   }
-
+  static async listarRegistrosPorEtado(estado) {
+    try {
+      const orders = await Order.findAll({
+        where: {
+          status: estado, //estado seria los diferentes estados que tiene la orden: analitica
+          // esperando muestra, finalizada, etc
+        },
+        include: [
+          {
+            model: User,
+            attributes: ['first_name', 'last_name'],
+            as: 'perteneceA'
+          },
+          {
+            model: User,
+            attributes: ['first_name', 'last_name'],
+            as: 'creadoPor'
+          },
+          {
+            model: User,
+            attributes: ['first_name', 'last_name'],
+            as: 'Doctor'
+          }
+        ]
+      });
+      return orders;
+    } catch (error) {
+      console.log("Error al listar órdenes:", error);
+      throw error;
+    }
+  }
+  
   static async lastNewOrder(userId) {
     try {
       const lastNewOrder = await Order.findOne({

@@ -11,7 +11,7 @@ class OrderRouter {
     }
     async listOrder(req, res, next) {
         try {
-            const orders = await orderController.listarRegistros();
+            const orders = await orderController.listarRegistrosPorEtado();
             //console.log(orders);
             //  const or = JSON.stringify(orders);
             res.render('orderView.pug', { orders });
@@ -40,9 +40,9 @@ class OrderRouter {
     async postNewOrder(req, res, next) {
         try {
             const orderData = {
-                diagnostico: req.body.diagnostico,
-                comment: req.body.comment,
-                user_id: req.body.user_id,
+                diagnosis: req.body.diagnosis,
+                observation: req.body.observation,
+                patient_id: req.body.patient_id,
                 employee_id: req.body.employee_id,
                 doctor_id: req.body.doctor_id
             }

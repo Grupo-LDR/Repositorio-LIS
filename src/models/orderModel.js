@@ -1,5 +1,5 @@
 import Conexion from '../models/conexion.js';
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { Sequelize, DataTypes, Model, DATE } from 'sequelize';
 Conexion.conectar();
 
 class Order extends Model { }
@@ -19,22 +19,30 @@ Order.init({
         allowNull: false
     },
     status: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
+        type: DataTypes.TINYINT,
+        allowNull: true,
         defaultValue: 1,
         comment: "0: inactivo, 1: activo"
     },
-    id_doctor: {
+    patient_id: {
         type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
+        allowNull: true,
         references: {
-            model: 'doctors',
+            model: 'users',
             key: 'id'
         }
     },
-    id_patient: {
+    doctor_id: {
         type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
+        allowNull: true,
+        references: {
+            model: 'users',
+            key: 'id'
+        }
+    },
+    employee_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: true,
         references: {
             model: 'users',
             key: 'id'
@@ -42,7 +50,7 @@ Order.init({
     },
     create_user_id: {
         type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'users',
             key: 'id'
@@ -55,11 +63,21 @@ Order.init({
             model: 'users',
             key: 'id'
         }
+    },
+    created_at: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
+    updated_at:{
+        type: DataTypes.DATE('CURRENT_TIMESTAMP_ONUPDATE'),
+        allowNull: true
     }
 }, {
     sequelize: Conexion.sequelize,
     modelName: 'Order',
     tableName: 'orders',
-    timestamps: false
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 });
 export default Order;

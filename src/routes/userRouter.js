@@ -28,7 +28,7 @@ class UserRouter {
                 return res.status(404).send('Usuario no encontrado');
             }
             const baseUrl = req.protocol + '://' + req.get('host');
-            console.log(baseUrl);
+            // console.log(baseUrl);
 
             //            res.render('examsView.pug', { user });
             const exams = await ExamController.listExams();
@@ -69,10 +69,10 @@ class UserRouter {
             //aca la idea es que me haga una lista desplegable para que al momento
             //de editar, me muestre la lista y el usuario elija la ciudad desde el desplegable
             //            const nombreCiudad = user.City ? user.City.name : null;
-            console.log(user);
+            // console.log(user);
             const ciudades = await CitysController.listCitys();
-            console.log("CIUDADES: ->", ciudades[0].name, ' - ', ciudades[0].id)
-            console.log('ciudad--->>> ', ciudades[0]);
+            // console.log("CIUDADES: ->", ciudades[0].name, ' - ', ciudades[0].id)
+            // console.log('ciudad--->>> ', ciudades[0]);
             let ciudad = ciudades[0];
             res.render('userEditView.pug', { user, ciudades: ciudades });
         } catch (error) {
