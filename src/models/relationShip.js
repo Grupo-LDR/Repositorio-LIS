@@ -5,6 +5,7 @@ import Exam from './examModel.js';
 import State from './stateModel.js';
 import Studie from './studieModel.js';
 import Sample from './sampleModel.js';
+import Sample from './sampleTypeModel.js';
 import Profile from './profileModel.js';
 import StudieResult from './studieResultModel.js';
 
