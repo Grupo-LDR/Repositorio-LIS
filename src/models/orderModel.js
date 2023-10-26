@@ -66,12 +66,14 @@ Order.init({
     },
     created_at: {
         type: DataTypes.DATE,
-        allowNull: true
-    },
-    updated_at:{
-        type: DataTypes.DATE('CURRENT_TIMESTAMP_ONUPDATE'),
-        allowNull: true
-    }
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'), 
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        // defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+      }
 }, {
     sequelize: Conexion.sequelize,
     modelName: 'Order',

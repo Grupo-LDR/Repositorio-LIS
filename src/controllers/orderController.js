@@ -93,37 +93,36 @@ class orderController {
   /**
    * PENDIENTES:
    * Ingreso de una nueva Orden de trabajo. ✔ ✔ ✔ 
-  Actualización de Orden de Trabajo (siempre y cuando todavía este en los estado "ingresada" y "esperando toma de muestra" y "Analítica") ✔
-  Cancelación de Orden de Trabajo con el motivo de cancelación (se permite en cualquier estado)
-  Aviso de Fecha de entrega de resultados
-  Visualización de Faltante de muestra
-  Ingreso de muestra pendiente y si estan todas las muestras pendientes el cambio de estado a "Analítica"
-  Impresión de etiquetas
+    Actualización de Orden de Trabajo (siempre y cuando todavía este en los estado "ingresada" y "esperando toma de muestra" y "Analítica") ✔ ✔ ✔
+    Cancelación de Orden de Trabajo con el motivo de cancelación (se permite en cualquier estado)
+    Aviso de Fecha de entrega de resultados
+    Visualización de Faltante de muestra
+    Ingreso de muestra pendiente y si estan todas las muestras pendientes el cambio de estado a "Analítica"
+    Impresión de etiquetas
    *
    */
 
-  static async actualizarOrdenDeTrabajo(orderId, newState) { //REVISAR
+  // Define los estados válidos en los que puedes actualizar la orden.
+  //desactivado -> 0 - activo -> 1 - ingresada -> 2 - esperando toma de muestra -> 3 - Analítica -> 4
+  //los estados 5 y 6 serian:
+  // finalizada -> 5 - entregada -> 6 //no se deben modificar
+  static async actualizarOrdenDeTrabajo(orden_id, estado, diagnosis, observation) {
     try {
-      // Define los estados válidos en los que puedes actualizar la orden.
-      const estadosValidos = ["ingresada", "esperando toma de muestra", "Analítica"];
-  
-      if (estadosValidos.includes(newState)) {
-        // Busca la orden por su ID y asegúrate de que esté en uno de los estados válidos.
-        const order = await Order.findByPk(orderId);
-  
-        if (order && estadosValidos.includes(order.status)) {
-          // Realiza la actualización de estado aquí.
-          order.status = newState;
-          await order.save();
-  
-          console.log(`Orden actualizada a estado "${newState}"`);
-          return true;
-        } else {
-          console.log("La orden no existe o no se puede actualizar en este estado.");
-          return false;
-        }
+      const estadosValidos = [0, 1, 2, 3, 4];
+      const order = await Order.findByPk(orden_id);
+      //  console.log("ORDEN ---->",order)
+      // console.log("ESTADO ->", estado);
+      // console.log("ESTADO Controller ->", order.status);
+
+      if (order && estadosValidos.includes(estado) && estadosValidos.includes(order.status)) {
+        order.status = estado;
+        order.diagnosis = diagnosis;
+        order.observation = observation;
+        await order.save();
+        console.log(`Orden actualizada: -> "${estado}"`);
+        return true;
       } else {
-        console.log("Estado no válido para la actualización.");
+        console.log("La orden no se puede actualizar en este estado o no existe.");
         return false;
       }
     } catch (error) {
@@ -131,11 +130,29 @@ class orderController {
       throw error;
     }
   }
-  
-
-
+  static async cancelarOrden(orden_id, estado) {
+    try {
+      const estadosValidos = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      const order = await Order.findByPk(orden_id);
+      if (order && estadosValidos.includes(estado) && estadosValidos.includes(order.status)) {
+        order.status = estado;
+        await order.save();
+        console.log(`Orden actualizada: -> "${estado}"`);
+        return true;
+      } else {
+        console.log("La orden no se puede actualizar en este estado o no existe.");
+        return false;
+      }
+    } catch (error) {
+      console.error('Error al actualizar la orden de trabajo:', error);
+      throw error;
+    }
+  }
 
 }
+
+
+
 
 export default orderController;
 
