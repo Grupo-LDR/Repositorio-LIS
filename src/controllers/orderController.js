@@ -39,6 +39,36 @@ class orderController {
       throw error;
     }
   }
+  static async listarRegistrosPorId(id) {
+    console.log('ID ->',id)
+    try {
+      const orders = await Order.findByPk(id, {
+        include: [
+          {
+            model: User,
+            attributes: ['first_name', 'last_name'],
+            as: 'perteneceA'
+          },
+          {
+            model: User,
+            attributes: ['first_name', 'last_name'],
+            as: 'creadoPor'
+          },
+          {
+            model: User,
+            attributes: ['first_name', 'last_name'],
+            as: 'Doctor'
+          }
+        ]
+      });
+      // console.log(orders);
+      return orders;
+    } catch (error) {
+      console.log("Error al listar órdenes:", error);
+      throw error;
+    }
+}
+
   static async listarRegistrosPorEtado(estado) {
     try {
       const orders = await Order.findAll({

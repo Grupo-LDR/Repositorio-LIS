@@ -4,6 +4,7 @@ import CitysController from "../controllers/cityController.js";
 import Exam from "../models/examModel.js";
 import config from "../config.js";
 import ExamController from "../controllers/examController.js";
+import orderController from "../controllers/orderController.js";
 class UserRouter {
     constructor() {
         this.router = express.Router();
@@ -14,6 +15,7 @@ class UserRouter {
         this.router.post('/edit/:id', this.postEditUser);
         //NEW
         this.router.get('/order/new/:id', this.getNewOrderUser);
+        this.router.get('/order/list/:id',this.listarOrdenPaciente);
     }
     /**
      * @argument{id}
@@ -33,7 +35,7 @@ class UserRouter {
 
             //            res.render('examsView.pug', { user });
             const exams = await ExamController.listExams();
-            console.log(exams);
+            // console.log(exams);
             // res.render('examsView.pug', { exams: exams });
             //            console.log(exams);
             res.render('orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
@@ -119,20 +121,22 @@ class UserRouter {
             res.status(500).send('Error interno del servidor');
         }
     }
-    /*
-    async createUser(req, res) {
-            console.log("Ruta createUser ***");
-            try {
-            const usuario = req.body;
-                await crearUsuario(usuario);
-                console.trace("Usuario Creado -> EXITOSO");
-                res.redirect('/main');
-            } catch (error) {
-                console.error('Error al crear un nuevo usuario:', error);
-                res.status(500).send('Error interno del servidor');
-            }
+    // listar todas las ordenes de un usuario
+    async listarOrdenPaciente(req, res) {
+        try {
+            const patient_id = req.body.patient_id;
+            console.log(patient_id)//esto da undefined desde la ruta
+            //user/order/list/:id
+            //porque no me trae el id del usuario
+           // console.log(req.body)
+            const ordenes = await orderController.listarRegistrosPorId(patient_id);
+            res.status(200).json(ordenes);
+        } catch (error) {
+            console.error('Error al listar órdenes del usuario:', error);
+            res.status(500).send('Error interno del servidor');
         }
-        */
+    }
+
     getMenu(req, res) {
         res.render("menu");
     }
