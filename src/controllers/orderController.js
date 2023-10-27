@@ -1,4 +1,4 @@
-import { Order, User } from "../models/relationShip.js";
+import { Order, User, } from "../models/relationShip.js";
 class orderController {
   static async crearNuevaOrden(orden) {
     try {
@@ -124,8 +124,8 @@ class orderController {
    * PENDIENTES:
    * Ingreso de una nueva Orden de trabajo. ✔ ✔ ✔ 
     Actualización de Orden de Trabajo (siempre y cuando todavía este en los estado "ingresada" y "esperando toma de muestra" y "Analítica") ✔ ✔ ✔
-    Cancelación de Orden de Trabajo con el motivo de cancelación (se permite en cualquier estado)
-    Aviso de Fecha de entrega de resultados
+    Cancelación de Orden de Trabajo con el motivo de cancelación (se permite en cualquier estado) ✔✔✔
+    Aviso de Fecha de entrega de resultados --pendiente
     Visualización de Faltante de muestra
     Ingreso de muestra pendiente y si estan todas las muestras pendientes el cambio de estado a "Analítica"
     Impresión de etiquetas
@@ -178,6 +178,13 @@ class orderController {
       throw error;
     }
   }
+  // Aviso de Fecha de entrega de resultados
+  static async informarFecha(){
+    // StudieResult
+
+  }
+
+
 
 }
 

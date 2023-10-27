@@ -25,9 +25,13 @@ StudieResult.init({
       type: DataTypes.STRING(250),
       allowNull: true
     },
-    date_create_at: {
+    create_at: {
       type: DataTypes.DATE('current_timestamp'),
       allowNull: false,
+    },
+    update_at:{
+      type: DataTypes.DATE(),
+      allowNull: false
     },
     date_validate: {
       type: DataTypes.DATEONLY,
@@ -40,16 +44,13 @@ StudieResult.init({
     studies_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
-      // references: {
-      //   model: 'studies',
-      //   key: 'id'
-      // }
     }
   }, {
     sequelize:Conexion.sequelize,
     tableName: 'studie_results',
     timestamps: true,
-    createdAt: 'date_create_at', // Nombre de la columna de creación
+    createdAt: 'create_at', // Nombre de la columna de creación
+    updatedAt: 'update_at'
   });
 
   export default StudieResult;
