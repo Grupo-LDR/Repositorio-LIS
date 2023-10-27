@@ -124,7 +124,7 @@ class UserRouter {
     // listar todas las ordenes de un usuario
     async listarOrdenPaciente(req, res) {
         try {
-            const patient_id = req.body.patient_id;
+            const patient_id = req.params.id;
             console.log(patient_id)//esto da undefined desde la ruta
             //user/order/list/:id
             //porque no me trae el id del usuario
