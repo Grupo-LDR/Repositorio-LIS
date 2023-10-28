@@ -1,7 +1,7 @@
 //import http_errors from 'http-errors';
 import express from 'express';
 import compression from 'compression';
-//import bodyParser from 'body-parser';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import config from './config.js';
 //import express_session from 'express-session';
@@ -18,6 +18,7 @@ import UserRouter from './routes/userRouter.js';
 import ExamRouter from './routes/examRouter.js';
 import CityRouter from './routes/cityRouter.js';
 import orderRouter from './routes/orderRouter.js';
+import SampleTypeRouter from './routes/sampleTypeRouter.js';
 // import IndexRouter from './routes/indexRouter.js';
 // import MainRouter from './routes/mainRouter.js';
 // import PatientRouter from './routes/patientRouter.js';
@@ -25,7 +26,7 @@ import orderRouter from './routes/orderRouter.js';
 // variables y constantes App
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-console.clear();
+//console.clear();
 class App {
     constructor() {
         console.log("APP instanciada");
@@ -45,6 +46,14 @@ class App {
         this.examRouter = new ExamRouter();
         this.cityRouter = new CityRouter();
         this.orderRouter = new orderRouter();
+        this.sampleTypeRouter = new SampleTypeRouter();
+        this.app.use(cors(
+            {
+                origin: '*',
+                methods: ['GET', 'POST', 'OPTIONS'],
+
+            }
+        ));
 
         // this.indexRouter = new IndexRouter();
         // this.mainRouter = new MainRouter();
@@ -57,12 +66,18 @@ class App {
      * Ruteo de peticiones  
      */
     appServerRoute() {
+        this.app.post('/prueba', (req, res, body) => {
+            console.log(req.body);
+            res.send((req.body));
+        });
         this.app.use(morgan('dev'));
         // ruta archvios estaticos
         this.app.use(express.static('./src/public'));
         this.app.get('/', (req, res) => {
             res.render('index.pug', { title: config.APP_TITLE });
         });
+
+
         // this.app.use('/', this.loginRouter.getRouter());
         this.app.use('/user', this.userRouter.getRouter());
         // ruteo Examenes 
@@ -71,8 +86,8 @@ class App {
         this.app.use('/city', this.cityRouter.getRouter());
         // ruteo de ordenes de trabajo
         this.app.use('/order', this.orderRouter.getRouter());
-
-
+        // ruteo samplestype
+        this.app.use('/sampletype', this.sampleTypeRouter.getRouter());
 
         //this.app.use('/user', this.userRouter.getRouter());
         //this.app.use('/users', this.userRouter.getRouter());

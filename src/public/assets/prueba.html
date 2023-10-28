@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+</head>
+
+<body>
+    <table id="miTabla" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí puedes agregar filas iniciales si es necesario -->
+        </tbody>
+    </table>
+
+    <button id="agregarFila">Agregar Fila</button>
+    <button id="guardarTodas">Guardar Todas</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var tabla = $('#miTabla').DataTable();
+            var filaEditando = null;
+
+            $('#agregarFila').on('click', function () {
+                var newRow = tabla.row.add(['', '', '<button class="editar">Editar</button> | <button class="eliminar">Eliminar</button>']);
+                newRow.draw();
+            });
+
+            $('#miTabla').on('click', '.editar', function () {
+                if (filaEditando && filaEditando !== this) {
+                    cancelarEdicion();
+                }
+
+                filaEditando = this;
+                var fila = $(this).closest('tr');
+                var datos = tabla.row(fila).data();
+                var inputNombre = '<input type="text" value="' + datos[0] + '">';
+                var inputEdad = '<input type="text" value="' + datos[1] + '>';
+
+                fila.find('td:eq(0)').html(inputNombre);
+                fila.find('td:eq(1)').html(inputEdad);
+                fila.find('td:eq(2)').html('<button class="guardar">Guardar</button> | <button class="cancelar">Cancelar</button>');
+            });
+
+            $('#miTabla').on('click', '.cancelar', function () {
+                cancelarEdicion();
+            });
+
+            $('#miTabla').on('click', '.guardar', function () {
+                if (filaEditando) {
+                    var fila = $(filaEditando).closest('tr');
+                    var datos = tabla.row(fila).data();
+                    datos[0] = $(filaEditando).closest('tr').find('input:eq(0)').val();
+                    datos[1] = $(filaEditando).closest('tr').find('input:eq(1)').val();
+                    tabla.row(fila).data(datos);
+
+                    cancelarEdicion();
+                }
+            });
+
+            $('#miTabla').on('click', '.eliminar', function () {
+                if (filaEditando === null) {
+                    var fila = $(this).closest('tr');
+                    tabla.row(fila).remove().draw();
+                }
+            });
+
+            $('#guardarTodas').on('click', function () {
+                var datosFilas = [];
+
+                tabla.rows().every(function () {
+                    var datos = this.data();
+                    datosFilas.push({
+                        nombre: datos[0],
+                        edad: datos[1]
+                    });
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:8082/prueba',
+                    data: JSON.stringify(datosFilas),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        console.error('Error al guardar los datos:', error);
+                    }
+                });
+            });
+
+            function cancelarEdicion() {
+                if (filaEditando) {
+                    var fila = $(filaEditando).closest('tr');
+                    var datos = tabla.row(fila).data();
+                    filaEditando.closest('tr').find('td:eq(0)').text(datos[0]);
+                    filaEditando.closest('tr').find('td:eq(1)').text(datos[1]);
+                    filaEditando.closest('tr').find('td:eq(2)').html('<button class="editar">Editar</button> | <button class="eliminar">Eliminar</button>');
+                }
+
+                filaEditando = null;
+            }
+        });
+    </script>
+</body>
+
+</html>

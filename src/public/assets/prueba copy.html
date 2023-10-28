@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+</head>
+
+<body>
+    <table id="miTabla" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí puedes agregar filas iniciales si es necesario -->
+        </tbody>
+    </table>
+
+    <button id="agregarFila">Agregar Fila</button>
+    <button id="guardarTodas">Guardar Todas</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="main.js"></script> -->
+    <script>
+        // main.js
+
+        $(document).ready(function () {
+            var tabla = $('#miTabla').DataTable();
+            var filasAgregadas = [];
+
+            $('#agregarFila').on('click', function () {
+                tabla.row.add(['', '', '<button class="editar">Editar</button> | <button class="eliminar">Eliminar</button>']).draw();
+            });
+
+            $('#guardarTodas').on('click', function () {
+                var datosFilas = [];
+
+                $.each(filasAgregadas, function (index, fila) {
+                    var datos = tabla.row(fila).data();
+                    var nuevoNombre = fila.find('input:eq(0)').val();
+                    var nuevaEdad = fila.find('input:eq(1)').val();
+                    datosFilas.push({
+                        nombre: nuevoNombre,
+                        edad: nuevaEdad
+                    });
+                });
+
+                // Realiza una solicitud POST al servidor con datosFilas
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:8082/prueba',
+                    data: JSON.stringify(datosFilas),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        console.log(response);
+                    }
+                });
+            });
+
+            $('#miTabla').on('click', '.editar', function () {
+                var fila = $(this).closest('tr');
+                var datos = tabla.row(fila).data();
+
+                fila.find('td:eq(0)').html('<input type="text" value="' + datos[0] + '">');
+                fila.find('td:eq(1)').html('<input type="text" value="' + datos[1] + '">');
+                fila.find('td:eq(2)').html('<button class="guardar">Guardar</button> | <button class="cancelar">Cancelar</button>');
+            });
+
+            $('#miTabla').on('click', '.guardar', function () {
+                var fila = $(this).closest('tr');
+                filasAgregadas.push(fila); // Agrega la fila a la lista de filas
+            });
+
+            $('#miTabla').on('click', '.cancelar', function () {
+                var fila = $(this).closest('tr');
+                var datos = tabla.row(fila).data();
+
+                fila.find('td:eq(0)').html(datos[0]);
+                fila.find('td:eq(1)').html(datos[1]);
+                fila.find('td:eq(2)').html('<button class="editar">Editar</button> | <button class="eliminar">Eliminar</button>');
+            });
+
+            $('#miTabla').on('click', '.eliminar', function () {
+                var fila = $(this).closest('tr');
+                tabla.row(fila).remove().draw();
+            });
+        });
+
+    </script>
+</body>
+
+</html>

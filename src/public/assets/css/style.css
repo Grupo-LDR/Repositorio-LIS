@@ -6,6 +6,7 @@
   --color-ligth: rgb(247, 243, 243);
   --color-hover: #f8b66a;
   --color-hover-icon: #9cec09;
+
 }
 
 body {
@@ -165,6 +166,47 @@ li.menu-link.active ul.dropdown-content {
 .userLink:hover {
   font-size: 32px;
   color: var(--color-hover-icon);
+  animation: heartbeat 1s infinite;
+}
+
+.trash-red {
+  font-size: 20px;
+  color: var(--color-primary);
+  transition: color 0.5s, font-size 0.5s;
+}
+
+.trash-green {
+  font-size: 20px;
+  color: var(--color-primary);
+  transition: color 0.5s, font-size 0.5s;
+}
+
+.trash-red:hover {
+  font-size: 30px;
+  color: red;
+  transition: color 0.5s, font-size 0.5s;
+
+}
+
+.trash-green:hover {
+  font-size: 32px;
+  color: green;
+  transition: color 0.5s, font-size 0.5s;
+  animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 @media (max-width: 1050px) {
