@@ -22,6 +22,9 @@ Determination.init({
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    unit:{
+        type: DataTypes.STRING(45)
+    },
     tiempo: {
         type: DataTypes.INTEGER,
         allowNull: false
