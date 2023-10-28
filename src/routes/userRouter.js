@@ -38,7 +38,7 @@ class UserRouter {
             // console.log(exams);
             // res.render('examsView.pug', { exams: exams });
             //            console.log(exams);
-            res.render('./user/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
+            res.render('./users/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
             //res.render('test_copy.pug', { user: user, examenes: exams });
 
 
@@ -54,7 +54,7 @@ class UserRouter {
         try {
             const usuarios = await UserController.listUsers();
             console.log(usuarios);
-            res.render('./user/usersView.pug', { usuarios });
+            res.render('./users/usersView.pug', { usuarios });
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -78,7 +78,7 @@ class UserRouter {
             // console.log("CIUDADES: ->", ciudades[0].name, ' - ', ciudades[0].id)
             // console.log('ciudad--->>> ', ciudades[0]);
             let ciudad = ciudades[0];
-            res.render('./user/userEditView.pug', { user, ciudades: ciudades });
+            res.render('./users/userEditView.pug', { user, ciudades: ciudades });
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -88,7 +88,7 @@ class UserRouter {
         try {
 
             const citys = await CitysController.listCitys();
-            res.render('./user/userNewView.pug', { citys: citys });
+            res.render('./users/userNewView.pug', { citys: citys });
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -100,7 +100,7 @@ class UserRouter {
             const usuario = req.body;
             await UserController.updateUsuario(usuario);
             //res.redirect('/user')
-            res.redirect(`/user/edit/${usuario.id}`)
+            res.redirect(`/users/edit/${usuario.id}`)
         } catch (error) {
             console.clear;
             console.error('Error al obtener actualizar user:', error);
