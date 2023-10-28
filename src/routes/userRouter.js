@@ -38,7 +38,7 @@ class UserRouter {
             // console.log(exams);
             // res.render('examsView.pug', { exams: exams });
             //            console.log(exams);
-            res.render('./users/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
+            res.render('./orders/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
             //res.render('test_copy.pug', { user: user, examenes: exams });
 
 

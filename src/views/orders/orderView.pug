@@ -1,13 +1,8 @@
-include ../head
+include ../head.pug
 each order in orders
     p oden #  #{order.id}  Medico #{order.Doctor.first_name}, #{order.Doctor.last_name} Diagnostico : #{order.diagnostico}
 //-    p Diagnostico : #{order.diagnostico}
 //-   p id : #{order.Doctor.first_name}
-
-
-
-
-
 //-div(class="container mt-5")
     div(class="row justify-content-center")
         div(class="col-12")

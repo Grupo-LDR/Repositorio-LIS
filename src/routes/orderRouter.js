@@ -15,7 +15,7 @@ class OrderRouter {
             const orders = await orderController.listarRegistros();
             //console.log(orders);
             //  const or = JSON.stringify(orders);
-            res.render('orderView.pug', { orders });
+            res.render('./orders/orderView.pug', { orders });
             //, { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
 
             // res.status(200).json(order);
