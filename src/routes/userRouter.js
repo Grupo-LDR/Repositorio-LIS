@@ -1,8 +1,7 @@
 import express from "express";
 import UserController from "../controllers/userController.js";
 import CitysController from "../controllers/cityController.js";
-import Exam from "../models/examModel.js";
-import config from "../config.js";
+// import config from "../config.js";
 import ExamController from "../controllers/examController.js";
 import orderController from "../controllers/orderController.js";
 class UserRouter {
@@ -30,18 +29,8 @@ class UserRouter {
                 return res.status(404).send('Usuario no encontrado');
             }
             const baseUrl = req.protocol + '://' + req.get('host');
-
-            // console.log(baseUrl);
-
-            //            res.render('examsView.pug', { user });
             const exams = await ExamController.listExams();
-            // console.log(exams);
-            // res.render('examsView.pug', { exams: exams });
-            //            console.log(exams);
             res.render('./orders/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
-            //res.render('test_copy.pug', { user: user, examenes: exams });
-
-
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');

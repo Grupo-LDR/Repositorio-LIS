@@ -47,6 +47,12 @@ class ExamController {
             console.error('Error al marcar el examen como eliminado:', error);
         }
     }
+
+    static async addDetermition(){
+        
+    }
+
+
 }
 export default ExamController;
 

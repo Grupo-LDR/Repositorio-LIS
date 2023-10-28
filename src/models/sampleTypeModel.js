@@ -1,18 +1,28 @@
+/**
+1. Sangre
+2. Orina
+3. Heces
+4. Saliva
+5. Líquido cefalorraquídeo
+6. Esputo
+7. Líquido pleural
+8. Secreciones y exudados
+9. Tejidos 
+10. Orina de 24 horas
+11. Heces de 24 horas
+12. Líquido sinovial
+*/
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
 
-class SampleType extends Model { }
+class SampleType extends Model { };
 SampleType.init({
   id: {
     autoIncrement: true,
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
-    primaryKey: true,
-    references: {
-      model: 'exams',
-      key: 'sample_type_id'
-    }
+    primaryKey: true
   },
   status: {
     type: DataTypes.BOOLEAN,
@@ -20,7 +30,7 @@ SampleType.init({
   },
   name: {
     type: DataTypes.STRING(45),
-    allowNull: false
+    allowNull: true
   },
   create_at: {
     type: DataTypes.DATE,
@@ -32,12 +42,10 @@ SampleType.init({
     allowNull: true
   }
 }, {
-  sequelize:  Conexion.sequelize,
+  sequelize: Conexion.sequelize,
   tableName: 'samples_type',
-  modelName:'SampleType',
   timestamps: true,
-  createdAt: 'create_at',
-  updatedAt: 'update_at',
-})
-  
+  createdAt: 'create_at', // Nombre de la columna de creación
+  updatedAt: 'update_at',// Nombre de la columna de actualización
+});
 export default SampleType;
