@@ -1,6 +1,4 @@
-
-
-import SampleType from '../models/sampleTypeModel.js';
+import SampleType from '../models/samples_type.js';
 class SampleTypeController {
     static async listSampleTypes() {
         try {
