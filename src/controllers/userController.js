@@ -1,5 +1,6 @@
 import User from '../models/userModel.js';
-import City from "../models/cityModel.js"
+import City from "../models/cityModel.js";
+import AuthController from "./authController.js"
 /**
  *  REFERENCIAS:
  * ✅(Hecho) || ❌(sin hacer) || ⏳ (en proceso)
@@ -58,6 +59,7 @@ class UserController {
     // crear un nuevo usuario
     static async crearUsuario(user) { //✅
         try {
+            const nuevaPass = await AuthController.hashPassword(user.password);
             const { first_name,
                 last_name,
                 gender,
@@ -68,7 +70,6 @@ class UserController {
                 email,
                 address,
                 birth_at,
-                password,
                 create_user_id,
                 update_user_id,
                 city_id,
@@ -87,7 +88,7 @@ class UserController {
                 email,
                 address,
                 birth_at,
-                password,
+                password:nuevaPass,
                 create_user_id,
                 update_user_id,
                 city_id,
@@ -101,28 +102,38 @@ class UserController {
         }
     };
     // actualizar un usuario
-    static async updateUsuario(user) { //✅
+    // hashear contraseña ✅
+    static async updateUsuario(user) {//✅
         try {
             const usuario = await User.findByPk(user.id);
             if (!usuario) {
                 throw new Error('Usuario no encontrado');
             }
-            usuario.set(user);
+            // Verificar si la contraseña actual coincide
+            if (user.pass && user.newPassword) {
+                const passValid = await AuthController.compararPass(user.pass, usuario.password);
+                if (!passValid) {
+                    throw new Error('La contraseña actual no es válida');
+                }
+                // Hashear y actualizar la nueva contraseña
+                const nuevaPass = await AuthController.hashPassword(user.newPassword);
+                usuario.set({
+                    password: nuevaPass,
+                });
+            } else {
+                usuario.set(user);
+            };
             await usuario.save();
-            // console.log("Usuario actualizado exitosamente");
             return usuario;
         } catch (error) {
             console.error('Error al actualizar el usuario:', error);
             throw error;
         }
     }
-
     // asignar Rol de usuario 
     //❌(sin hacer)
 
-    // hashear contraseña
-    // ❌(sin hacer)
-
+    
 }
 
 export default UserController;

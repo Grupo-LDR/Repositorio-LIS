@@ -30,15 +30,15 @@ User.init({
     allowNull: false,
     validate: {
       notEmpty: {
-        msg: 'El nombre no puede estar vacío.',
+        msg: 'El nombre no puede estar vacío.'
       },
       len: {
         args: [3, 80],
         msg: 'El nombre debe tener entre 3 y 80 caracteres.',
       },
-      // isAlpha: {
-      //   msg: 'El nombre debe contener solo letras.',
-      // },
+      isAlpha: {
+        msg: 'El nombre debe contener solo letras.',
+      },
     },
   },
   last_name: {
@@ -52,9 +52,9 @@ User.init({
         args: [3, 80],
         msg: 'El Apellido debe tener entre 3 y 80 caracteres.',
       },
-      // isAlpha: {
-      //   msg: 'El apellido debe contener solo letras.',
-      // },
+      isAlpha: {
+        msg: 'El apellido debe contener solo letras.',
+      },
     },
   },
   gender: {
