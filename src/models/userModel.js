@@ -3,7 +3,7 @@ import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
 class User extends Model {
- 
+
   edad = '';
   calcularEdad() {
     if (this.date_birth_at) {
@@ -27,19 +27,43 @@ User.init({
   },
   first_name: {
     type: DataTypes.STRING(80),
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: {
+        msg: 'El nombre no puede estar vacío.',
+      },
+      len: {
+        args: [3, 80],
+        msg: 'El nombre debe tener entre 3 y 80 caracteres.',
+      },
+      // isAlpha: {
+      //   msg: 'El nombre debe contener solo letras.',
+      // },
+    },
   },
   last_name: {
     type: DataTypes.STRING(80),
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: {
+        msg: 'El Apellido no puede estar vacío.',
+      },
+      len: {
+        args: [3, 80],
+        msg: 'El Apellido debe tener entre 3 y 80 caracteres.',
+      },
+      // isAlpha: {
+      //   msg: 'El apellido debe contener solo letras.',
+      // },
+    },
   },
   gender: {
-    type: DataTypes.ENUM('M','F','X',''),
+    type: DataTypes.ENUM('M', 'F', 'X', ''),
     allowNull: false,
     comment: "M: masculino, F: femenino, X: gen x"
   },
   sex: {
-    type: DataTypes.ENUM('M','F'),
+    type: DataTypes.ENUM('M', 'F'),
     allowNull: false
   },
   active: {
@@ -51,7 +75,10 @@ User.init({
   document: {
     type: DataTypes.STRING(9),
     allowNull: false,
-    unique: "document"
+    unique: {
+      args: true,
+      msg: 'El documento ya existe en la base de datos.',
+    }
   },
   phone: {
     type: DataTypes.STRING(15),
@@ -60,7 +87,15 @@ User.init({
   email: {
     type: DataTypes.STRING(80),
     allowNull: false,
-    unique: "email"
+    unique: {
+      args: true,
+      msg: 'El correo electrónico ya existe en la base de datos.',
+    },
+    validate: {
+      isEmail: {
+        msg: 'El correo electrónico debe ser válido.',
+      },
+    }
   },
   address: {
     type: DataTypes.STRING(80),
@@ -68,7 +103,12 @@ User.init({
   },
   birth_at: {
     type: DataTypes.DATEONLY,
-    allowNull: true
+    allowNull: true,
+    validate: {
+      isDate: {
+        msg: 'La fecha de nacimiento debe ser válida.',
+      },
+    }
   },
   password: {
     type: DataTypes.STRING(80),
@@ -90,11 +130,11 @@ User.init({
       key: 'id'
     }
   },
-  created_at:{
+  created_at: {
     type: DataTypes.DATE,
     allowNull: true
   },
-  updated_at:{
+  updated_at: {
     type: DataTypes.DATE,
     allowNull: true
   },
@@ -103,9 +143,9 @@ User.init({
     allowNull: true
   }
 }, {
-  sequelize:Conexion.sequelize,
+  sequelize: Conexion.sequelize,
   tableName: 'users',
-  modelName:'User',
+  modelName: 'User',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
@@ -148,11 +188,12 @@ User.init({
         { name: "update_users_id" },
       ]
     },
-  ]});
-  User.belongsTo(City, { foreignKey: "city_id" });
-  City.hasMany(User,{foreignKey:"city_id"});
-  User.belongsTo(User, {foreignKey:"create_users_id"})
-  User.belongsTo(User, {foreignKey:"update_users_id"})
-  User.hasMany(User,{foreignKey:"create_users_id"});
-  User.hasMany(User,{foreignKey:"update_users_id"});
+  ]
+});
+User.belongsTo(City, { foreignKey: "city_id" });
+City.hasMany(User, { foreignKey: "city_id" });
+User.belongsTo(User, { foreignKey: "create_users_id" })
+User.belongsTo(User, { foreignKey: "update_users_id" })
+User.hasMany(User, { foreignKey: "create_users_id" });
+User.hasMany(User, { foreignKey: "update_users_id" });
 export default User;

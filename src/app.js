@@ -30,17 +30,17 @@ import path from 'path';
 /***
  * modulos routes
  */
-// import LoginRouter from './routes/loginRouter.js';
+import LoginRouter from './routes/loginRouter.js';
 import UserRouter from './routes/userRouter.js';
-// import ExamRouter from './routes/examRouter.js';
-// import CityRouter from './routes/cityRouter.js';
-// import orderRouter from './routes/orderRouter.js';
+import ExamRouter from './routes/examRouter.js';
+import CityRouter from './routes/cityRouter.js';
+import orderRouter from './routes/orderRouter.js';
 /**
  * variables y constantes App
  */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-//console.clear();
+console.clear();
 class App {
     constructor() {
         console.log("APP instanciada");
@@ -70,11 +70,11 @@ class App {
         /**
          * instancias de Ruteo
          */
-        //     this.loginRouter = new LoginRouter();
+            this.loginRouter = new LoginRouter();
         this.userRouter = new UserRouter();
-        //     this.examRouter = new ExamRouter();
-        //     this.cityRouter = new CityRouter();
-        //     this.orderRouter = new orderRouter();
+            this.examRouter = new ExamRouter();
+            this.cityRouter = new CityRouter();
+            this.orderRouter = new orderRouter();
     }
     /**
      * Ruteo de peticiones  
@@ -98,19 +98,19 @@ class App {
         /**
          * Ruteo Examenes
          */
-        // this.app.use('/exam', this.examRouter.getRouter());
+        this.app.use('/exam', this.examRouter.getRouter());
         /** 
          * Ruteo de ciudades
         */
-        // this.app.use('/city', this.cityRouter.getRouter());
+        this.app.use('/city', this.cityRouter.getRouter());
         /**
          * Ruteo de ordenes
          */
-        // this.app.use('/order', this.orderRouter.getRouter());
+        this.app.use('/order', this.orderRouter.getRouter());
         /**
          * Ruteo de autenticacion
          */
-        //        this.app.use(this.authServer.authUser);
+            //    this.app.use(this.authServer.authUser);
         /**
          * Ruteo de error
          */

@@ -53,11 +53,12 @@ class UserController {
     }
     static async crearUsuario(user) {
         try {
-            const { first_name, last_name, gender, active, document, phone, email, address, date_birth_at, citys_id } = user;
-            await User.create({ first_name, last_name, gender, active, document, phone, email, address, date_birth_at, citys_id });
-            console.log("Creación de nuevo usuario -> Exitosa");
+            const { first_name, last_name, gender, sex,active, document, phone, email, address, birth_at, password,create_user_id, update_user_id,city_id,create_at,update_at,pregnant } = user;
+            await User.create({ first_name, last_name, gender, sex,active, document, phone, email, address, birth_at, password,create_user_id, update_user_id,city_id,create_at,update_at,pregnant });
+           //console.log("Creación de nuevo usuario -> Exitosa");
+           return user;
         } catch (error) {
-            console.error('Error al crear un nuevo usuario:', error);
+            //console.error('Error al crear un nuevo usuario:', error);
             throw error;
         }
     };

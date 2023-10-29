@@ -20,7 +20,7 @@ Array.from(menu).forEach(element => {
 // controlador eventos menu
 async function consultaLink(menuLink) {
     try {
-        const response = await fetch(`http://localhost:8082${menuLink}`);
+        const response = await fetch(menuLink);
         const data = await response.text();
         contenido.innerHTML = data;
         userEdit = document.querySelectorAll('.userEdit');
