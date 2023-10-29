@@ -14,3 +14,6 @@ utils/EEM.mwb
 *.mwb
 *.mwb
 utils/EEM.mwb
+.dev.env
+.prod.env
+*.env
