@@ -1,8 +1,12 @@
 import User from '../models/userModel.js';
 import City from "../models/cityModel.js"
-//const usuario = new User();
+/**
+ *  REFERENCIAS:
+ * ✅(Hecho) || ❌(sin hacer) || ⏳ (en proceso)
+ */
 class UserController {
-    static async listUsers() {
+    //listar todos los usuarios
+    static async listUsers() { //✅ 
         try {
             const users = await User.findAll({
                 include: {
@@ -11,14 +15,14 @@ class UserController {
                     // as: 'City'
                 }
             });
-            // console.log('tipo  ', typeof users);
             return users;
         } catch (error) {
-            console.log(error);
-            return [];
+            console.error('Error al listar usuarios:', error);
+            throw error; // -> relanzar el error
         }
     }
-    static async findUser(id) {
+    //buscar usuario por ID
+    static async findUser(id) { //✅
         try {
             const user = await User.findByPk(id, {
                 include: {
@@ -27,19 +31,19 @@ class UserController {
                     as: 'City'
                 }
             });
-
             if (user) {
                 user.dataValues.edad = this.calcularEdad(user.dataValues.date_birth_at);
-                // console.log('User encontrado:', user);
                 return user;
             } else {
-                console.log('User no encontrado');
+                throw new Error('Usuario no encontrado');
             }
         } catch (error) {
-            console.error('Error user:', error);
+            console.error('Error al buscar usuario por ID:', error);
+            throw error;
         }
     }
-    static calcularEdad(date_birth_at) {
+    //calculo de edad 
+    static calcularEdad(date_birth_at) {//✅
         if (date_birth_at) {
             const hoy = new Date();
             const fechaNacimiento = new Date(date_birth_at);
@@ -51,18 +55,53 @@ class UserController {
             return edad;
         }
     }
-    static async crearUsuario(user) {
+    // crear un nuevo usuario
+    static async crearUsuario(user) { //✅
         try {
-            const { first_name, last_name, gender, sex,active, document, phone, email, address, birth_at, password,create_user_id, update_user_id,city_id,create_at,update_at,pregnant } = user;
-            await User.create({ first_name, last_name, gender, sex,active, document, phone, email, address, birth_at, password,create_user_id, update_user_id,city_id,create_at,update_at,pregnant });
-           //console.log("Creación de nuevo usuario -> Exitosa");
-           return user;
+            const { first_name,
+                last_name,
+                gender,
+                sex,
+                active,
+                document,
+                phone,
+                email,
+                address,
+                birth_at,
+                password,
+                create_user_id,
+                update_user_id,
+                city_id,
+                create_at,
+                update_at,
+                pregnant } = user;
+
+            const nuevoUsuario = await User.create({
+                first_name,
+                last_name,
+                gender,
+                sex,
+                active,
+                document,
+                phone,
+                email,
+                address,
+                birth_at,
+                password,
+                create_user_id,
+                update_user_id,
+                city_id,
+                create_at,
+                update_at,
+                pregnant
+            });
+            return nuevoUsuario;
         } catch (error) {
-            //console.error('Error al crear un nuevo usuario:', error);
             throw error;
         }
     };
-    static async updateUsuario(user) {
+    // actualizar un usuario
+    static async updateUsuario(user) { //✅
         try {
             const usuario = await User.findByPk(user.id);
             if (!usuario) {
@@ -70,12 +109,20 @@ class UserController {
             }
             usuario.set(user);
             await usuario.save();
-            console.log("Actualización de usuario -> Exitosa");
+            // console.log("Usuario actualizado exitosamente");
+            return usuario;
         } catch (error) {
-            console.error('Error al crear un nuevo usuario:', error);
+            console.error('Error al actualizar el usuario:', error);
             throw error;
         }
     }
+
+    // asignar Rol de usuario 
+    //❌(sin hacer)
+
+    // hashear contraseña
+    // ❌(sin hacer)
+
 }
 
 export default UserController;
