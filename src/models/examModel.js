@@ -1,5 +1,7 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import SampleType from './sampleTypeModel.js'
+import Determination from './determination.js'
 class Exam extends Model {
 }
 
@@ -73,4 +75,8 @@ Exam.init({
     },
   ]
 });
+Exam.belongsTo(SampleType, {foreignKey: "sample_type_id"});
+SampleType.hasMany(Exam,{foreignKey: "sample_type_id"})
+Exam.hasMany(Determination, {foreignKey: "exams_id"});
+Determination.belongsTo(Exam, {foreignKey: "exams_id"});
 export default Exam;

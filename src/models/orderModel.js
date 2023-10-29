@@ -1,8 +1,8 @@
-import User from './userModel.js';
 import Conexion from '../models/conexion.js';
 import { Sequelize, DataTypes, Model, DATE } from 'sequelize';
+import User from './userModel.js';
+import Studie from './studieModel.js';
 Conexion.conectar();
-
 class Order extends Model {
 }
 Order.init({
@@ -75,8 +75,8 @@ Order.init({
       tableName: 'orders',
       modelName:'Order',
       timestamps: true,
-      createdAt:'create_at',
-      updatedAt:'update_at',
+      createdAt:'created_at',
+      updatedAt:'updated_at',
       indexes: [
         {
           name: "PRIMARY",
@@ -116,6 +116,16 @@ Order.init({
         },
       ]
 });
+Order.belongsTo(User, {foreignKey: "patient_id"});
+Order.belongsTo(User, {foreignKey: "employee_id"});
+Order.belongsTo(User, {foreignKey: "doctor_id"});
+Order.belongsTo(User,{foreignKey:"validate_users_id"});
+User.hasMany(Order,{foreignKey:"patient_id"});
+User.hasMany(Order,{foreignKey:"employee_id"});
+User.hasMany(Order,{foreignKey:"doctor_id"});
+User.hasMany(Order,{foreignKey:"validate_users_id"});
+Order.hasMany(Studie,{foreignKey: "order_id"});
+Studie.belongsTo(Order,{foreignKey:"order_id"})
 
 
 

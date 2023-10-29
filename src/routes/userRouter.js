@@ -30,7 +30,8 @@ class UserRouter {
             }
             const baseUrl = req.protocol + '://' + req.get('host');
             const exams = await ExamController.listExams();
-            res.render('./orders/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
+            // res.render('./orders/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
+            res.status(200).json(user)
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -43,7 +44,8 @@ class UserRouter {
         try {
             const usuarios = await UserController.listUsers();
             console.log(usuarios);
-            res.render('./users/usersView.pug', { usuarios });
+           // res.render('./users/usersView.pug', { usuarios });
+           res.status(200).json(usuarios)
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -67,7 +69,8 @@ class UserRouter {
             // console.log("CIUDADES: ->", ciudades[0].name, ' - ', ciudades[0].id)
             // console.log('ciudad--->>> ', ciudades[0]);
             let ciudad = ciudades[0];
-            res.render('./users/userEditView.pug', { user, ciudades: ciudades });
+            // res.render('./users/userEditView.pug', { user, ciudades: ciudades });
+            res.status(200).json(user,ciudades)
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');

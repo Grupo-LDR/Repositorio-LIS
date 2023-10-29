@@ -1,5 +1,6 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import Studie from './studieModel.js'
 Conexion.conectar()
 
 class StudieResult extends Model { };
@@ -69,5 +70,6 @@ StudieResult.init({
       ]
     },
   ]});
-
+StudieResult.belongsTo(Studie,{foreignKey:"studies_id"});
+Studie.hasMany(StudieResult,{foreignKey:"studies_id"});
 export default StudieResult;

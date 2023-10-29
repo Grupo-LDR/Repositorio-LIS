@@ -1,7 +1,9 @@
+import City from './cityModel.js';
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
 class User extends Model {
+ 
   edad = '';
   calcularEdad() {
     if (this.date_birth_at) {
@@ -147,9 +149,10 @@ User.init({
       ]
     },
   ]});
-// import Order from './orderModel.js';
-// User.hasMany(Order, {
-//   foreignKey: 'employee_id',
-//   as: 'EmployeeOrders',
-// });
+  User.belongsTo(City, { foreignKey: "city_id" });
+  City.hasMany(User,{foreignKey:"city_id"});
+  User.belongsTo(User, {foreignKey:"create_users_id"})
+  User.belongsTo(User, {foreignKey:"update_users_id"})
+  User.hasMany(User,{foreignKey:"create_users_id"});
+  User.hasMany(User,{foreignKey:"update_users_id"});
 export default User;

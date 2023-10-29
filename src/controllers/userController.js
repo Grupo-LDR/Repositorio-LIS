@@ -8,7 +8,7 @@ class UserController {
                 include: {
                     model: City,
                     attributes: ['name'],
-                    as: 'City'
+                    // as: 'City'
                 }
             });
             // console.log('tipo  ', typeof users);

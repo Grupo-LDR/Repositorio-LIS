@@ -1,5 +1,8 @@
 // ESTO NO ANDA DEBERIA SER
 import Studie from "../models/studieModel.js";
+import Order from '../models/orderModel.js'
+import Exam from '../models/examModel.js'
+import Sample from '../models/sampleModel.js'
 
 class StudiesController {
   static async registerStudies(order_id, studies) {

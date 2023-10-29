@@ -29,8 +29,8 @@ class SampleTypeRouter {
 
             //     console.log('sampleTypes', sampleTypes);
 
-            //   res.status(200).json(sampleTypes);
-            res.render('./samples/sampleTypeNewView.pug', { samples: sampleTypes });
+              res.status(200).json(sampleTypes);
+           // res.render('./samples/sampleTypeNewView.pug', { samples: sampleTypes });
 
 
         } catch (error) {

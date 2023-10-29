@@ -11,8 +11,8 @@ class CityRouter {
         try {
             const citys = await CitysController.listCitys();
             //console.log(citys);
-            // res.status(200).json(citys);
-            res.render('citysView.pug', { citys: citys });
+            res.status(200).json(citys);
+            // res.render('citysView.pug', { citys: citys });
         } catch (error) {
             console.error('Error al obtener ciudades:', error);
             res.status(500).send('Error interno del servidor');

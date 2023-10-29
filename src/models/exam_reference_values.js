@@ -1,8 +1,9 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import Determination from './determination.js';
 Conexion.conectar();
-class testReference extends Model { };
-testReference.init({
+class ExamReferenceValues extends Model { };
+ExamReferenceValues.init({
   id: {
     autoIncrement: true,
     type: DataTypes.INTEGER.UNSIGNED,
@@ -87,4 +88,5 @@ testReference.init({
     },
   ]
 });
-export default testReference;
+
+export default ExamReferenceValues;

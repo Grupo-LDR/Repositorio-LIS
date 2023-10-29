@@ -21,21 +21,17 @@ class orderController {
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-          as: 'perteneceA'
           },
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-            as: 'creadoPor'
           },
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-            as: 'Doctor'
           },{
             model:User,
           attributes:['first_name', 'last_name'],
-          as: 'Validacion'
           }
           ]
       });

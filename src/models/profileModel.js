@@ -1,5 +1,6 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import User from './userModel.js';
 Conexion.conectar()
 
 class Profile extends Model { };
@@ -69,7 +70,9 @@ Profile.init({
       ]
     },
   ]
-}
-)
+});
+Profile.belongsTo(User,{foreignKey:"users_id"});
+User.hasMany(Profile,{foreignKey:"users_id"});
+
 
 export default Profile;

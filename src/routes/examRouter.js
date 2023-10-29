@@ -17,9 +17,9 @@ class ExamRouter {
 
         try {
             const examenes = await ExamController.listExams();
-            console.log(JSON.stringify(examenes));
-            // res.send(examenes);
-            res.render('./exams/examsView.pug', { titulo: 'Listado Examenes', exams: examenes });
+            // console.log(JSON.stringify(examenes));
+            res.status(200).json(examenes);
+            // res.render('./exams/examsView.pug', { titulo: 'Listado Examenes', exams: examenes });
         } catch (error) {
             console.error('Error al obtener examenes:', error);
             res.status(500).send('Error interno del servidor');
@@ -34,7 +34,8 @@ class ExamRouter {
         try {
             const examenes = await ExamController.listExams();
             console.log(examenes);
-            //         res.render('examsNewView.pug', { titulo: 'NUevo Examen', exams: examenes });
+            //res.render('examsNewView.pug', { titulo: 'NUevo Examen', exams: examenes });
+            res.status(200).json(examenes)
         } catch (error) {
             console.error('Error al obtener examenes:', error);
             res.status(500).send('Error interno del servidor');

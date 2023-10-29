@@ -19,3 +19,5 @@ utils/EEM.mwb
 src/config.js
 src/config.js
 .remote.env
+.dev.env
+.prod.env

@@ -57,8 +57,8 @@ City.init({
         },
       ]
 });
-City.belongsTo(State, { as: "state", foreignKey: "states_id" });
-State.hasMany(City, { as: "cities", foreignKey: "states_id" });
+City.belongsTo(State, {foreignKey: "states_id" });
+State.hasMany(City, { foreignKey: "states_id" });
 
 
 export default City;
