@@ -1,8 +1,8 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
+import State from './stateModel.js';
 Conexion.conectar();
 class City extends Model {
-
 }
 City.init({
     id: {
@@ -39,5 +39,26 @@ City.init({
     timestamps: true,
     createdAt: 'create_at', // Nombre de la columna de creación
     updatedAt: 'update_at',// Nombre de la columna de actualización
+    indexes: [
+        {
+          name: "PRIMARY",
+          unique: true,
+          using: "BTREE",
+          fields: [
+            { name: "id" },
+          ]
+        },
+        {
+          name: "fk_citys_states1_idx",
+          using: "BTREE",
+          fields: [
+            { name: "states_id" },
+          ]
+        },
+      ]
 });
+City.belongsTo(State, { as: "state", foreignKey: "states_id" });
+State.hasMany(City, { as: "cities", foreignKey: "states_id" });
+
+
 export default City;

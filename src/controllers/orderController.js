@@ -1,4 +1,5 @@
-import { Order, User, } from "../models/relationShip.js";
+import Order from "../models/orderModel.js";
+import User from "../models/userModel.js";
 class orderController {
   static async crearNuevaOrden(orden) {
     try {
@@ -14,12 +15,13 @@ class orderController {
   }
   static async listarRegistros() {
     try {
+      
       const orders = await Order.findAll({
         include: [
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-            as: 'perteneceA'
+          as: 'perteneceA'
           },
           {
             model: User,
@@ -30,8 +32,12 @@ class orderController {
             model: User,
             attributes: ['first_name', 'last_name'],
             as: 'Doctor'
+          },{
+            model:User,
+          attributes:['first_name', 'last_name'],
+          as: 'Validacion'
           }
-        ]
+          ]
       });
       return orders;
     } catch (error) {
@@ -187,9 +193,6 @@ class orderController {
 
 
 }
-
-
-
 
 export default orderController;
 

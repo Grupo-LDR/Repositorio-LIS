@@ -11,17 +11,6 @@ import StudieResult from './studieResultModel.js';
 
 class Relaciones {
   static relaciones() {
-    // Relación de usuario con ciudad
-    // Una ciudad le PERTENECE A UN usuario
-    User.belongsTo(City, {
-      foreignKey: 'city_id',
-    });
-    // Relación de ciudad con provincia
-    City.belongsTo(State, {
-      foreignKey: 'states_id',
-      as: 'Provincia',
-    });
-
     // Relación de un usuario con órdenes como paciente
     // Un usuario tiene muchas órdenes como paciente
     User.hasMany(Order, {
@@ -35,26 +24,7 @@ class Relaciones {
       foreignKey: 'employee_id',
       as: 'EmployeeOrders',
     });
-
-    // Relación de órdenes con usuarios como paciente
-    // Una Orden le PERTENECE a UN usuario como paciente
-    Order.belongsTo(User, {
-      foreignKey: 'patient_id',
-      as: 'perteneceA',
-    });
-    //BUG OJO LEO ACA LA ORDEN L CREA LA RECEPCIONISTA : 'employee_id'
-    // Relación de órdenes con usuarios como creador
-    // Una Orden solo la CREA UN USUARIO como doctor
-    Order.belongsTo(User, {
-      foreignKey: 'doctor_id',
-      as: 'creadoPor',
-    });
-
-    Order.belongsTo(User, {
-      foreignKey: 'doctor_id',
-      as: 'Doctor',
-    });
-
+  
     Studie.belongsTo(Order, {
       foreignKey: 'order_id',
     });

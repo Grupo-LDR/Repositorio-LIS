@@ -30,9 +30,20 @@ Sample.init({
 }, {
   sequelize: Conexion.sequelize,
   tableName: 'samples',
+  modelName:'Sample',
   timestamps: true,
   createdAt: 'create_at', // Nombre de la columna de creación
   updatedAt: 'update_at',// Nombre de la columna de actualización
+  indexes: [
+    {
+      name: "PRIMARY",
+      unique: true,
+      using: "BTREE",
+      fields: [
+        { name: "id" },
+      ]
+    },
+  ]
 });
 
 export default Sample;

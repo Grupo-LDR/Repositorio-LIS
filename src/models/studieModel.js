@@ -10,7 +10,7 @@ Studie.init({
     allowNull: false,
     primaryKey: true
   },
-  id_order: {
+  order_id: {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
     references: {
@@ -18,7 +18,7 @@ Studie.init({
       key: 'id'
     }
   },
-  id_exam: {
+  exams_id: {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
     references: {
@@ -36,11 +36,7 @@ Studie.init({
     type: DataTypes.STRING(250),
     allowNull: true
   },
-  id_studie_results: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: true
-  },
-  id_sample: {
+  samples_id: {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: true,
     references: {
@@ -62,10 +58,42 @@ Studie.init({
     allowNull: true
   }
 }, {
-  sequelize: Conexion.sequelize,
-  modelName: 'Studies',
+  sequelize:Conexion.sequelize,
   tableName: 'studies',
-  timestamps: false
+  timestamps: true,
+  createdAt: 'create_at',
+  updatedAt: 'update_at',
+  indexes: [
+    {
+      name: "PRIMARY",
+      unique: true,
+      using: "BTREE",
+      fields: [
+        { name: "id" },
+      ]
+    },
+    {
+      name: "fk_studies_orders1_idx1",
+      using: "BTREE",
+      fields: [
+        { name: "order_id" },
+      ]
+    },
+    {
+      name: "fk_studies_exams1_idx",
+      using: "BTREE",
+      fields: [
+        { name: "exams_id" },
+      ]
+    },
+    {
+      name: "fk_studies_samples1_idx",
+      using: "BTREE",
+      fields: [
+        { name: "samples_id" },
+      ]
+    },
+  ]
 });
 export default Studie;
 

@@ -1,5 +1,4 @@
-// userModel.js
-import Conexion from '../models/conexion.js';
+import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
 class User extends Model {
@@ -33,12 +32,12 @@ User.init({
     allowNull: false
   },
   gender: {
-    type: DataTypes.ENUM('M', 'F','X'),
+    type: DataTypes.ENUM('M','F','X',''),
     allowNull: false,
-    comment: "M: masculino, F: femenino"
+    comment: "M: masculino, F: femenino, X: gen x"
   },
   sex: {
-    type: DataTypes.ENUM('M', 'F'),
+    type: DataTypes.ENUM('M','F'),
     allowNull: false
   },
   active: {
@@ -49,7 +48,8 @@ User.init({
   },
   document: {
     type: DataTypes.STRING(9),
-    allowNull: false
+    allowNull: false,
+    unique: "document"
   },
   phone: {
     type: DataTypes.STRING(15),
@@ -74,7 +74,7 @@ User.init({
   },
   create_users_id: {
     type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false
+    allowNull: true
   },
   update_users_id: {
     type: DataTypes.INTEGER.UNSIGNED,
@@ -88,15 +88,68 @@ User.init({
       key: 'id'
     }
   },
+  created_at:{
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  updated_at:{
+    type: DataTypes.DATE,
+    allowNull: true
+  },
   pregnant: {
     type: DataTypes.BOOLEAN,
     allowNull: true
   }
 }, {
-  sequelize: Conexion.sequelize,
+  sequelize:Conexion.sequelize,
   tableName: 'users',
+  modelName:'User',
   timestamps: true,
-  createdAt: 'created_at', // Nombre de la columna de creación
-  updatedAt: 'updated_at',// Nombre de la columna de actualización
-});
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  indexes: [
+    {
+      name: "PRIMARY",
+      unique: true,
+      using: "BTREE",
+      fields: [
+        { name: "id" },
+      ]
+    },
+    {
+      name: "email",
+      unique: true,
+      using: "BTREE",
+      fields: [
+        { name: "email" },
+      ]
+    },
+    {
+      name: "document",
+      unique: true,
+      using: "BTREE",
+      fields: [
+        { name: "document" },
+      ]
+    },
+    {
+      name: "fk_users_citys1_idx",
+      using: "BTREE",
+      fields: [
+        { name: "city_id" },
+      ]
+    },
+    {
+      name: "fk_users_users1_idx",
+      using: "BTREE",
+      fields: [
+        { name: "update_users_id" },
+      ]
+    },
+  ]});
+// import Order from './orderModel.js';
+// User.hasMany(Order, {
+//   foreignKey: 'employee_id',
+//   as: 'EmployeeOrders',
+// });
 export default User;

@@ -1,6 +1,5 @@
-// import User from '../models/userModel.js'; no es necesario importar
-// import City from "../models/cityModel.js"
-import { User, City } from "../models/relationShip.js";
+import User from '../models/userModel.js';
+import City from "../models/cityModel.js"
 //const usuario = new User();
 class UserController {
     static async listUsers() {
@@ -12,7 +11,6 @@ class UserController {
                     as: 'City'
                 }
             });
-
             // console.log('tipo  ', typeof users);
             return users;
         } catch (error) {
