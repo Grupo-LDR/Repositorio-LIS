@@ -29,8 +29,8 @@ class SampleTypeRouter {
 
             //     console.log('sampleTypes', sampleTypes);
 
-              res.status(200).json(sampleTypes);
-           // res.render('./samples/sampleTypeNewView.pug', { samples: sampleTypes });
+            res.status(200).json(sampleTypes);
+            // res.render('./samples/sampleTypeNewView.pug', { samples: sampleTypes });
 
 
         } catch (error) {
@@ -47,16 +47,21 @@ class SampleTypeRouter {
                 res.redirect('/sampletype');
                 //res.status(200).json(req.body);
             } else {
+                console.log('ruteo en neuva sampletype');
                 const sampleType = await SampleTypeController.createSampleType(req.body);
-                res.redirect('/sampletype');
-                //res.status(200).json(req.body);
+                if (sampleType) {
+                    console.log('sampleType', sampleType);
+                    res.redirect('/sampletype');
+
+                } else {
+                    res.status(404).send('No pudo completarse');
+                }
             }
 
         } catch (error) {
             console.error('Error al crear tipo muestras:', error);
             res.status(500).send('Error interno del servidor');
         }
-
     }
     getRouter() {
         return this.router;

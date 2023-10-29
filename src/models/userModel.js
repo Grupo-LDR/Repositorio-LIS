@@ -3,19 +3,31 @@ import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
 class User extends Model {
- 
-  edad = '';
+
+  //edad = '';
   calcularEdad() {
-    if (this.date_birth_at) {
+    if (this.birth_at) {
       const hoy = new Date();
-      const fechaNacimiento = new Date(this.date_birth_at);
+      const fechaNacimiento = new Date(this.birth_at);
       const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
       if (hoy < new Date(hoy.getFullYear(), fechaNacimiento.getMonth(), fechaNacimiento.getDate())) {
         return edad - 1;
       }
       return edad;
     }
-    return null; // Devuelve null si la fecha de nacimiento no está definida
+    return null; // si no hay fecha de nacimiento
+  }
+  get edad() {
+    if (this.birth_at) {
+      const hoy = new Date();
+      const fechaNacimiento = new Date(this.birth_at);
+      const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+      if (hoy < new Date(hoy.getFullYear(), fechaNacimiento.getMonth(), fechaNacimiento.getDate())) {
+        return edad - 1;
+      }
+      return edad;
+    }
+    return null; // si no hay fecha de nacimiento
   }
 }
 User.init({
@@ -34,12 +46,12 @@ User.init({
     allowNull: false
   },
   gender: {
-    type: DataTypes.ENUM('M','F','X',''),
+    type: DataTypes.ENUM('M', 'F', 'X', ''),
     allowNull: false,
     comment: "M: masculino, F: femenino, X: gen x"
   },
   sex: {
-    type: DataTypes.ENUM('M','F'),
+    type: DataTypes.ENUM('M', 'F'),
     allowNull: false
   },
   active: {
@@ -90,11 +102,11 @@ User.init({
       key: 'id'
     }
   },
-  created_at:{
+  created_at: {
     type: DataTypes.DATE,
     allowNull: true
   },
-  updated_at:{
+  updated_at: {
     type: DataTypes.DATE,
     allowNull: true
   },
@@ -103,9 +115,9 @@ User.init({
     allowNull: true
   }
 }, {
-  sequelize:Conexion.sequelize,
+  sequelize: Conexion.sequelize,
   tableName: 'users',
-  modelName:'User',
+  modelName: 'User',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
@@ -148,11 +160,12 @@ User.init({
         { name: "update_users_id" },
       ]
     },
-  ]});
-  User.belongsTo(City, { foreignKey: "city_id" });
-  City.hasMany(User,{foreignKey:"city_id"});
-  User.belongsTo(User, {foreignKey:"create_users_id"})
-  User.belongsTo(User, {foreignKey:"update_users_id"})
-  User.hasMany(User,{foreignKey:"create_users_id"});
-  User.hasMany(User,{foreignKey:"update_users_id"});
+  ]
+});
+User.belongsTo(City, { foreignKey: "city_id" });
+City.hasMany(User, { foreignKey: "city_id" });
+User.belongsTo(User, { foreignKey: "create_users_id" })
+User.belongsTo(User, { foreignKey: "update_users_id" })
+User.hasMany(User, { foreignKey: "create_users_id" });
+User.hasMany(User, { foreignKey: "update_users_id" });
 export default User;

@@ -1,4 +1,4 @@
-import Exam from  '../models/examModel.js'
+import Exam from '../models/examModel.js'
 import SampleType from '../models/sampleTypeModel.js';
 import Studie from '../models/studieModel.js';
 class ExamController {
@@ -6,9 +6,9 @@ class ExamController {
         try {
             const exams = await Exam.findAll({
                 where: { status: true },
-                include:{
+                include: {
                     model: SampleType,
-                    attributes: ['name','observation']
+                    attributes: ['name', 'observation']
                 }
             });
             return exams;
@@ -17,6 +17,7 @@ class ExamController {
             console.log(error);
         }
     }
+    //BUG CAMBIAR EL METDO DE VE RIS ESTA EN USO
     static async modifyExam(exam) {
         //modificar examen solo si no tiene relacion con un estudio
         try {
@@ -53,8 +54,8 @@ class ExamController {
         }
     }
 
-    static async addDetermition(){
-        
+    static async addDetermition() {
+
     }
 
 

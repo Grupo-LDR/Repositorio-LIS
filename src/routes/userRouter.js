@@ -23,6 +23,7 @@ class UserRouter {
         try {
             const id = req.params.id;
             // validacion si usairo exite
+
             const user = await UserController.findUser(id);
             console.log(user);
             if (!user) {
@@ -54,19 +55,30 @@ class UserRouter {
         }
     }
     /**
-     *  responde peticion /users con listado de usuarios
+     * 
+     * @param {id} req 
+     * @param {*} res 
+     * @returns user(id) data
      */
+
     async getEditUser(req, res) {
         try {
             const id = req.params.id;
+            /**
+             * validacion si usairo exite
+             */
             const user = await UserController.findUser(id);
             if (!user) {
                 return res.status(404).send('Usuario no encontrado');
             }
+            user.dataValues.edad = user.edad;
+            /**
+             * listado de ciudades para renderizar en vista
+             */
+            console.log(user);
             const ciudades = await CitysController.listCitys();
-            let ciudad = ciudades[0];
             // res.render('./users/userEditView.pug', { user, ciudades: ciudades });
-            res.status(200).json(user, ciudades)
+            res.status(200).json(user)
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');

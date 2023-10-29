@@ -1,5 +1,7 @@
 import User from '../models/userModel.js';
 import City from "../models/cityModel.js"
+import Conexion from '../models/conexion.js';
+Conexion.conectar();
 //const usuario = new User();
 class UserController {
     static async listUsers() {
@@ -21,22 +23,41 @@ class UserController {
     static async findUser(id) {
         try {
             const user = await User.findByPk(id, {
+                attributes: [
+                    'first_name',
+                    'last_name',
+                    'gender',
+                    'active',
+                    'document',
+                    'phone',
+                    'email',
+                    'address',
+                    'birth_at',
+                    'city_id',
+
+
+                ],
                 include: {
                     model: City,
                     attributes: ['name'],
                     as: 'City'
                 }
             });
+            //   [Conexion.sequelize.fn('DATEDIFF', Conexion.sequelize.literal('CURDATE()'), Conexion.sequelize.col('birth_at')), 'edad'],
+            //   [Conexion.sequelize.fn('FLOOR', Conexion.sequelize.fn('DATEDIFF', Conexion.sequelize.literal('CURDATE()'), Conexion.sequelize.col('birth_at')) / 365.25), 'edad'],
+            //   [Conexion.sequelize.fn('TIMESTAMPDIFF', Conexion.sequelize.literal('YEAR'), Conexion.sequelize.col('birth_at'), Conexion.sequelize.fn('CURDATE')),'edad'  ]
+            //   [Conexion.sequelize.fn('FLOOR', Conexion.sequelize.fn('DATEDIFF', Conexion.sequelize.literal('CURDATE()'), Conexion.sequelize.col('birth_at')) / 365.25),'edad'],
+            //   [Conexion.sequelize.fn('FLOOR', Conexion.sequelize.fn('DATEDIFF', Conexion.sequelize.literal('CURDATE()'), Conexion.sequelize.col('birth_at')) / 365.25),'edad'  ]
 
             if (user) {
-                user.dataValues.edad = this.calcularEdad(user.dataValues.date_birth_at);
-                // console.log('User encontrado:', user);
+                //   user.setDataValues.edad = this.calcularEdad(user.dataValues.birth_at);
+                //user.setDataValue('edad', edad);
                 return user;
-            } else {
-                console.log('User no encontrado');
             }
+            return null;
         } catch (error) {
             console.error('Error user:', error);
+            return null;
         }
     }
     static calcularEdad(date_birth_at) {

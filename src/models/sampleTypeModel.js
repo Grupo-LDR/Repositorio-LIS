@@ -30,7 +30,11 @@ SampleType.init({
   },
   name: {
     type: DataTypes.STRING(45),
-    allowNull: true
+    allowNull: false,
+    validate: {
+      notEmpty: { msg: 'El nombre no puede estar vacío' },
+      len: { args: [3, 30], msg: 'El nombre debe tener entre 3 y 30 caracteres' }
+    }
   },
   create_at: {
     type: DataTypes.DATE,
@@ -48,7 +52,7 @@ SampleType.init({
 }, {
   sequelize: Conexion.sequelize,
   tableName: 'samples_type',
-  modelName:'sampleType',
+  modelName: 'sampleType',
   timestamps: true,
   createdAt: 'create_at', // Nombre de la columna de creación
   updatedAt: 'update_at',// Nombre de la columna de actualización
