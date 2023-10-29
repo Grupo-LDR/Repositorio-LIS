@@ -1,4 +1,4 @@
-import { Sample } from '../models/relationShip.js'
+import Sample from "../models/sampleModel.js";
 class SampleController {
     static async listSamples() {
         try {

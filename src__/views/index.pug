@@ -1,0 +1,55 @@
+include head
+- var userRol = 10
+- var userName='Rafa Lopez'
+script(type="text/javascript" src="/assets/js/main.js" defer)
+body
+    div(class="sidebar")
+        div(class="menu-contenedor")
+            a(href="")
+                img(src="./assets/img/lis1.png" alt="Logo" width="50" height="50")
+                h4 #{title}
+        hr 
+        div(class="menu")
+            p(class="menu-link" id="/user") 
+                i(class="fa-solid fa-users m-4")  Pacientes
+            p(class="menu-link" id="/order")
+                i(class="fa-solid fa-folder-tree m-4")  Ordenes
+                p(class="menu-link" id="/order")
+                    i(class="fa-solid fa-folder-tree m-4")  Ordenes
+            p(class="menu-link" id="/doctor")
+                i(class="fa-solid fa-user-doctor m-4")  Medicos
+            if userRol >=8    
+                p(class="menu-link" id="/admin") 
+                    i(class="fa-solid fa-gear m-4")  Admin
+            //- ul(class="menu")    
+            //-     li.menu-link(id="users-dropdown")
+            //-         i.fa-solid.fa-users.m-4 Pacientes
+            //-         ul.dropdown-content
+            //-             li
+            //-                 a(href="/user") Listar
+
+            //-     li.menu-link(id="order-dropdown")
+            //-         i.fa-solid.fa-folder-tree.m-4 Ordenes
+            //-         ul.dropdown-content
+            //-             li
+            //-                 a(href="/order") Listar
+
+            //-     li.menu-link(id="doctor-dropdown")
+            //-         i.fa-solid.fa-user-doctor.m-4 Medicos
+            //-         ul.dropdown-content
+            //-             li
+            //-                 a(href="/doctor") Listar
+
+            //-     li.menu-link(id="admin-dropdown")
+            //-         i.fa-solid.fa-gear.m-4 Admin
+            //-         ul.dropdown-content
+            //-             li
+            //-                 a(href="/empleado/admin") Admin Empleados
+            //-             li
+            //-                 a(href="/order/admin/") Admin Ordes
+            //-             li
+            //-                 a(href="/studies/admin") Admin Estudios
+
+    div(class="contenido" id="contenido")
+//- <i class="fa-solid fa-gear"></i>
+//- script(type="text/javascript" src="../assets/js/main.js" defer)

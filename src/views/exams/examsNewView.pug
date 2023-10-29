@@ -1,0 +1,22 @@
+//- include head 
+- let auth=true;
+body
+table
+    thead #{titulo}    
+        tr 
+            td #
+            td Detail 
+            if auth
+                td Status
+
+    each exam in exams     
+        tr 
+            td  
+                p #{exam.id}
+                p #{exam.detail}
+                if auth 
+                    td 
+                        if exam.status
+                            p Activo
+                        else 
+                            p Inactivo   

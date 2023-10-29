@@ -1,4 +1,5 @@
-import {City,State} from '../models/relationShip.js'
+import City from "../models/cityModel.js";
+import State from "../models/stateModel.js";
 class CityController {
     static async listCitys() {
         try {
@@ -6,7 +7,6 @@ class CityController {
                 include:{
                     model: State,
                     attributes: ['name'],
-                    as: 'Provincia'
                 }
             });
             return citys;

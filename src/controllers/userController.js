@@ -1,6 +1,5 @@
-// import User from '../models/userModel.js'; no es necesario importar
-// import City from "../models/cityModel.js"
-import { User, City } from "../models/relationShip.js";
+import User from '../models/userModel.js';
+import City from "../models/cityModel.js"
 //const usuario = new User();
 class UserController {
     static async listUsers() {
@@ -9,11 +8,10 @@ class UserController {
                 include: {
                     model: City,
                     attributes: ['name'],
-                    as: 'City'
+                    // as: 'City'
                 }
             });
-
-            console.log('tipo  ', typeof users);
+            // console.log('tipo  ', typeof users);
             return users;
         } catch (error) {
             console.log(error);
@@ -32,7 +30,7 @@ class UserController {
 
             if (user) {
                 user.dataValues.edad = this.calcularEdad(user.dataValues.date_birth_at);
-                console.log('User encontrado:', user);
+                // console.log('User encontrado:', user);
                 return user;
             } else {
                 console.log('User no encontrado');

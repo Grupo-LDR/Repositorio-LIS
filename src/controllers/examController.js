@@ -1,11 +1,16 @@
-import {Exam,Studie} from '../models/relationShip.js'
+import Exam from  '../models/examModel.js'
+import SampleType from '../models/sampleTypeModel.js';
+import Studie from '../models/studieModel.js';
 class ExamController {
     static async listExams() {
         try {
             const exams = await Exam.findAll({
-                where: { status: true }
+                where: { status: true },
+                include:{
+                    model: SampleType,
+                    attributes: ['name','observation']
+                }
             });
-            // console.log("EXAMENES: ", exams)
             return exams;
         }
         catch (error) {
@@ -47,6 +52,12 @@ class ExamController {
             console.error('Error al marcar el examen como eliminado:', error);
         }
     }
+
+    static async addDetermition(){
+        
+    }
+
+
 }
 export default ExamController;
 
