@@ -116,9 +116,9 @@ Order.init({
         },
       ]
 });
-Order.belongsTo(User, {foreignKey: "patient_id"});
-Order.belongsTo(User, {foreignKey: "employee_id"});
-Order.belongsTo(User, {foreignKey: "doctor_id"});
+Order.belongsTo(User, {foreignKey: "patient_id", as:"perteneceA"});
+Order.belongsTo(User, {foreignKey: "employee_id", as:"creadoPor"});
+Order.belongsTo(User, {foreignKey: "doctor_id",as:"Doctor"});
 Order.belongsTo(User,{foreignKey:"validate_users_id"});
 User.hasMany(Order,{foreignKey:"patient_id"});
 User.hasMany(Order,{foreignKey:"employee_id"});

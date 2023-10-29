@@ -14,7 +14,9 @@ class AuthController {
  * @param {} req 
  * @param {*} res 
  * @returns 
- *//*
+ */
+/*
+ESTO ES PARA EL RUTEO
   static async signUp(req, res) {
     try {
       const { email, pass } = req.body;
