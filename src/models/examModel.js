@@ -14,7 +14,21 @@ Exam.init({
   },
   nbu: {
     type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isUnsigned(value) {
+        if (value < 0) {
+          throw new Error('El valor de nbu debe ser un número entero sin signo.');
+        }
+      },
+      isNumeric(value) {
+        if (Number.isInteger(value)) {
+          throw new Error('El valor de nbu debe ser un número entero.');
+        }
+
+      },
+
+    },
   },
   detail: {
     type: DataTypes.STRING(250),
@@ -26,7 +40,7 @@ Exam.init({
   },
   status: {
     type: DataTypes.BOOLEAN,
-    allowNull: false
+    allowNull: true
   },
   sample_type_id: {
     type: DataTypes.INTEGER.UNSIGNED,
@@ -51,12 +65,12 @@ Exam.init({
     allowNull: false
   }
 }, {
-  sequelize:Conexion.sequelize,
+  sequelize: Conexion.sequelize,
   tableName: 'exams',
-  modelName:'Exam',
+  modelName: 'Exam',
   timestamps: true,
-  createdAt:'create_at',
-  updatedAt:'update_at',
+  createdAt: 'create_at',
+  updatedAt: 'update_at',
   indexes: [
     {
       name: "PRIMARY",
@@ -73,10 +87,28 @@ Exam.init({
         { name: "sample_type_id" },
       ]
     },
+
+    {
+      name: "nbu_2",
+      unique: true,
+      using: "BTREE",
+      fields: [
+        { name: "nbu" },
+        { name: "detail" },
+      ]
+    },
   ]
 });
-Exam.belongsTo(SampleType, {foreignKey: "sample_type_id"});
-SampleType.hasMany(Exam,{foreignKey: "sample_type_id"})
-Exam.hasMany(Determination, {foreignKey: "exams_id"});
-Determination.belongsTo(Exam, {foreignKey: "exams_id"});
+/**
+ * unique 
+ */
+// Exam.addConstraint('unique_nbu_detail', {
+//   type: 'unique',
+//   fields: ['nbu', 'detail'],
+//   name: 'unique_nbu_detail',
+// });
+Exam.belongsTo(SampleType, { foreignKey: "sample_type_id" });
+SampleType.hasMany(Exam, { foreignKey: "sample_type_id" })
+Exam.hasMany(Determination, { foreignKey: "exams_id" });
+Determination.belongsTo(Exam, { foreignKey: "exams_id" });
 export default Exam;

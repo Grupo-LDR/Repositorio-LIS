@@ -1,4 +1,7 @@
-
+//TODO listar samples_type  ✔
+//TODO:crear  samples_type {validar, mapear, guardar}
+//TODO edit samples_type {validar, mapear, guardar}
+//TODO delete samples_type
 /**
  * 
  *  * CREAR TIPOS MUESTRAS
@@ -60,39 +63,35 @@ class SampleTypeController {
             console.log('Error a listar las muestras: ', error);
         }
     }
-
-    static async createSampleType(type) {
+    static async createSampleType(sampleType) {
         try {
-            const { name } = type;
-            const result = await SampleType.create({ name });
-            console.log("Creación de nuevo SAMPLE -> Exitosa ", result);
+            const { name, observation } = sampleType;
+            const result = await SampleType.create({ name, observation });
+            console.trace(result);
+            return true;
         } catch (error) {
-            console.error('Error al crear un nuevo typop muestra:', error);
-            throw error;
+            return false;
         }
     }
     static async updateSampleType(type) {
         try {
             const id = (type.del) ? type.del : type.edit;
-            console.log(id);
             const sampleType = await SampleType.findByPk(id);
             if (!sampleType) {
                 throw new Error('SampleType no encontrado');
             }
             if (type.del) {
-                console.log('line36 ', sampleType.status);
                 sampleType.status = !sampleType.status;
-                console.log('line37 ', type.del);
                 await sampleType.save();
-
             } else {
                 sampleType.name = type.name; // Actualiza el campo 'name'
                 await sampleType.save(); // Guarda los cambios en la instancia
             }
+            return true;
             console.log("Actualización de Sample Type -> Exitosa");
         } catch (error) {
             console.error('Error al actualizar Sample Type:', error);
-            throw error;
+            return false;
         }
     }
 }

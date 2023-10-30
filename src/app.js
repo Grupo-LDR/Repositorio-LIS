@@ -74,7 +74,8 @@ import path from 'path';
 // import LoginRouter from './routes/loginRouter.js';
 import UserRouter from './routes/userRouter.js';
 import AdminRouter from './routes/adminRouter.js';
-import SampleType from './routes/sampleTypeRouter.js';
+import SampleTypeRouter from './routes/sampleTypeRouter.js';
+import ExamRouter from './routes/examRouter.js';
 
 // import ExamRouter from './routes/examRouter.js';
 // import CityRouter from './routes/cityRouter.js';
@@ -117,7 +118,9 @@ class App {
         //     this.loginRouter = new LoginRouter();
         this.userRouter = new UserRouter();
         this.adminRouter = new AdminRouter();
-        this.sampleType = new SampleType();
+        this.sampleTypeRouter = new SampleTypeRouter();
+        this.examRouter = new ExamRouter();
+
 
         //     this.examRouter = new ExamRouter();
         //     this.cityRouter = new CityRouter();
@@ -145,12 +148,12 @@ class App {
         /**
          * Ruteo de peticiones sampletype
          */
-        this.app.use('/samplestype', this.sampleType.getRouter());
+        this.app.use('/samplestype', this.sampleTypeRouter.getRouter());
 
         /**
          * Ruteo Examenes
          */
-        // this.app.use('/exam', this.examRouter.getRouter());
+        this.app.use('/exam', this.examRouter.getRouter());
         /** 
          * Ruteo de ciudades
         */
