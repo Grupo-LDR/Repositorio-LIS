@@ -18,3 +18,4 @@ utils/EEM.mwb
 .prod.env
 *.env
 src/config.js
+src/config.js
