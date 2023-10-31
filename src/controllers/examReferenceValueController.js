@@ -60,7 +60,22 @@ class ExamReferenceValuesController {
             throw error;
         }
     }
-    
+    static async updateValue(id,value) { //✅
+        try {
+            const valor = await ExamReferenceValues.findByPk(id);
+            if (!valor) {
+                console.log('valor no encontrado');
+                throw new Error("valor no encontrado");
+            } else {
+                valor.set(value);
+                await valor.save();
+                return valor;
+            }
+        } catch (error) {
+            console.log("error al editar un valor", error)
+            throw error;
+        }
+    }
 
 }
 export default ExamReferenceValuesController

@@ -9,8 +9,9 @@ class ExamReferenceValuesRouter {
         this.router = express.Router();
         this.router.get('/', this.listExamReferenceValue);
         this.router.get('/list/:id', this.listValueId);
-        this.router.post('/',this.addValue);
-        
+        this.router.post('/', this.addValue);
+        this.router.post('/edit/:id', this.editValue);
+
     }
     async listExamReferenceValue(req, res) { //✅
         try {
@@ -30,7 +31,7 @@ class ExamReferenceValuesRouter {
         const id = req.params.id;
         try {
             const valor = await ExamReferenceValuesController.listValuesbyId(id);
-            console.log("ID ->",id)
+            //console.log("ID ->", id)
             res.status(200).send(JSON.stringify(valor));
             return valor
         } catch (error) {
@@ -39,12 +40,12 @@ class ExamReferenceValuesRouter {
             throw error;
         }
     }
-    async addValue(req,res){ //✅
+    async addValue(req, res) { //✅
         const value = req.body;
         try {
             const valor = await ExamReferenceValuesController.addValue(value);
             res.status(200).send(JSON.stringify(valor));
-            return valor   
+            return valor
         }
         catch (error) {
             console.log("error al agregar el valor de referencia", error)
@@ -52,7 +53,18 @@ class ExamReferenceValuesRouter {
             throw error;
         }
     }
-
+    async editValue(req,res) { //✅
+        try {
+            const id = req.params.id;
+            const valor = req.body;
+            const valorEditado = await ExamReferenceValuesController.updateValue(id,valor);
+           // console.log(valor);
+            res.status(200).send(JSON.stringify(valorEditado));
+        } catch (error) {
+            console.log('error al editar el valor de referencia');
+            throw error;
+        }
+    }
     getRouter() {
         return this.router;
     }
