@@ -112,7 +112,7 @@ class App {
         /**
          * Ruteo de valores de referencia
          */
-        this.app.use('/values', this.examReferenceValue.getRouter());
+        this.app.use('/values', this.examReferenceValuesRouter.getRouter());
         /**
          * Ruteo de autenticacion
          */
