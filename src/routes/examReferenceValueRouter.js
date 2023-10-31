@@ -9,6 +9,8 @@ class ExamReferenceValuesRouter {
         this.router = express.Router();
         this.router.get('/', this.listExamReferenceValue);
         this.router.get('/list/:id', this.listValueId);
+        this.router.post('/',this.addValue);
+        
     }
     async listExamReferenceValue(req, res) { //✅
         try {
@@ -37,8 +39,20 @@ class ExamReferenceValuesRouter {
             throw error;
         }
     }
+    async addValue(req,res){ //✅
+        const value = req.body;
+        try {
+            const valor = await ExamReferenceValuesController.addValue(value);
+            res.status(200).send(JSON.stringify(valor));
+            return valor   
+        }
+        catch (error) {
+            console.log("error al agregar el valor de referencia", error)
+            res.status(500).send(JSON.stringify("Error en el servidor"))
+            throw error;
+        }
+    }
 
-    
     getRouter() {
         return this.router;
     }
