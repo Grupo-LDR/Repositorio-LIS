@@ -1,4 +1,4 @@
-import ExamReferenceValues from "../models/exam_reference_values.js";
+import ExamReferenceValues from "../models/examReferenceValueModel.js";
 /**
  *  REFERENCIAS:
  * ✅(Hecho) || ❌(sin hacer) || ⏳ (en proceso)
@@ -60,7 +60,7 @@ class ExamReferenceValuesController {
             throw error;
         }
     }
-    
+
 
 }
 export default ExamReferenceValuesController

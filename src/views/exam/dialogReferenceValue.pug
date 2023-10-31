@@ -1,0 +1,228 @@
+dialog(id="new_dialog" class="border rounded")
+    form(id="new_form" action="./refvalue" method="post")
+        //- hiddens values
+        input(hidden type="number" value=1 name="status")
+        input(hidden type="number" value=1 name="employee_id")
+        div.row
+            div.form-group.col-md-8
+                div.row
+                    h3 Age range for determination
+                    div.form-group.col-md-6
+                        label(for="age_range_min" title="Enter the minimum age for this determination") Age Min:
+                        input(type="number" class="form-control" id="age_range_min" name="age_min" placeholder="Age min range" value="" required autofocus)
+                    div.form-group.col-md-6
+                        label(for="age_range_max" title="Enter the maximum age for this determination") Age Max:
+                        input(type="number" class="form-control" id="age_range_max" name="age_max" placeholder="Age max range" value="" required)
+                div.row
+                    h3 Value for validation
+                    div.form-group.col-md-6
+                        label(for="value_min" title="Enter the minimum value for this determination") Value Min:
+                        input(type="number" class="form-control" id="value_min" name="value_min" placeholder="Value min for determination" value="" required)
+                    div.form-group.col-md-6
+                        label(for="value_max" title="Enter the maximum value for this determination") Value Max:
+                        input(type="number" class="form-control" id="value_max" name="value_max" placeholder="Value max for determination" value="" required)
+                div.row
+                    h3 Value standard for determination
+                    div.form-group.col-md-4
+                        label(for="value_ref_min" title="Enter the minimum reference value for this determination") Value ref Min:
+                        input(type="number" class="form-control" id="value_ref_min" name="value_ref_min" placeholder="Value ref min for determination" value="" required)
+                    div.form-group.col-md-4
+                        label(for="value_ref_max" title="Enter the maximum reference value for this determination") Value ref Max:
+                        input(type="number" class="form-control" id="value_ref_max" name="value_ref_max" placeholder="Value ref max for determination" value="" required)
+                    div.form-group.col-md-4
+                        label(for="value_unit" title="Enter the unit for this determination") Unit determination:
+                        input(type="text" class="form-control" id="value_unit" name="unit_value" placeholder="example mg/dL " value="" required)
+                div.row    
+                    div.form-group.col-md-5
+                        h3 Sex
+                        div.form-group.col-md-9.border.rounded.text-center
+                            div.form-check.form-check-inline
+                                input(type="radio" class="form-check-input" id="male" name="sex" value="M" checked="user.sex === 'M'" title="Select Male if applicable" required)
+                                label.form-check-label(for="male") Male
+                            div.form-check.form-check-inline
+                                input(type="radio" class="form-check-input" id="female" name="sex" value="F" checked="user.sex === 'F'" title="Select Female if applicable" required)
+                                label.form-check-label(for="female") Female
+                            div.form-check.form-check-inline
+                                input(type="radio" class="form-check-input" id="pregnant" name="pregnant" value="false" checked="user.sex === 'F'" title="Select Pregnant if applicable" required)
+                                label.form-check-label(for="pregnant") Pregnant
+            div.form-group.col-md-4
+                h3 Observation for this determination
+                label(for="observation" title="Enter a description for this determination (250 character limit)") Description:
+                textarea.form-control(id="observation" name="observation" placeholder="Detail for this determination (250 char)" rows="10" cols="20" maxlength="250"  )
+                br 
+                button.btn.btn-primary.form-control(type="submit") Save Determination
+
+//-
+
+    id: {
+        autoIncrement: true,
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        primaryKey: true
+    },
+    status: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 1,
+        comment: "0: inactivo 1 activo"
+    },
+    sex: {
+        type: DataTypes.ENUM('M','F'),
+        allowNull: true
+    },
+    age_min: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    age_max: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    pregnant: {
+        type: DataTypes.TINYINT.UNSIGNED,
+        allowNull: false,
+        defaultValue: 0
+    },
+    value_max: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        comment: "alor max poible"
+    },
+    value_min: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        comment: "Valor minimo posible"
+    },
+    value_ref_max: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        comment: "valor max para persana sana"
+    },
+    value_ref_min: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        comment: "valo rmin para persona sana"
+    },
+    unit_value: {
+        type: DataTypes.STRING(45),
+        allowNull: false
+    },
+    observation: {
+        type: DataTypes.STRING(250),
+        allowNull: true
+    },
+    create_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.Sequelize.fn('current_timestamp')
+    },
+    update_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: Sequelize.Sequelize.fn('current_timestamp')
+    }
+
+//- dialog(id="new_dialog" class="border rounded", open)
+//-     form(id="new_form" action="./refvalue" method="post")
+//-         div.row
+
+//-             div.form-group.col-md-8
+//-                 div.row
+//-                     h3 Age range for determination
+//-                     div.form-group.col-md-6
+//-                         label(for="age_range_min") Age Min:
+//-                         input(type="number" class="form-control" id="age_range_min" name="age_range_min" placeholder="Age min range" value="")
+//-                     div.form-group.col-md-6
+//-                         label(for="age_range_max") Age Max:
+//-                         input(type="number" class="form-control" id="age_range_max" name="age_range_max" placeholder="Age max range" value="")
+//-                 div.row
+//-                     h3 Value for validation
+//-                     div.form-group.col-md-6
+//-                         label(for="value_min") Value Min:
+//-                         input(type="number" class="form-control" id="value_min" name="value_min" placeholder="Value min for determination" value="")
+//-                     div.form-group.col-md-6
+//-                         label(for="value_max") Value Max:
+//-                         input(type="number" class="form-control" id="value_max" name="value_max" placeholder="Value max for determination" value="")
+//-                 div.row
+//-                     h3 Value standard for determination
+//-                     div.form-group.col-md-4
+//-                         label(for="value_ref_min") Value ref Min:
+//-                         input(type="number" class="form-control" id="value_ref_min" name="value_ref_min" placeholder="Value ref min for determination" value="")
+//-                     div.form-group.col-md-4
+//-                         label(for="value_ref_max") Value ref Max:
+//-                         input(type="number" class="form-control" id="value_ref_max" name="value_ref_max" placeholder="Value ref max for determination" value="")
+//-                     div.form-group.col-md-4
+//-                         label(for="value_unit") Unit determination:
+//-                         input(type="text" class="form-control" id="value_unit" name="value_unit" placeholder="example mg/dL " value="")
+//-                 div.row    
+//-                     div.form-group.col-md-5
+//-                         h3 Sex
+//-                         div.form-group.col-md-9.border.rounded.text-center
+//-                             div.form-check.form-check-inline
+//-                                 input(type="radio" class="form-check-input" id="male" name="sex" value="M" checked="user.sex === 'M'")
+//-                                 label.form-check-label(for="male") Male
+//-                             div.form-check.form-check-inline
+//-                                 input(type="radio" class="form-check-input" id="female" name="sex" value="F" checked="user.sex === 'F'")
+//-                                 label.form-check-label(for="female") Female
+//-                             div.form-check.form-check-inline
+//-                                 input(type="radio" class="form-check-input" id="pregnant" name="pregnant" value="false" checked="user.sex === 'F'")
+//-                                 label.form-check-label(for="pregnant") Pregnant
+//-             div.form-group.col-md-4
+//-                 h3 Observation for this determination
+//-                 label(for="observation") Description:
+//-                 textarea.form-control(id="observation" name="observation" placeholder="Detail for this determination (250 char)" rows="10" cols="20" maxlength="250" autofocus)  
+//-                 br 
+//-                 button.btn.btn-primary.form-control(type="submit") SAve Determination                 
+
+//- dialog(id="new_dialog" class="border rounded", open)
+    form(id="new_form" action="./refvalue" method="post")
+        div.row
+            div.form-group.col-md-12
+                h3 Description for determination
+                label(for="observation") Description:
+                textarea.form-control(id="observation" name="observation" placeholder="Detail for this determination" rows="4" cols="30")
+            div.form-group.col-md-12
+                h3 Age range for determination
+                div.row
+                    div.form-group.col-md-6
+                        label(for="age_range_min") Age Min:
+                        input(type="number" class="form-control" id="age_range_min" name="age_range_min" placeholder="Age min range" value="")
+                    div.form-group.col-md-6
+                        label(for="age_range_max") Age Max:
+                        input(type="number" class="form-control" id="age_range_max" name="age_range_max" placeholder="Age max range" value="")
+                h3 Value for validation
+                div.row
+                    div.form-group.col-md-6
+                        label(for="value_min") Value Min:
+                        input(type="number" class="form-control" id="value_min" name="value_min" placeholder="Value min for determination" value="")
+                    div.form-group.col-md-6
+                        label(for="value_max") Value Max:
+                        input(type="number" class="form-control" id="value_max" name="value_max" placeholder="Value max for determination" value="")
+                h3 Value standard for determination
+                div.row
+                    div.form-group.col-md-4
+                        label(for="value_ref_min") Value ref Min:
+                        input(type="number" class="form-control" id="value_ref_min" name="value_ref_min" placeholder="Value ref min for determination" value="")
+                    div.form-group.col-md-4
+                        label(for="value_ref_max") Value ref Max:
+                        input(type="number" class="form-control" id="value_ref_max" name="value_ref_max" placeholder="Value ref max for determination" value="")
+                    div.form-group.col-md-4
+                        label(for="value_unit") Unit determination:
+                        input(type="text" class="form-control" id="value_unit" name="value_unit" placeholder="Unit for this Value" value="")
+                h3 Sex
+                div.form-group.col-md-12
+                    div.form-check.form-check-inline
+                        input(type="radio" class="form-check-input" id="male" name="sex" value="M" checked="user.sex === 'M'")
+                        label.form-check-label(for="male") Male
+                    div.form-check.form-check-inline
+                        input(type="radio" class="form-check-input" id="female" name="sex" value="F" checked="user.sex === 'F'")
+                        label.form-check-label(for="female") Female
+                    div.form-check.form-check-inline
+                        input(type="radio" class="form-check-input" id="pregnant" name="pregnant" value="false" checked="user.sex === 'F'")
+                        label.form-check-label(for="pregnant") Pregnant
+
+
+//-
+
+    td #{e.sex}
+    td #{e.pregnant} 

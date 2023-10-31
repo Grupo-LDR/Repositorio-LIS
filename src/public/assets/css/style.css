@@ -169,10 +169,10 @@ li.menu-link.active ul.dropdown-content {
   color: red;
 }
 
-/* Define un estilo personalizado para el color rojo en la columna "Age max." */
-#refValTable td:nth-child(4) {
+
+/* #refValTable td:nth-child(4) {
   color: red;
-}
+} */
 
 */ tr:not(:first-child):nth-child(odd) {
   background-color: #f2f2f2;
