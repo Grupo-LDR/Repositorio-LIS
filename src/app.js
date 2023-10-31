@@ -118,7 +118,7 @@ class App {
         /**
          * Ruteo de peticiones sampletype
          */
-        this.app.use('/samplestype', this.sampleTypeRouter.getRouter());
+        this.app.use('/sampletype', this.sampleTypeRouter.getRouter());
         /**
          * Ruteo de autenticacion
          */
