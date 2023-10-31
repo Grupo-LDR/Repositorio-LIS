@@ -35,6 +35,7 @@ import UserRouter from './routes/userRouter.js';
 import ExamRouter from './routes/examRouter.js';
 import CityRouter from './routes/cityRouter.js';
 import orderRouter from './routes/orderRouter.js';
+import examReferenceValuesRouter from './routes/examReferenceValueRouter.js';
 /**
  * variables y constantes App
  */
@@ -75,6 +76,7 @@ class App {
             this.examRouter = new ExamRouter();
             this.cityRouter = new CityRouter();
             this.orderRouter = new orderRouter();
+            this.examReferenceValuesRouter= new examReferenceValuesRouter();
     }
     /**
      * Ruteo de peticiones  
@@ -107,6 +109,10 @@ class App {
          * Ruteo de ordenes
          */
         this.app.use('/order', this.orderRouter.getRouter());
+        /**
+         * Ruteo de valores de referencia
+         */
+        this.app.use('/values', this.examReferenceValue.getRouter());
         /**
          * Ruteo de autenticacion
          */

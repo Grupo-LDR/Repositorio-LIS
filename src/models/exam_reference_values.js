@@ -1,6 +1,6 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import Determination from './determination.js';
+
 Conexion.conectar();
 class ExamReferenceValues extends Model { };
 ExamReferenceValues.init({
