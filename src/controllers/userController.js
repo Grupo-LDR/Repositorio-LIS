@@ -1,13 +1,30 @@
 import User from '../models/userModel.js';
 import City from "../models/cityModel.js";
 import AuthController from "./authController.js"
+import Conexion from '../models/conexion.js';
 /**
  *  REFERENCIAS:
  * ✅(Hecho) || ❌(sin hacer) || ⏳ (en proceso)
  */
 class UserController {
+
+
+    static async listUsers() { //✅
+        try {
+            const usersWithAgeQuery = 'SELECT User.*, YEAR(FROM_DAYS(DATEDIFF(CURDATE(), birth_at))) AS edad, City.id AS Cityid, City.name AS Cityname FROM users AS User LEFT OUTER JOIN citys AS City ON User.city_id = City.id';
+            const users = await Conexion.sequelize.query(usersWithAgeQuery, {
+                type: Conexion.sequelize.QueryTypes.SELECT,
+                model: User,
+                mapToModel: true, //mapea el user y me trae
+            });
+            return users;
+        } catch (error) {
+            console.error('Error al listar usuarios:', error);
+            throw error;
+        }
+    }
     //listar todos los usuarios
-    static async listUsers() { //✅ 
+    static async listUsers_2() { //✅ 
         try {
             const users = await User.findAll({
                 include: {
@@ -24,6 +41,7 @@ class UserController {
     }
     //buscar usuario por ID
     static async findUser(id) { //✅
+        console.log('entro user find', id);
         try {
             const user = await User.findByPk(id, {
                 include: {
@@ -33,7 +51,7 @@ class UserController {
                 }
             });
             if (user) {
-                user.dataValues.edad = this.calcularEdad(user.dataValues.date_birth_at);
+                user.dataValues.edad = this.calcularEdad(user.dataValues.birth_at);
                 return user;
             } else {
                 throw new Error('Usuario no encontrado');
@@ -88,7 +106,7 @@ class UserController {
                 email,
                 address,
                 birth_at,
-                password:nuevaPass,
+                password: nuevaPass,
                 create_user_id,
                 update_user_id,
                 city_id,
@@ -123,6 +141,7 @@ class UserController {
             } else {
                 usuario.set(user);
             };
+            console.log(usuario);
             await usuario.save();
             return usuario;
         } catch (error) {
@@ -133,7 +152,7 @@ class UserController {
     // asignar Rol de usuario 
     //❌(sin hacer)
 
-    
+
 }
 
 export default UserController;

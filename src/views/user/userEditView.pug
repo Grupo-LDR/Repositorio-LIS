@@ -9,8 +9,7 @@ form
 
 div(class="container mt-5")
     div(class="row justify-content-center")
-
-        div(class="col-10")
+        div(class="col-12")
             div(class="rounded p-4 border table-container")
                 h2 Modificacion datos Usuario
                 form( accion="" method ="post" onsubmit="return verifyForm();" id="form_edit")
@@ -25,6 +24,14 @@ div(class="container mt-5")
                             label(for="email") Email:
                             input(type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico"  value=user.email)    
                         div(class="form-group col-md-4 p-2")
+                            label(class="p2 m-2") Sex:                     
+                            div(class="form-check form-check-inline")
+                                input(type="radio" class="form-check-input" id="male" name="sex" value="M" checked=user.sex === 'M'  )
+                                label(class="form-check-label" for="male" ) Male
+                            div(class="form-check form-check-inline")
+                                input(type="radio" class="form-check-input " id="female" name="sex" value="F" checked=user.sex === 'F'  )
+                                label(class="form-check-label " for="female" ) Female
+                        div(class="form-group col-md-4 p-2")
                             label(class="p2 m-2") Gender:                     
                             div(class="form-check form-check-inline")
                                 input(type="radio" class="form-check-input" id="male" name="gender" value="M" checked=user.gender === 'M'  )
@@ -34,15 +41,10 @@ div(class="container mt-5")
                                 label(class="form-check-label " for="female" ) Female
                             div(class="form-check form-check-inline")
                                 input(type="radio" class="form-check-input " id="other" name="gender" value="X" checked=user.gender === 'X'  )
-                                label(class="form-check-label" for="other" ) Other
-                        div(class="form-group col-md-4 p-2")
-                            label(class="p2 m-2") Active:                     
-                            div(class="form-check form-check-inline")
-                                input(type="radio" class="form-check-input" id="active" name="active" value=true checked=user.active === true  )
-                                label(class="form-check-label" for="male") Active
-                            div(class="form-check form-check-inline")
-                                input(type="radio" class="form-check-input" id="inactive" name="active" value=false checked=user.active === false  )
-                                label(class="form-check-label" for="female") Inactive        
+                                label(class="form-check-label" for="other" ) Other        
+                        div(class="form-group col-md-4")
+                            label(for="birth_at") Date birth:
+                                input(type="date" class="form-control" id="birth_at" name="birth_at" placeholder="Date birth"  value=user.birth_at)        
                     div(class="row")            
                         div(class="form-group col-md-4")
                             label(for="document ") Document:
@@ -50,26 +52,31 @@ div(class="container mt-5")
                         div(class="form-group col-md-4")
                             label(for="phone") Phone:
                             input(type="text" class="form-control" id="phone" name="phone" placeholder="Phone"  value=user.phone)
-                        div(class="row")            
-                            div(class="form-group col-md-4")
-                                label(for="address ") Address:
-                                    input(type="text" class="form-control" id="address" name="address" placeholder="Address"  value=user.address)
-                            div(class="form-group col-md-4")
-                                label(for="city_select") City:
+                    div(class="row")            
+                        div(class="form-group col-md-4")
+                            label(for="address ") Address:
+                                input(type="text" class="form-control" id="address" name="address" placeholder="Address"  value=user.address)
+                        div(class="form-group col-md-4")
+                            label(for="city_select") City:
                                 select(name="city" class="form-control" id="city" placeholder="City" )
                                     each cit in ciudades
-                                        option(value=cit.id, selected=(cit.id === user.city_id)) #{cit.name}                                        
-                            div(class="form-group col-md-4")
-                                LABE    
-                                label(for="birth_at") Date birth:
-                                input(type="date" class="form-control" id="birth_at" name="birth_at" placeholder="Date birth"  value=user.birth_at)
+                                        option(value=cit.id, selected=(cit.id === user.city_id)) #{cit.name}
+                            div(class="form-group col-md-4 p-2")
+                                label(class="p2 m-2") Active:                     
+                                div(class="form-check form-check-inline")
+                                    input(type="radio" class="form-check-input" id="active" name="active" value=true checked=user.active === true  )
+                                    label(class="form-check-label" for="male") Active
+                                div(class="form-check form-check-inline")
+                                    input(type="radio" class="form-check-input" id="inactive" name="active" value=false checked=user.active === false  )
+                                    label(class="form-check-label" for="female") Inactive                                
+                    div(class="row")            
+                        div(class="form-group p-2" id="div_button")    
+                            input(hidden="true" id="id_user" name="id" value=user.id)    
+                            label(for="button_confirm" class="p-4") Edit User:
+                            button(type="" class="btn btn-primary" name="button_edit" id="button_edit" ) Edit
+                            button(type="submit" class="btn btn-primary  m-2" name="button_confirm" id="button_confirm") Send
+                            button(type="" class="btn btn-warning  m-2" name="button_cancel" id="button_cancel") Cancel
 
-                            div(class="form-group p-2" id="div_button")    
-                                input(hidden="true" id="id_user" name="id" value=user.id)    
-                                label(for="button_confirm" class="p-4") Edit User:
-                                button(type="" class="btn btn-primary" name="button_edit" id="button_edit" ) Edit
-                                button(type="submit" class="btn btn-primary  m-2" name="button_confirm" id="button_confirm") Send
-                                button(type="" class="btn btn-warning  m-2" name="button_cancel" id="button_cancel") Cancel
 //- include footer 
 script.
     const botonEdit = document.getElementById("button_edit");

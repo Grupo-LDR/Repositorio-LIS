@@ -4,7 +4,7 @@ import { Sequelize, DataTypes, Model } from 'sequelize';
 Conexion.conectar();
 class User extends Model {
 
-  edad = '';
+  // edad = '';
   calcularEdad() {
     if (this.date_birth_at) {
       const hoy = new Date();
@@ -16,6 +16,18 @@ class User extends Model {
       return edad;
     }
     return null; // Devuelve null si la fecha de nacimiento no está definida
+  }
+  get edad() {
+    if (this.birth_at) {
+      const hoy = new Date();
+      const fechaNacimiento = new Date(this.birth_at);
+      const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+      if (hoy < new Date(hoy.getFullYear(), fechaNacimiento.getMonth(), fechaNacimiento.getDate())) {
+        return edad - 1;
+      }
+      return edad;
+    }
+    return null; // si no hay fecha de nacimiento
   }
 }
 User.init({
@@ -58,7 +70,7 @@ User.init({
     },
   },
   gender: {
-    type: DataTypes.ENUM('M', 'F', 'X', ''),
+    type: DataTypes.ENUM('M', 'F', 'X'),
     allowNull: false,
     comment: "M: masculino, F: femenino, X: gen x"
   },

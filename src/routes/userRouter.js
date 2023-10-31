@@ -29,8 +29,8 @@ class UserRouter {
             }
             const baseUrl = req.protocol + '://' + req.get('host');
             const exams = await ExamController.listExams();
-            // res.render('./orders/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
-            res.status(200).json(user)
+            res.render('./order/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
+            // res.status(200).json(user)
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -42,9 +42,9 @@ class UserRouter {
     async getUsers(req, res) {
         try {
             const usuarios = await UserController.listUsers();
-            console.log(usuarios);
-            // res.render('./users/usersView.pug', { usuarios });
-            res.status(200).json(usuarios)
+            // console.log(usuarios);
+            //    res.render('./user/usersView.pug', { usuarios });
+            res.status(200).send(JSON.stringify(usuarios))
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -60,16 +60,13 @@ class UserRouter {
             if (!user) {
                 return res.status(404).send('Usuario no encontrado');
             }
-            //aca la idea es que me haga una lista desplegable para que al momento
-            //de editar, me muestre la lista y el usuario elija la ciudad desde edesplegable
-            //            const nombreCiudad = user.City ? user.City.name : null;
-            // console.log(user);
+            console.log(user);
             const ciudades = await CitysController.listCitys();
             // console.log("CIUDADES: ->", ciudades[0].name, ' - ', ciudades[0].id)
             // console.log('ciudad--->>> ', ciudades[0]);
-            let ciudad = ciudades[0];
-            // res.render('./users/userEditView.pug', { user, ciudades: ciudades });
-            res.status(200).json(user, ciudades)
+            //let ciudad = ciudades[0];
+            res.render('./user/userEditView.pug', { user, ciudades: ciudades });
+            //res.status(200).send(JSON.stringify(user));
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -79,7 +76,7 @@ class UserRouter {
         try {
 
             const citys = await CitysController.listCitys();
-            res.render('./users/userNewView.pug', { citys: citys });
+            res.render('./user/userNewView.pug', { citys: citys });
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -91,7 +88,7 @@ class UserRouter {
             const usuario = req.body;
             await UserController.updateUsuario(usuario);
             //res.redirect('/user')
-            res.redirect(`/users/edit/${usuario.id}`)
+            res.redirect(`/user/edit/${usuario.id}`)
         } catch (error) {
             console.clear;
             console.error('Error al obtener actualizar user:', error);

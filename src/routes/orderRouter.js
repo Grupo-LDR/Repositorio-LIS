@@ -15,7 +15,7 @@ class OrderRouter {
             const orders = await orderController.listarRegistros();
             //console.log(orders);
             //  const or = JSON.stringify(orders);
-           // res.render('./orders/orderView.pug', { orders });
+            // res.render('./orders/orderView.pug', { orders });
             //, { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
 
             res.status(200).json(orders);
@@ -30,9 +30,9 @@ class OrderRouter {
         try {
             const id = req.body.id;
             const estado = req.body.status;
-            const {diagnosis,observation} = req.body
+            const { diagnosis, observation } = req.body
             //actualizar segun estado
-            const order = await orderController.actualizarOrdenDeTrabajo(id, estado,diagnosis,observation);
+            const order = await orderController.actualizarOrdenDeTrabajo(id, estado, diagnosis, observation);
             res.status(200).json(order);
         } catch (error) {
             // Manejo de errores
@@ -42,6 +42,7 @@ class OrderRouter {
     }
 
     async postNewOrder(req, res, next) {
+        console.trace(req.body);
         try {
             const orderData = {
                 diagnosis: req.body.diagnosis,

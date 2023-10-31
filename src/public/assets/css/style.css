@@ -122,6 +122,7 @@ li.menu-link.active ul.dropdown-content {
   white-space: pre-wrap;
 }
 
+/*
 .table-container {
   display: flex;
   justify-content: center;
@@ -129,7 +130,17 @@ li.menu-link.active ul.dropdown-content {
   width: 80vw;
   height: 100vh;
   padding: auto;
-  /* margin-top: 10vh; */
+}
+*/
+.table-container {
+  display: flex;
+  align-items: center;
+  width: 80vw;
+  height: 65vh;
+  padding: auto;
+  margin-top: 10vh;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 /*DTATBLES CSS*/
