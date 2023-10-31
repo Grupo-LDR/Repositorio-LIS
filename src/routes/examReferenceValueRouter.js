@@ -8,8 +8,9 @@ class ExamReferenceValuesRouter {
     constructor() {
         this.router = express.Router();
         this.router.get('/', this.listExamReferenceValue);
+        this.router.get('/list/:id', this.listValueId);
     }
-    async listExamReferenceValue(req, res) { //⏳
+    async listExamReferenceValue(req, res) { //✅
         try {
             const values = await ExamReferenceValuesController.listValues();
             console.log('listando valores de referencia: ->')
@@ -23,6 +24,21 @@ class ExamReferenceValuesRouter {
             throw error
         }
     }
+    async listValueId(req, res) { //✅
+        const id = req.params.id;
+        try {
+            const valor = await ExamReferenceValuesController.listValuesbyId(id);
+            console.log("ID ->",id)
+            res.status(200).send(JSON.stringify(valor));
+            return valor
+        } catch (error) {
+            console.log("error al listar el valor de referencia", error)
+            res.status(500).send(JSON.stringify("Error en el servidor"))
+            throw error;
+        }
+    }
+
+    
     getRouter() {
         return this.router;
     }
