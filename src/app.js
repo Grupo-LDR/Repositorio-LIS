@@ -34,8 +34,9 @@ import LoginRouter from './routes/loginRouter.js';
 import UserRouter from './routes/userRouter.js';
 import ExamRouter from './routes/examRouter.js';
 import CityRouter from './routes/cityRouter.js';
-import orderRouter from './routes/orderRouter.js';
-import examReferenceValuesRouter from './routes/examReferenceValueRouter.js';
+import OrderRouter from './routes/orderRouter.js';
+import SampleTypeRouter from './routes/sampleTypeRouter.js';
+import ExamReferenceValuesRouter from './routes/examReferenceValueRouter.js';
 /**
  * variables y constantes App
  */
@@ -75,8 +76,9 @@ class App {
         this.userRouter = new UserRouter();
         this.examRouter = new ExamRouter();
         this.cityRouter = new CityRouter();
-        this.orderRouter = new orderRouter();
-        this.examReferenceValuesRouter = new examReferenceValuesRouter();
+        this.orderRouter = new OrderRouter();
+        this.examReferenceValuesRouter = new ExamReferenceValuesRouter();
+        this.sampleTypeRouter = new SampleTypeRouter();
     }
     /**
      * Ruteo de peticiones  
@@ -113,6 +115,10 @@ class App {
          * Ruteo de valores de referencia
          */
         this.app.use('/refvalue', this.examReferenceValuesRouter.getRouter());
+        /**
+         * Ruteo de peticiones sampletype
+         */
+        this.app.use('/samplestype', this.sampleTypeRouter.getRouter());
         /**
          * Ruteo de autenticacion
          */
