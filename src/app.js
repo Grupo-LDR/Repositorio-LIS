@@ -42,7 +42,7 @@ import ExamReferenceValuesRouter from './routes/examReferenceValueRouter.js';
  */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-console.clear();
+//console.clear();
 class App {
     constructor() {
         console.log("APP instanciada");
