@@ -1,0 +1,65 @@
+//-
+    CREATE TABLE `exam_reference_values` (
+        td #{examRefValue.id}
+        td #{examRefValue.status}
+        td #{examRefValue.sex}
+        td #{examRefValue.age_min}
+        td #{examRefValue.age_max}  
+        td #{examRefValue.pregnant}        
+        td #{examRefValue.value_max}        
+        td #{examRefValue.value_min}        
+        td #{examRefValue.value_ref_max}        
+        td #{examRefValue.value_ref_min}        
+        td #{examRefValue.unit_value}        
+        td #{examRefValue.observation}        
+        td #{examRefValue.create_at}        
+        td #{examRefValue.update_at}
+        \n datetime DEFAULT current_timestamp(),
+        PRIMARY KEY (\nid\n) USING BTREE
+    ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Tabla para registrar valores standard de estudios'
+
+    //- include head 
+- let auth=true;
+body
+table
+    thead #{titulo}
+        hr
+        tr 
+            td #
+            td Sex
+            td Age min.
+            td Age max.
+            td Pregnant 
+            td Value min.
+            td Value max.
+            td Value ref. min.
+            td Value ref. max.
+            td Unit Value
+            td Observation        
+            td Type Sample
+            if auth
+                td Status
+
+    each examRefValue in examsRefValue     
+
+        tr 
+            td #{examRefValue.id}
+            td #{examRefValue.sex}
+            td #{examRefValue.age_min}
+            td #{examRefValue.age_max} 
+            td #{examRefValue.pregnant} 
+            td #{examRefValue.value_min}      
+            td #{examRefValue.value_max}         
+            td #{examRefValue.value_ref_min}
+            td #{examRefValue.value_ref_max}                
+            td #{examRefValue.unit_value}        
+            td #{examRefValue.observation}        
+                //- td #{examRefValue.create_at}        
+                //- td #{examRefValue.update_at}                    
+            td Type Sample
+                if auth 
+                td 
+                    if examRefValue.status
+                        p Activo
+                    else 
+                        p Inactivo   
