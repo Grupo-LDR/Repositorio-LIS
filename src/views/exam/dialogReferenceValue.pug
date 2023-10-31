@@ -49,8 +49,14 @@ dialog(id="new_dialog" class="border rounded")
                 h3 Observation for this determination
                 label(for="observation" title="Enter a description for this determination (250 character limit)") Description:
                 textarea.form-control(id="observation" name="observation" placeholder="Detail for this determination (250 char)" rows="10" cols="20" maxlength="250"  )
-                br 
-                button.btn.btn-primary.form-control(type="submit") Save Determination
+                br
+                div.form-group.text-center
+                    div.form-check.form-check-inline
+                        button(type="submit" formmethod="post" class="btn btn-primary m-2" onsubmit="false") Save
+                    div.form-check.form-check-inline                        
+                        button(id="new_reset" type="reset" class="btn btn-warning m-2") Reset
+                    div.form-check.form-check-inline
+                        button(id="new_close" type="button" class="btn btn-secondary m-2") Cancel
 
 //-
 

@@ -23,15 +23,8 @@ div(class="container mt-5")
                                     td(class="text-center align-middle userEdit")
                                         i(class="fa-solid fa-pen-to-square  px-2   userLink" name="sample_edit" type="edit" sample_name=sample.name sample=sample.id id="edi"+sample.id accion="editSample")
                                         - const status = sample.status == 1 ? 'fa-trash  trash-red' : 'fa-recycle trash-green';
-                                        //- <i class="fa-solid fa-recycle fa-beat-fade" style="color: #2d5c39;"></i>
-
-                                        //- if sample.status==0
                                         i(class=`fa-solid  ${status}    px-2   userLink` name="sample_delete" type="delete" sample=sample.id id="del"+sample.id accion="delSample") 
-                                        //- #{sample.status} #{status}
-                                        //- td(class="text-center  align-middle  fs-6" name=""id=sample.id)  #{sample.id} , #{sample.name}
-                                            td(class="text-center align-middle userEdit")
-                                                i(class="fa-solid fa-pen-to-square px-2   userLink" name="sample" type="edit" sample=sample.id id="edi"+sample.id accion="editSample")
-                                                i(class="fa-solid fa-trash fa-beat  px-2   userLink" name="sample" type="delete" sample=sample.id id="del"+sample.id accion="delSample")
+
 dialog(id="new_dialog")
     form(id="new_form" action="./sampletype" method="post")
         h2 New Sample Type

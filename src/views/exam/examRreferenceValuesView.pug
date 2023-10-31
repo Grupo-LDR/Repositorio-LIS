@@ -46,10 +46,12 @@ include ../head
                                                     //- td #{e.update_at}                    
                                                 if auth 
                                                     td.text-center 
-                                                        i(class="fa-solid fa-pen-to-square  px-2   userLink" name="sample_edit" type="edit" sample_name=e.name sample=e.id id="edi"+e.id accion="editSample")
+                                                        i(class="fa-solid fa-pen-to-square  px-2   userLink" name="e_edit" type="edit" sample_name=e.name elem=e.id id="edi"+e.id accion="editSample")
                                                         - const status = e.status == 1 ? 'fa-trash  trash-red' : 'fa-recycle trash-green';
-                                                        i(class=`fa-solid  ${status}    px-2   userLink` name="sample_delete" type="delete" sample=e.id id="del"+e.id accion="delSample") 
+                                                        i(class=`fa-solid  ${status}    px-2   userLink` name="e_delete" type="delete" elem=e.id id="del"+e.id accion="delSample") 
 
+form(id="del_form" action="./refvalue" method="post" hidden)
+    input(type="text" name="del" value="" hidden )  
 include dialogReferenceValue
 dialog(id="new_dialog" )
     form(id="new_form" action="./refvalue" method="post")
@@ -68,14 +70,38 @@ dialog(id="new_dialog" )
 
 script.
     // dialogo new
-    // captura boton nueva orden
+    // captura boton nueva ref
     const openNewType = document.getElementById('btn_new_type');
-    // captura  dialogo nueva orden
+    // captura  dialogo nueva ref
     const dialogNew = document.getElementById('new_dialog');
-    // evento click nueva orden
+    // evento click nueva ref
     openNewType.addEventListener('click', () => {
         dialogNew.showModal();
     });
+    // captura icono delete 
+        const btnsElementDel = document.querySelectorAll('i[name="e_delete"]');
+    // iteracion iconos delete
+        btnsElementDel.forEach(function(icon) {
+        icon.addEventListener('click', function() {
+            // Captura el click en el icono
+            const elemId = icon.getAttribute('elem');
+
+            // Pide confirmación al usuario
+            const confirmarEliminacion = confirm('¿Estás seguro de que deseas Modificar el estado de esta Muestra?');
+
+            // Si el usuario acepta la confirmación, procede con la eliminación
+            if (confirmarEliminacion) {
+            // Captura el input para asignar el ID a la solicitud de eliminación
+            const inputDelete = document.querySelector('input[name="del"]');
+            inputDelete.value = elemId;
+
+            // Envía el formulario de eliminación
+            document.getElementById("del_form").submit();
+            }
+        });
+        });
+
+
 //-
     - let auth=true;
     body
@@ -261,9 +287,9 @@ script.
             });
 
         // captura icono delete 
-            const btnsSampleDel = document.querySelectorAll('i[name="sample_delete"]');
+            const btnsElementDel = document.querySelectorAll('i[name="sample_delete"]');
         // iteracion iconos del
-            btnsSampleDel.forEach(function(icon) {
+            btnsElementDel.forEach(function(icon) {
             icon.addEventListener('click', function() {
                 // Captura el click en el icono
                 const sampleId = icon.getAttribute('sample');

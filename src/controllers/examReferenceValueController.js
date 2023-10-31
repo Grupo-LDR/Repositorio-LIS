@@ -60,6 +60,32 @@ class ExamReferenceValuesController {
             throw error;
         }
     }
+    static async update(value) {
+
+        try {
+            const id = (value.del) ? value.del : value.edit;
+            console.log(id);
+            const update = await ExamReferenceValues.findByPk(id);
+            if (!update) {
+                throw new Error('Valor Referencia no encontrado');
+            }
+            if (value.del) {
+                console.log('line36 ', update.status);
+                update.status = !update.status;
+                console.log('line37 ', value.del);
+                await update.save();
+            } else {
+                // aca se deberia hacer un update completo
+                // el formualrio todavia no ennvia lso datos
+                //
+                await update.save(); // Guarda los cambios en la instancia
+            }
+            console.log("Actualización -> Exitosa");
+        } catch (error) {
+            console.error('Error al actualizar :', error);
+            throw error;
+        }
+    }
 
 
 }

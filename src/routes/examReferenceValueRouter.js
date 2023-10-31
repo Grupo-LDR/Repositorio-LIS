@@ -42,23 +42,33 @@ class ExamReferenceValuesRouter {
     }
     async addValue(req, res) { //✅
         const value = req.body;
-        try {
-            const valor = await ExamReferenceValuesController.addValue(value);
-            res.status(200).send(JSON.stringify(valor));
-            return valor
-        }
-        catch (error) {
-            console.log("error al agregar el valor de referencia", error)
-            res.status(500).send(JSON.stringify("Error en el servidor"))
-            throw error;
+        if (value.edit || value.del) {
+            await ExamReferenceValuesController.update(value);
+            console.log(`entro por edit o del ${JSON.stringify(value)}`);
+            //   res.send('ok');
+            res.redirect('/refvalue');
+            //            const value = await ExamReferenceValuesController.updateValue(req.body); 
+        } else {
+
+            try {
+                const valor = await ExamReferenceValuesController.addValue(value);
+                res.redirect('/refvalue');
+                //            res.status(200).send(JSON.stringify(valor));
+                return valor
+            }
+            catch (error) {
+                console.log("error al agregar el valor de referencia", error)
+                res.status(500).send(JSON.stringify("Error en el servidor"))
+                throw error;
+            }
         }
     }
-    async editValue(req,res) { //✅
+    async editValue(req, res) { //✅
         try {
             const id = req.params.id;
             const valor = req.body;
-            const valorEditado = await ExamReferenceValuesController.updateValue(id,valor);
-           // console.log(valor);
+            const valorEditado = await ExamReferenceValuesController.updateValue(id, valor);
+            // console.log(valor);
             res.status(200).send(JSON.stringify(valorEditado));
         } catch (error) {
             console.log('error al editar el valor de referencia');
