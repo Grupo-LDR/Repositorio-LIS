@@ -71,12 +71,12 @@ class App {
         /**
          * instancias de Ruteo
          */
-            this.loginRouter = new LoginRouter();
+        this.loginRouter = new LoginRouter();
         this.userRouter = new UserRouter();
-            this.examRouter = new ExamRouter();
-            this.cityRouter = new CityRouter();
-            this.orderRouter = new orderRouter();
-            this.examReferenceValuesRouter= new examReferenceValuesRouter();
+        this.examRouter = new ExamRouter();
+        this.cityRouter = new CityRouter();
+        this.orderRouter = new orderRouter();
+        this.examReferenceValuesRouter = new examReferenceValuesRouter();
     }
     /**
      * Ruteo de peticiones  
@@ -112,11 +112,11 @@ class App {
         /**
          * Ruteo de valores de referencia
          */
-        this.app.use('/values', this.examReferenceValuesRouter.getRouter());
+        this.app.use('/refvalue', this.examReferenceValuesRouter.getRouter());
         /**
          * Ruteo de autenticacion
          */
-            //    this.app.use(this.authServer.authUser);
+        //    this.app.use(this.authServer.authUser);
         /**
          * Ruteo de error
          */
