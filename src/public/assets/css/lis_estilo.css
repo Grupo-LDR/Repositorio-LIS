@@ -1,0 +1,108 @@
+/* Lis estilo CSS */
+:root {
+    --paddin-lis-div: 2vh;
+    --margin-lis-div: 5vh;
+    --altura-bar: 8vh;
+    --altura-main: 91vh;
+    --paddin-lis-izq: 2px;
+    --paddin-lis-der: 2px;
+    /* -- colores --*/
+    --lis-primario: #adbce6;
+    --lis-primario-trasp: #4978f885;
+
+}
+
+separada o en línea body,
+html {
+    width: 100vw;
+    height: 100vh;
+}
+
+.lis-div {
+    height: 100vh;
+    border: 3px solid var(--lis-primario);
+    border-radius: 5px;
+    padding: 1px;
+    margin: 0;
+
+}
+
+.lis-izq-section {
+    width: 40%;
+    float: left;
+    /* border: 1px solid #000; */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+}
+
+.lis-der-section {
+    width: 60%;
+    float: left;
+    /* border: 1px solid #000; */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+}
+
+main {
+    display: flex;
+    border: 1px solid #000;
+    height: var(--altura-main)
+}
+
+.navbar-brand,
+.nav-link,
+.btn {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    /* color: #f10d0d; */
+    /* Otros estilos de fuente aquí */
+}
+
+.navbar {
+    background-color: var(--lis-primario);
+    border-radius: 5px 5px 0px 0px;
+    height: var(--altura-bar);
+}
+
+.nav-container {
+
+    margin-left: 5px;
+
+}
+
+.nav-button {
+    margin: 5px;
+}
+
+@media (max-width: 768px) {
+    #navbarLis {
+        background-color: var(--lis-primario-trasp);
+        width: 140px;
+        border-radius: 0 0 10px 10px;
+        width: 25vw;
+        margin-left: 16px;
+        padding-left: 10px;
+        font-weight: 600;
+    }
+
+    #lis-logo {
+        display: none;
+    }
+
+    .navbar {
+        /* background-color: #f8495a; */
+        /* margin-top: 20px; */
+        /* margin-right: 20px; */
+        /* padding: 5px; */
+    }
+
+    .navbar-brand {
+        margin-top: 20px;
+        margin-right: 20px;
+        /* background-color: rgb(176, 170, 170); */
+        /* Ajusta la cantidad de espacio en la parte superior según tus preferencias */
+    }
+
+}

@@ -13,20 +13,21 @@ import config from './config.js';
 // import Config from './config.js';
 // const config = new Config(__DEV);
 /**
- * modulos http
+ * modulos uso gral
  */
 import express from 'express';
+import session from 'express-session';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import { fileURLToPath } from 'url';
-/**
- * modulos path
- */
 import { dirname } from 'path';
 import path from 'path';
-
+/**
+ * mopdulo autorizacion
+ */
+import AuthServer from './middlewares/authServer.js';
 /***
  * modulos routes
  */
@@ -51,8 +52,6 @@ class App {
     /**
     * Configuracion del servidor
     */
-
-
     configureServer() {
         const corsOptions = {
             origin: '*', // Origen permitido
@@ -69,9 +68,15 @@ class App {
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.use(cookieParser());
         this.app.use(cors(corsOptions));
+        this.app.use(session({
+            secret: config.APP_SECRET,
+            resave: false,
+            saveUninitialized: true
+        }));
         /**
          * instancias de Ruteo
          */
+        this.authServer = new AuthServer();
         this.loginRouter = new LoginRouter();
         this.userRouter = new UserRouter();
         this.examRouter = new ExamRouter();
@@ -95,6 +100,11 @@ class App {
         this.app.get('/', (req, res) => {
             res.render('index.pug', { title: config.APP_TITLE });
         });
+
+        /**
+        * Ruteo de autenticacion
+        */
+        this.app.use(this.authServer.authUser);
         /**
          * Ruteo de peticiones user
          */
@@ -119,10 +129,7 @@ class App {
          * Ruteo de peticiones sampletype
          */
         this.app.use('/sampletype', this.sampleTypeRouter.getRouter());
-        /**
-         * Ruteo de autenticacion
-         */
-        //    this.app.use(this.authServer.authUser);
+
         /**
          * Ruteo de error
          */

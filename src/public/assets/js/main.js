@@ -1,8 +1,8 @@
 // Elemento contenido 
 const contenido = document.getElementById('contenido');
-// leemnto menu lateral
+// elemnto menu lateral izq
 const menu = document.getElementsByClassName('menu-link');
-contenido.innerHTML = `Hola Mundo`;
+console.log(menu);
 // cpnvioerto menu a array
 Array.from(menu).forEach(element => {
     console.log(element.textContent);
@@ -16,6 +16,8 @@ Array.from(menu).forEach(element => {
         }
     });
 });
+consultaLink('/user');
+//document.onload = consultaLink('/user');
 // TODO: userEdit, userOrder (new), userOrders (lista)
 // controlador eventos menu
 async function consultaLink(menuLink) {
