@@ -3,17 +3,36 @@
 // import { v4 as uuidv4 } from 'uuid';
 // const uuid = uuidv4();
 // console.log('UUID generado:', uuid);
-//import config from '../config.js';
+import config from '../config.js';
 //console.log(config);
 
 class AuthServer {
     constructor() {
 
+
+    }
+    auth(req, res) {
+        const tokken = config.APP_SECRET;
+        res.send(
+            `<h1>Esta autorizado a usar  el servicio<br> ${req.connection.remoteAddress} <br>tokken<br> ${tokken}</h1>`
+        );
     }
     authUser(req, res, next) {
-        res.send('auth');
+        console.clear;
+        console.log('user', user1);
+        if ('2' == '1') {
+            res.send(`<h1>Esta autorizado a usar  el servicio ${user1}</h1>`);
+        } else {
+            res.send(`Esta autorizado a usar  el servicio ${user1}`);
+            // next();
+        }
+
+    }
+    /**
+    authUser(req, res, next) {
+        res.send('No esta autorizado a usar  el servicio');
         next();
-        /**         //  console.log(req.connection.remoteAddress);
+                //  console.log(req.connection.remoteAddress);
                 //  console.log(hrtime.hrtime()[1]);
                 //  console.log(Date.now());
                 const semilla = req.connection.remoteAddress + hrtime.hrtime()[0] + Date.now();
@@ -68,7 +87,6 @@ class AuthServer {
                     res.send(htmlResponse);
                 }
                 */
-    }
-
 }
+
 export default AuthServer;
