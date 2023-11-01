@@ -87,6 +87,12 @@ class ExamReferenceValuesController {
         }
     }
 
-
+/**
+ * unidades de medida codificadas 
+ * precargarlas en la tabla
+ * soporte tecnico
+ * usuario solicita agregar nueva unidad de medida
+ * tener en cuenta: invertrir id de valores de referencia 
+ */
 }
 export default ExamReferenceValuesController

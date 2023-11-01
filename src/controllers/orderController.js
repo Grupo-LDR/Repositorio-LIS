@@ -42,24 +42,24 @@ class orderController {
     }
   }
   static async listarRegistrosPorId(id) {
-    console.log('ID ->',id)
+    //console.log('ID ->',id)
     try {
       const orders = await Order.findByPk(id, {
         include: [
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-            as: 'perteneceA'
+            // as: 'perteneceA'
           },
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-            as: 'creadoPor'
+            // as: 'creadoPor'
           },
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-            as: 'Doctor'
+            // as: 'Doctor'
           }
         ]
       });
@@ -185,7 +185,10 @@ class orderController {
     // StudieResult
 
   }
-
+/** IMPORTANTE
+ * una determinacion puede tener varios valores de referencia
+ * pero un valor de referencia puede tener una sola determinacion
+ */
 
 
 }

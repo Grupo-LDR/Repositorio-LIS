@@ -1,6 +1,6 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
-
+import Determination from './determination.js';
 Conexion.conectar();
 class ExamReferenceValues extends Model { };
 ExamReferenceValues.init({
@@ -9,6 +9,10 @@ ExamReferenceValues.init({
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
     primaryKey: true
+  },
+  determination_id:{
+    type: DataTypes.INTEGER,
+    allowNull:true
   },
   status: {
     type: DataTypes.BOOLEAN,
@@ -88,5 +92,7 @@ ExamReferenceValues.init({
     },
   ]
 });
+ExamReferenceValues.belongsTo(Determination, { foreignKey: 'determination_id'});
+Determination.hasMany(ExamReferenceValues, { foreignKey: 'determination_id'});
 
 export default ExamReferenceValues;
