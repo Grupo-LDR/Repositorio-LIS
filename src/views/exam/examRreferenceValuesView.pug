@@ -30,7 +30,7 @@ include ../head
                                 tbody()      
                                     if auth
                                         each e in examsRefValue              
-                                            tr 
+                                            tr(id=`tr${e.id}` name="e_tr") 
                                                 td #{e.id}
                                                 td.text-center #{e.sex}
                                                 td.text-center #{e.age_min}
@@ -53,6 +53,8 @@ include ../head
 form(id="del_form" action="./refvalue" method="post" hidden)
     input(type="text" name="del" value="" hidden )  
 include dialogReferenceValue
+
+
 dialog(id="new_dialog" )
     form(id="new_form" action="./refvalue" method="post")
         h2 New Ref. Value
