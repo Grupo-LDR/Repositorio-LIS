@@ -1,6 +1,5 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import ExamReferenceValues from './examReferenceValueModel.js';
 import Exam from './examModel.js'
 Conexion.conectar();
 class Determination extends Model {
@@ -78,8 +77,5 @@ Determination.init({
     },
   ]
 });
-
-Determination.belongsTo(ExamReferenceValues, { foreignKey: "exam_reference_values_id" });
-ExamReferenceValues.hasMany(Determination, { foreignKey: "exam_reference_values_id" });
 export default Determination;
 

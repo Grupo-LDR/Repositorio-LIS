@@ -43,8 +43,8 @@ class UserRouter {
         try {
             const usuarios = await UserController.listUsers();
             // console.log(usuarios);
-            //    res.render('./user/usersView.pug', { usuarios });
-            res.status(200).send(JSON.stringify(usuarios))
+               res.render('./user/usersView.pug', { usuarios });
+            // res.status(200).send(JSON.stringify(usuarios))
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
