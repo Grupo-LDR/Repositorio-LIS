@@ -4,7 +4,7 @@
  * @false: dproduction
  *   
  */
-// hOLA RAFA
+// gitignore del orto
 const __DEV = false;
 
 /**
