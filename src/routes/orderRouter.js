@@ -5,11 +5,25 @@ class OrderRouter {
     constructor() {
         this.router = Express.Router();
         this.router.get('/', this.listOrder);
+        this.router.get('/list/:id',this.informOrder);
         // this.router.get('/new/:id', this.getOrder);
         this.router.post('/', this.postNewOrder);
         this.router.put('/edit/:id', this.editOrder);
 
     }
+    async informOrder(req,res){
+        try {
+            const id = req.params.id;
+            const order = await orderController.informarFecha(id);
+            res.status(200).json(order);
+        } catch (error) {
+            // Manejo de errores
+            console.error(error);
+            res.status(500).json({ error: 'Hubo un error al obtener la orden.' });
+        }
+
+    }
+
     async listOrder(req, res, next) {
         try {
             const orders = await orderController.listarRegistros();

@@ -8,7 +8,10 @@ import Conexion from '../models/conexion.js';
  */
 class UserController {
 
-
+/**
+ * Buscar Usuarios
+ * @returns 
+ */
     static async listUsers() { //✅
         try {
             const usersWithAgeQuery = 'SELECT User.*, YEAR(FROM_DAYS(DATEDIFF(CURDATE(), birth_at))) AS edad, City.id AS Cityid, City.name AS Cityname FROM users AS User LEFT OUTER JOIN citys AS City ON User.city_id = City.id';
@@ -30,7 +33,6 @@ class UserController {
                 include: {
                     model: City,
                     attributes: ['name'],
-                    // as: 'City'
                 }
             });
             return users;
@@ -46,8 +48,7 @@ class UserController {
             const user = await User.findByPk(id, {
                 include: {
                     model: City,
-                    attributes: ['name'],
-                    as: 'City'
+                    attributes: ['name']
                 }
             });
             if (user) {
@@ -127,13 +128,11 @@ class UserController {
             if (!usuario) {
                 throw new Error('Usuario no encontrado');
             }
-            // Verificar si la contraseña actual coincide
             if (user.pass && user.newPassword) {
                 const passValid = await AuthController.compararPass(user.pass, usuario.password);
                 if (!passValid) {
                     throw new Error('La contraseña actual no es válida');
                 }
-                // Hashear y actualizar la nueva contraseña
                 const nuevaPass = await AuthController.hashPassword(user.newPassword);
                 usuario.set({
                     password: nuevaPass,
@@ -149,9 +148,6 @@ class UserController {
             throw error;
         }
     }
-    // asignar Rol de usuario 
-    //❌(sin hacer)
-
 
 }
 

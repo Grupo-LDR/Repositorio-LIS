@@ -30,6 +30,7 @@ class ExamReferenceValuesController {
     static async addValue(value) { //✅
         try {
             const { status,
+                determination_id,
                 sex,
                 age_min,
                 age_max,
@@ -38,11 +39,12 @@ class ExamReferenceValuesController {
                 value_min,
                 value_ref_min,
                 value_ref_max,
-                unit_value,
+                unit_value_id,
                 observation } = value;
 
             const nuevoValue = await ExamReferenceValues.create({
                 status,
+                determination_id,
                 sex,
                 age_min,
                 age_max,
@@ -51,7 +53,7 @@ class ExamReferenceValuesController {
                 value_min,
                 value_ref_min,
                 value_ref_max,
-                unit_value,
+                unit_value_id,
                 observation
             });
             return nuevoValue;

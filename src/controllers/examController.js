@@ -1,14 +1,16 @@
-import Exam from  '../models/examModel.js'
+import Exam from '../models/examModel.js'
 import SampleType from '../models/sampleTypeModel.js';
 import Studie from '../models/studieModel.js';
+import determinationController from './determinationController.js'
+import examRefrenceValue from './examReferenceValueController.js'
 class ExamController {
     static async listExams() {
         try {
             const exams = await Exam.findAll({
                 where: { status: true },
-                include:{
+                include: {
                     model: SampleType,
-                    attributes: ['name','observation']
+                    attributes: ['name', 'observation']
                 }
             });
             return exams;
@@ -52,10 +54,42 @@ class ExamController {
             console.error('Error al marcar el examen como eliminado:', error);
         }
     }
+    static async addExam(exam) {
+        try {
+            const { nbu,
+                detail,
+                common,
+                status,
+                sample_type_id,
+                time } = exam
 
-    static async addDetermition(){
-        
+            const newExam = await Exam.create({
+                nbu,
+                detail,
+                common,
+                status,
+                sample_type_id,
+                time
+            });
+            return newExam;
+        } catch (error) {
+            throw error
+        }
     }
+    static async updateDetermition(determination) {
+        determinationController.update(determination)
+    }
+    static async addDetermition(determination) {
+        determinationController.add(determination)
+    }
+
+    static async addValue(value) {
+        examRefrenceValue.addValue(value);
+    }
+    static async updateValue(value) {
+        examRefrenceValue.update(value);
+    }
+
 
 
 }
