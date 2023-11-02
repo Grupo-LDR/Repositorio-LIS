@@ -47,14 +47,7 @@ City.init({
           fields: [
             { name: "id" },
           ]
-        },
-        {
-          name: "fk_citys_states1_idx",
-          using: "BTREE",
-          fields: [
-            { name: "states_id" },
-          ]
-        },
+        }
       ]
 });
 City.belongsTo(State, {foreignKey: "states_id" });

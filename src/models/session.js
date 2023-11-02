@@ -5,8 +5,7 @@ Conexion.conectar();
 class Session extends Model {
 }
 Session.init({
-    id: {
-        autoIncrement: true,
+    user_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         primaryKey: true
@@ -19,10 +18,6 @@ Session.init({
         type: DataTypes.DATE,
         allowNull: false
 
-    },
-    user_id:{
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false
     }
 },{
     sequelize:Conexion.sequelize,

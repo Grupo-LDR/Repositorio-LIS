@@ -1,6 +1,7 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import Determination from './determination.js';
+import UnitValue from './unit_value.js'
 Conexion.conectar();
 class ExamReferenceValues extends Model { };
 ExamReferenceValues.init({
@@ -57,7 +58,7 @@ ExamReferenceValues.init({
     allowNull: false,
     comment: "valo rmin para persona sana"
   },
-  unit_value: {
+  unit_value_id: {
     type: DataTypes.STRING(45),
     allowNull: false
   },
@@ -94,5 +95,8 @@ ExamReferenceValues.init({
 });
 ExamReferenceValues.belongsTo(Determination, { foreignKey: 'determination_id'});
 Determination.hasMany(ExamReferenceValues, { foreignKey: 'determination_id'});
+ExamReferenceValues.hasMany(UnitValue,{foreignKey:'unit_value_id'});
+UnitValue.belongsTo(ExamReferenceValues,{foreignKey:'unit_value_id'});
+
 
 export default ExamReferenceValues;

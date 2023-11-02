@@ -9,6 +9,9 @@ UnitValue.init({
         primaryKey: true,
         autoIncrement: true
     },
+    unit:{
+        type:DataTypes.STRING(15)
+    },
     name:{
        type:DataTypes.STRING(200)
     }

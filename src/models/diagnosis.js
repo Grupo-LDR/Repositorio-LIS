@@ -9,6 +9,9 @@ Diagnostico.init({
         primaryKey: true,
         autoIncrement: true
     },
+    codigo:{
+        type:DataTypes.STRING(5)
+    },
     name:{
        type:DataTypes.STRING(200) 
     }

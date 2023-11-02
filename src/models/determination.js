@@ -1,6 +1,5 @@
 import Conexion from './conexion.js';
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import Exam from './examModel.js'
 Conexion.conectar();
 class Determination extends Model {
 }
@@ -18,14 +17,6 @@ Determination.init({
   observation: {
     type: DataTypes.STRING(250),
     allowNull: true
-  },
-  exam_reference_values_id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
-    references: {
-      model: 'exam_reference_values',
-      key: 'id'
-    }
   },
   exams_id: {
     type: DataTypes.INTEGER.UNSIGNED,
@@ -60,21 +51,7 @@ Determination.init({
       fields: [
         { name: "id" },
       ]
-    },
-    {
-      name: "fk_exam_determinations_exam_reference_values1_idx",
-      using: "BTREE",
-      fields: [
-        { name: "exam_reference_values_id" },
-      ]
-    },
-    {
-      name: "fk_exam_determinations_exams1_idx",
-      using: "BTREE",
-      fields: [
-        { name: "exams_id" },
-      ]
-    },
+    }
   ]
 });
 export default Determination;

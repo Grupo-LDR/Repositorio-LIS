@@ -2,7 +2,7 @@ import seedrandom from 'seedrandom';
 import fs from 'fs';
 import dotenv from 'dotenv';
 dotenv.config();
-const configEnv = dotenv.parse(fs.readFileSync('.dev.env', 'utf-8'));
+const configEnv = dotenv.parse(fs.readFileSync('.prod.env', 'utf-8'));
 const config = {};
 for (const key in configEnv) {
     config[key] = configEnv[key];
@@ -14,6 +14,7 @@ if (!config.APP_SECRET_2) {
 }
 
 function calcSeed(secret) {
+    //calcula una semilla aleatoria para el token
     let seed = '';
     const alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     const seedMax = secret.length;

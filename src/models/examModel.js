@@ -75,8 +75,12 @@ Exam.init({
     },
   ]
 });
+//examen pertenece a sampletype
 Exam.belongsTo(SampleType, {foreignKey: "sample_type_id"});
+//sampletype tiene uno/muchos examenes
 SampleType.hasMany(Exam,{foreignKey: "sample_type_id"})
+// examen tiene uno/muchas determinaciones
 Exam.hasMany(Determination, {foreignKey: "exams_id"});
+// una determinacion pertenece a un examen
 Determination.belongsTo(Exam, {foreignKey: "exams_id"});
 export default Exam;

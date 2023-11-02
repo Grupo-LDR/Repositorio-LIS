@@ -2,6 +2,7 @@ import Conexion from '../models/conexion.js';
 import { Sequelize, DataTypes, Model, DATE } from 'sequelize';
 import User from './userModel.js';
 import Studie from './studieModel.js';
+import Diagnostico from './diagnosis.js'
 Conexion.conectar();
 class Order extends Model {
 }
@@ -20,8 +21,8 @@ Order.init({
           key: 'id'
         }
       },
-      diagnosis: {
-        type: DataTypes.STRING(250),
+      diagnosis_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true
       },
       observation: {
@@ -114,8 +115,18 @@ Order.init({
             { name: "validate_users_id" },
           ]
         },
+        {
+          name: "diagnostico_idx",
+          using: "BTREE",
+          fields: [
+            { name: "diagnosis_id" },
+          ]
+        }
       ]
 });
+/**
+ * relaiones
+ */
 Order.belongsTo(User, {foreignKey: "patient_id"});
 Order.belongsTo(User, {foreignKey: "employee_id"});
 Order.belongsTo(User, {foreignKey: "doctor_id"});
@@ -126,7 +137,6 @@ User.hasMany(Order,{foreignKey:"doctor_id"});
 User.hasMany(Order,{foreignKey:"validate_users_id"});
 Order.hasMany(Studie,{foreignKey: "order_id"});
 Studie.belongsTo(Order,{foreignKey:"order_id"})
-
-
-
+Diagnostico.belongsTo(Order, { foreignKey: 'diagnostico_id' });
+Order.hasMany(Diagnostico, { foreignKey: 'diagnostico_id' });
 export default Order;
