@@ -11,12 +11,16 @@ class AuthServer {
 
 
     }
-    auth(req, res) {
+    auth(req, res, next) {
+        console.log(req.cookies);
         const tokken = config.APP_SECRET;
-        res.send(
-            `<h1>Esta autorizado a usar  el servicio<br> ${req.connection.remoteAddress} <br>tokken<br> ${tokken}</h1>`
-        );
+        console.log(tokken.length);
+
+        res.send(`<h1>Esta autorizado a usar  el servicio<br> ${req.connection.remoteAddress} <br>tokken<br> ${tokken}</h1>`);
+        next();
     }
+    //'connect.sid': 's:-XlumvjeTLUDxBI268v60cwf8jBx6y6s.efYYZEgTghDLQOQCCGYedxq3Bl2Wl5y5JLj3tv719ac'
+
     authUser(req, res, next) {
         console.clear;
         console.log('user', user1);

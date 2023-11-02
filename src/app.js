@@ -88,23 +88,28 @@ class App {
     /**
      * Ruteo de peticiones  
      */
+
     appServerRoute() {
         this.app.use(morgan('dev'));
         /**
          * Ruteo de peticiones estaticas
          */
         this.app.use(express.static('./src/public'));
+
         /**
-         * Ruteo de peticiones  default index
-         */
+        * Ruteo de peticiones  default index
+        */
         this.app.get('/', (req, res) => {
             res.render('index.pug', { title: config.APP_TITLE });
         });
-
         /**
-        * Ruteo de autenticacion
-        */
-        this.app.use(this.authServer.authUser);
+       * Ruteo de autenticacion
+       */
+        //        this.app.use(this.authServer.auth);
+
+
+
+
         /**
          * Ruteo de peticiones user
          */

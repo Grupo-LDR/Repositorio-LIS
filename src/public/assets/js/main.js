@@ -1,9 +1,8 @@
-// Elemento contenido 
-const contenido = document.getElementById('contenido');
-// elemnto menu lateral izq
+// Elemento patients 
+const patients = document.getElementById('patients');
+// elemento menu lateral izq
 const menu = document.getElementsByClassName('menu-link');
-console.log(menu);
-// cpnvioerto menu a array
+// convierto menu a array
 Array.from(menu).forEach(element => {
     console.log(element.textContent);
     element.addEventListener('click', async function (event) {
@@ -24,7 +23,7 @@ async function consultaLink(menuLink) {
     try {
         const response = await fetch(menuLink);
         const data = await response.text();
-        contenido.innerHTML = data;
+        patients.innerHTML = data;
         userEdit = document.querySelectorAll('.userEdit');
         userOrder = document.querySelectorAll('.userOrder');
         userOrders = document.querySelectorAll('.userOrders');
