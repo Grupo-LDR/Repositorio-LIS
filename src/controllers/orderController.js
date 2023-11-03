@@ -1,6 +1,8 @@
 import Order from "../models/orderModel.js";
 import User from "../models/userModel.js";
 import Conexion from "../models/conexion.js";
+import SampleController from "./sampleController.js";
+import Sample from "../models/sampleModel.js";
 class orderController {
   static async crearNuevaOrden(orden) {
     try {
@@ -180,31 +182,14 @@ class orderController {
   */
   static async informarFecha(order_id) {
     const query = `
-    SELECT DISTINCT
-    u.first_name AS patient_first_name,
-    u.last_name AS patient_last_name,
-    o.id AS order_number,
-    DATE_FORMAT(DATE_ADD(NOW(), INTERVAL e.time DAY), '%d-%m-%Y') AS fecha_de_entrega,
-    e.detail AS exam_name,
-    ed.name AS determination_name,
-    uv.name AS unidad_de_medida,
-    uv.unit as unidad,
-    erv.value_ref_min,
-    erv.value_ref_max
-FROM
-    users AS u
-INNER JOIN
-    orders AS o ON u.id = o.patient_id
-INNER JOIN
-    studies AS s ON s.order_id = o.id
-INNER JOIN
-    exams AS e ON s.exams_id = e.id
-LEFT JOIN
-    exam_determinations AS ed ON 1 = 1
-LEFT JOIN
-    exam_reference_values AS erv ON ed.id = erv.determination_id
-LEFT JOIN
-    unit_value AS uv ON erv.unit_value_id = uv.id;`;
+    SELECT
+DATE_FORMAT(DATE_ADD(NOW(),INTERVAL MAX(e.time) DAY), '%d-%m-%Y') AS fecha_de_entrega
+FROM users AS u
+INNER JOIN orders AS o ON o.patient_id = u.id
+INNER JOIN studies AS s ON s.order_id = o.id
+INNER JOIN exams AS e ON e.id = s.exams_id
+WHERE o.id = :order_id;
+`;
     try {
       const results = await Conexion.sequelize.query(query, {
         replacements: { order_id },
@@ -221,7 +206,7 @@ LEFT JOIN
    * una determinacion puede tener varios valores de referencia
    * pero un valor de referencia puede tener una sola determinacion
    */
-  static async verMuestra(id) {
+  static async verMuestra2(id) {
     const query = `SELECT 
   s.order_id as Numero_orden, 
   e.detail AS exam_name, 
@@ -232,19 +217,20 @@ LEFT JOIN
   FROM studies AS s
   INNER JOIN exams AS e ON s.exams_id = e.id
   INNER JOIN samples AS sm ON s.samples_id = sm.id
-  LEFT JOIN samples_type AS st ON e.sample_type_id = st.id;`
-  try {
-    const results = await Conexion.sequelize.query(query, {
-      replacements: { id },
-      type: Conexion.sequelize.QueryTypes.SELECT,
-    });
-    return results;
-  } catch (error) {
-    console.error('Error al ejecutar la consulta SQL:', error);
-    throw error;
+  LEFT JOIN samples_type AS st ON e.sample_type_id = st.id
+  WHERE s.order_id =:id;`
+    try {
+      let results = await Conexion.sequelize.query(query, {
+        replacements: { id },
+        type: Conexion.sequelize.QueryTypes.SELECT,
+      });
+      return results;
+    } catch (error) {
+      console.error('Error al ejecutar la consulta SQL:', error);
+      throw error;
+    }
   }
 
-  }
 
 }
 

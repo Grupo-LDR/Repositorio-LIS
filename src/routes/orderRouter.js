@@ -1,17 +1,50 @@
 import Express from "express";
 import orderController from "../controllers/orderController.js";
 import StudiesController from "../controllers/studieController.js";
+import Studie from "../models/studieModel.js";
 class OrderRouter {
     constructor() {
         this.router = Express.Router();
         this.router.get('/', this.listOrder);
-        this.router.get('/list/:id',this.informOrder);
+        this.router.get('/sample/pending', this.verMuestra);
+        this.router.post('/sample', this.addSample);
+        this.router.get('/list/:id', this.informDate);
         // this.router.get('/new/:id', this.getOrder);
         this.router.post('/', this.postNewOrder);
         this.router.put('/edit/:id', this.editOrder);
-
     }
-    async informOrder(req,res){
+    async addSample(req, res) {
+        try {
+            const muestra = {
+                valid: req.body.valid,
+                observation: req.body.observation
+            };
+            const resultado = await StudiesController.addSample(muestra);
+            res.status(200).json({ mensaje: 'Muestra agregada exitosamente' });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Hubo un error al agregar la muestra.' });
+        }
+    }
+
+    async verMuestra(req, res) {
+        try {
+            const studie = req.body.samples_id;
+            if (studie) {
+                console.log('El objeto contiene un sample_id:', studie);
+                const muestra = await StudiesController.verMuestra(studie);
+                res.status(200).json(muestra);
+            } else {
+                console.log('El objeto no contiene un sample_id');
+                res.status(200).json({ mensaje: 'aun falta cargar la muestra' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Hubo un error al procesar la solicitud.' });
+        }
+    }
+    async informDate(req, res) {
         try {
             const id = req.params.id;
             const order = await orderController.informarFecha(id);
@@ -54,6 +87,7 @@ class OrderRouter {
             res.status(500).json({ error: 'Hubo un error al crear la nueva orden.' });
         }
     }
+
 
     async postNewOrder(req, res, next) {
         console.trace(req.body);

@@ -3,6 +3,7 @@ import Studie from "../models/studieModel.js";
 import Order from '../models/orderModel.js'
 import Exam from '../models/examModel.js'
 import SampleController from './sampleController.js'
+import Sample from "../models/sampleModel.js";
 
 class StudiesController {
   static async registerStudies(order_id, studies) {
@@ -29,15 +30,28 @@ class StudiesController {
       console.error('Error al insertar estudios:', error);
     }
   }
-  static async addSample(sample){
+  static async addSample(sample) {
     SampleController.newSample(sample);
   }
-  static async updateSample(sample){
-      SampleController.updateSample(sample);
+  static async updateSample(sample) {
+    SampleController.updateSample(sample);
   }
-  static async addExam(exam){
+  static async verMuestra(samples_id) {
+    try {
+      const muestra = await Studie.findOne({ where: { samples_id } });
+      if (!muestra) {
+        console.log('No se encontró una muestra asociada al sample_id:', samples_id);
+        return null;
+        //console.log(muestra)
+      } else {
+        return muestra
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async addExam(exam) {
     ExamController.addExam(exam);
   }
-
 }
 export default StudiesController;

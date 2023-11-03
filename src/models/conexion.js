@@ -14,6 +14,7 @@ class Conexion {
 
     static async conectar() {
         try {
+            // this.sequelize.sync();
             //await this.sequelize.authenticate();
             console.log('Conexión exitosa a la base de datos');
             // console.log("se ejecuto -> conectar")
