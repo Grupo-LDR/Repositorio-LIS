@@ -33,7 +33,7 @@ class OrderRouter {
             const studie = req.body.samples_id;
             if (studie) {
                 console.log('El objeto contiene un sample_id:', studie);
-                const muestra = await StudiesController.verMuestra(studie);
+                const muestra = await StudiesController.verMuestra();
                 res.status(200).json(muestra);
             } else {
                 console.log('El objeto no contiene un sample_id');

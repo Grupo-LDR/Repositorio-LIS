@@ -4,6 +4,8 @@ import Order from '../models/orderModel.js'
 import Exam from '../models/examModel.js'
 import SampleController from './sampleController.js'
 import Sample from "../models/sampleModel.js";
+import { Op } from 'sequelize';
+import SampleType from "../models/sampleTypeModel.js";
 
 class StudiesController {
   static async registerStudies(order_id, studies) {
@@ -36,13 +38,23 @@ class StudiesController {
   static async updateSample(sample) {
     SampleController.updateSample(sample);
   }
-  static async verMuestra(samples_id) {
+  /**
+   * ver todas las muestras que estan cargadas
+   * @returns 
+   */
+  static async verMuestra() {
     try {
-      const muestra = await Studie.findOne({ where: { samples_id } });
-      if (!muestra) {
-        console.log('No se encontró una muestra asociada al sample_id:', samples_id);
+      const muestra = await Studie.findAll({
+        where: {
+          samples_id: {
+            [Op.not]: null,
+          },
+        }
+      });
+
+      if (!muestra || muestra.length === 0) {
+        console.log('No se encontraron muestras asociadas con un sample_id no nulo.');
         return null;
-        //console.log(muestra)
       } else {
         return muestra
       }
@@ -50,6 +62,39 @@ class StudiesController {
       throw error;
     }
   }
+  /**
+   * 
+   * @returns ver todas las muestras incluyendo las pendientes 
+   */
+  static async muestraPendiente() {
+    try {
+      const muestrasPendientes = await Studie.findAll({
+        attributes: ['order_id', 'exams_id', 'observation'],
+        include: [
+          {
+            model: Sample,
+            attributes: ['id', 'valid', 'observation'],
+            required: false, // LEFT JOIN
+          },
+          {
+            model: Exam,
+            attributes: ['id', 'detail'],
+            include: [
+              {
+                model: SampleType, 
+                attributes: ['name'],
+              },
+            ],
+          },
+        ],
+      });
+      return muestrasPendientes;
+    } catch (error) {
+      console.error('Error al buscar muestras pendientes:', error);
+      throw error;
+    }
+  }
+
   static async addExam(exam) {
     ExamController.addExam(exam);
   }
