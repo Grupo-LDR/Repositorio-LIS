@@ -128,14 +128,11 @@ class orderController {
   //desactivado -> 0 - activo -> 1 - ingresada -> 2 - esperando toma de muestra -> 3 - Analítica -> 4
   //los estados 5 y 6 serian:
   // finalizada -> 5 - entregada -> 6 //no se deben modificar
-  static async actualizarOrdenDeTrabajo(orden_id, estado, diagnosis, observation) {
+  static async actualizarOrdenDeTrabajo(orden) {
     try {
       const estadosValidos = [0, 1, 2, 3, 4];
+      const { orden_id, estado, observation } = orden;
       const order = await Order.findByPk(orden_id);
-      //  console.log("ORDEN ---->",order)
-      // console.log("ESTADO ->", estado);
-      // console.log("ESTADO Controller ->", order.status);
-
       if (order && estadosValidos.includes(estado) && estadosValidos.includes(order.status)) {
         order.status = estado;
         order.diagnosis = diagnosis;
@@ -173,13 +170,6 @@ class orderController {
     }
   }
   // Aviso de Fecha de entrega de resultados
-  /**
-  * la consulta trae el nombre y el apellido
-  * trae el numero de orden
-  * trae la fecha de entrega
-  * los nombres de los examenes que solicitó
-  * la determinacion y sus valores de referencia maximos y minimos
-  */
   static async informarFecha(order_id) {
     const query = `
     SELECT

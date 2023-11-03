@@ -6,7 +6,8 @@ class OrderRouter {
     constructor() {
         this.router = Express.Router();
         this.router.get('/', this.listOrder);
-        this.router.get('/sample/pending', this.verMuestra);
+        this.router.get('/samples', this.verMuestra);
+        this.router.get('/sample/pending', this.muestraPendiente);
         this.router.post('/sample', this.addSample);
         this.router.get('/list/:id', this.informDate);
         // this.router.get('/new/:id', this.getOrder);
@@ -44,6 +45,20 @@ class OrderRouter {
             res.status(500).json({ error: 'Hubo un error al procesar la solicitud.' });
         }
     }
+    async muestraPendiente(req, res) {
+        try {
+          const muestra = await StudiesController.muestraPendiente();
+          const muestrasConNullSample = muestra.filter(item => item.Sample === null);
+          if (muestrasConNullSample.length > 0) {
+            res.status(200).json({ mensaje: 'Al menos una muestra tiene el campo "Sample" nulo.', muestra: muestrasConNullSample });
+          } else {
+            res.status(200).json({ mensaje: 'Todas las muestras tienen "Sample" definido.', muestra });
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Hubo un error al procesar la solicitud.' });
+        }
+      }
     async informDate(req, res) {
         try {
             const id = req.params.id;
