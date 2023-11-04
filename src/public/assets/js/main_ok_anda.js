@@ -2,30 +2,56 @@
 // captura div secciones 
 const sectionIzq = document.getElementById('izq');
 const sectionDer = document.getElementById('der');
-// caprtura menu 
+// captura menu 
 const navLink = document.getElementsByClassName('nav-link');
+const userTable = lisTable(sectionIzq, '#usersTable', '/user', 'userLink');
+// captura iconos
+const userLink = capturarLink('userLink');
+/****************************************************** */
+console.log(userLink);
 
 
 
+/***************************************************** */
 
-// llamo pacientes
-mostrarResultadoEnWeb(sectionIzq, '/user');
-//console.log(pacientes);
-mostrarResultadoEnWeb(sectionDer, '/refvalue');
+async function capturarLink(link) {
+    const element = document.getElementById(link);
+    return element;
+}
+// convierto menu a array
+/**
+ * 
+ */
+Array.from(navLink).forEach(element => {
+    //    console.log(element.textContent);
+    // agrego escuchador evento    
+    element.addEventListener('click', async function (event) {
+        event.preventDefault();
+        console.log(element.id);
+        //        await consultaLink(element.id);
+        switch (element.id) {
+            case 'admin':
+                const userT = await lisTable(sectionDer, '#refValTable', '/refvalue', 'userLink');
+                break;
+            case ('order'):
+                const derecha = await mostrarResultadoEnWeb(sectionDer, 'userLink');
 
 
-
+        }
+    });
+});
 
 /**
  * 
  * @param {*} elemento 
  * @param {*} link 
  */
-async function mostrarResultadoEnWeb(elemento, link) {
-
-    const htmlDocument = await consultaWebServer(link);
+async function mostrarResultadoEnWeb(elemento, htmlDocument) {
+    elemento.innerHTML = '';
+    //const htmlDocument = await consultaWebServer(link);
     if (htmlDocument) {
-        elemento.innerHTML = htmlDocument.body.innerHTML;
+        //     elemento.innerHTML = htmlDocument.body.innerHTML;
+        elemento.innerHTML = htmlDocument;
     } else {
         elemento.innerHTML = 'No se pudo obtener el contenido.';
     }
@@ -43,8 +69,8 @@ async function consultaWebServer(link) {
             const parser = new DOMParser();
             const htmlDocument = parser.parseFromString(htmlContent, 'text/html');
             if (htmlDocument) {
-                console.log(htmlDocument.body.innerHTML);
-                return htmlDocument;
+
+                return htmlDocument.body.innerHTML;
             }
             return null;
         } else {
@@ -55,4 +81,53 @@ async function consultaWebServer(link) {
     }
 }
 
+async function lisTable(section, tabla, link, idElement) {
+    const result = await consultaWebServer(link);
+    await mostrarResultadoEnWeb(section, result);
 
+    const table = $(tabla).DataTable({
+        "paging": true,
+        "responsive": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "fixedHeader": true,
+        "language": {
+            "search": "Buscar:",
+            "searchPlaceholder": "Escribe para buscar",
+            "lengthMenu": "Mostrar _MENU_ entradas por página",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            "infoEmpty": "No se encontraron entradas",
+            "infoFiltered": "(filtrado de un total de _MAX_ entradas)",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "emptyTable": "La tabla está vacía",
+            "paginate": {
+                "first": "Primero",
+                "previous": "Anterior",
+                "next": "Siguiente",
+                "last": "Último"
+            }
+        },
+        "drawCallback": function (settings) {
+            // Captura los elementos con la clase "userLink" después de que se haya dibujado la tabla
+            const userLinks = this.api().table().container().querySelectorAll(`.${idElement}`);
+
+            userLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    const name = this.getAttribute('name');
+                    const route = this.getAttribute('route');
+                    const userT = lisTable(sectionDer, '#refValTable', '/refvalue', 'userLink');
+                    console.log(`Clic en el enlace con name=${name} y route=${route}`);
+                });
+            });
+        }
+
+    },
+
+
+    );
+
+
+}

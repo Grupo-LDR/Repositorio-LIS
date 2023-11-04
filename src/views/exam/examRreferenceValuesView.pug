@@ -32,6 +32,11 @@ include ../head
                                         each e in examsRefValue              
                                             tr(id=`tr${e.id}` name="e_tr") 
                                                 td #{e.id}
+                                                td.text-center 
+                                                    i(class="fa-solid fa-pen-to-square  px-2   userLink" name="e_edit" type="edit" sample_name=e.name elem=e.id id="edi"+e.id accion="editSample")
+                                                    - const status = e.status == 1 ? 'fa-trash  trash-red' : 'fa-recycle trash-green';
+                                                    i(class=`fa-solid  ${status}    px-2   userLink` name="e_delete" type="delete" elem=e.id id="del"+e.id accion="delSample") 
+
                                                 td.text-center #{e.sex}
                                                 td.text-center #{e.age_min}
                                                 td.text-center #{e.age_max} 
@@ -45,10 +50,10 @@ include ../head
                                                     //- td #{e.create_at}        
                                                     //- td #{e.update_at}                    
                                                 if auth 
-                                                    td.text-center 
-                                                        i(class="fa-solid fa-pen-to-square  px-2   userLink" name="e_edit" type="edit" sample_name=e.name elem=e.id id="edi"+e.id accion="editSample")
-                                                        - const status = e.status == 1 ? 'fa-trash  trash-red' : 'fa-recycle trash-green';
-                                                        i(class=`fa-solid  ${status}    px-2   userLink` name="e_delete" type="delete" elem=e.id id="del"+e.id accion="delSample") 
+                                                    //- td.text-center 
+                                                    //-     i(class="fa-solid fa-pen-to-square  px-2   userLink" name="e_edit" type="edit" sample_name=e.name elem=e.id id="edi"+e.id accion="editSample")
+                                                    //-     - const status = e.status == 1 ? 'fa-trash  trash-red' : 'fa-recycle trash-green';
+                                                    //-     i(class=`fa-solid  ${status}    px-2   userLink` name="e_delete" type="delete" elem=e.id id="del"+e.id accion="delSample") 
 
 form(id="del_form" action="./refvalue" method="post" hidden)
     input(type="text" name="del" value="" hidden )  

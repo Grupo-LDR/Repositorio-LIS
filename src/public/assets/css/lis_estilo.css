@@ -21,7 +21,7 @@
     --color-hover-icon: #9cec09;
     --color-hover-link: #3f5713;
     --color-icon-red: #f31628c0;
-    --color-icon-green: #42ac38c0;
+    --color-green-50: #42ac38c0;
 
 }
 
@@ -111,6 +111,11 @@ html {
     background-color: var(--color-primario-trasp);
     font-size: large;
     font-weight: bold;
+}
+
+#alert {
+    width: 20vw;
+    background-color: var(--color-green-50);
 }
 
 .alert-title {
