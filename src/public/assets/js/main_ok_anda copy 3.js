@@ -10,8 +10,89 @@ const userLink = capturarLink('userLink');
 /****************************************************** */
 console.log(userLink);
 
+/**
+ * 
+ * @param {link ruteable} link 
+ * @param {objeto de datos} data 
+ */
+/*
+async function postJsonToSErver(link, data) {
+    const opciones = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+    fetch(link, opciones)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Respuesta exitosa:', data);
+        })
+        .catch(error => {
 
+            console.error('Error en la solicitud:', error);
+        });
+}
 
+document.getElementById('miFormulario').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const form = event.target;
+    const link = form.action;
+    const formData = new FormData(form);
+    postForm(formData, link);
+
+});
+
+async function postForm(formData, link) {
+    fetch(link, {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+            }
+        })
+        .then(responseData => {
+            console.log('Respuesta:', responseData);
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+        });
+}
+
+async function postJsonToSErver(link, data) {
+    const opciones = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+    fetch(link, opciones)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Respuesta exitosa:', data);
+        })
+        .catch(error => {
+
+            console.error('Error en la solicitud:', error);
+        });
+}
+*/
 /***************************************************** */
 
 async function capturarLink(link) {
@@ -110,45 +191,15 @@ async function lisTable(section, tabla, link, idElement) {
                 "last": "Último"
             }
         },
-        "drawCallback": function () {
-            const userLinks = this.api().table().container().querySelectorAll('.userEdit i');
-
-            userLinks.forEach(link => {
-                link.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                    if (event.target.tagName === 'I') {
-                        const name = this.getAttribute('name');
-                        const route = this.getAttribute('route');
-                        const iconId = this.getAttribute('id');
-
-                        switch (tabla) {
-                            case '#usersTable':
-                                console.log(`Clic en el enlace con name=${name} y route=${route} con id ${iconId}`);
-                                routeClickUser(route, name);
-                                break;
-                            case '#refValTable':
-                                routeClickRefValueTabla(route, tabla);
-                                break;
-                        }
-
-                        //                        console.log(`Clic en el enlace con name=${name} y route=${route} -> ${tabla}`);
-                    }
-                });
-            });
-        }
-
-
-
-        /*
-
-        "drawCallback": function () {
-            const userLinks = this.api().table().container().querySelectorAll('.userEdit i');
+        "linksCallback": function () {
+            // Captura los elementos con la clase "userLink" después de que se haya dibujado la tabla
+            const userLinks = this.api().table().container().querySelectorAll(`.${idElement}`);
 
             userLinks.forEach(link => {
                 link.addEventListener('click', function () {
                     const name = this.getAttribute('name');
                     const route = this.getAttribute('route');
-
+                    // name e sel id user
                     switch (tabla) {
                         case '#usersTable':
                             console.log(`Clic en el enlace con name=${name} y route=${route}`);
@@ -159,46 +210,24 @@ async function lisTable(section, tabla, link, idElement) {
                             break;
                     }
 
+                    //  const userT = lisTable(sectionDer, '#refValTable', '/refvalue', 'userLink');
                     console.log(`Clic en el enlace con name=${name} y route=${route} -> ${tabla}`);
                 });
             });
         }
-        */
-
-
-
-        // "drawCallback": function () {
-        //     // Captura los elementos con la clase "userLink" después de que se haya dibujado la tabla
-        //     const userLinks = this.api().table().container().querySelectorAll(`.${idElement}`);
-
-        //     userLinks.forEach(link => {
-        //         link.addEventListener('click', function () {
-        //             const name = this.getAttribute('name');
-        //             const route = this.getAttribute('route');
-        //             // name e sel id user
-        //             switch (tabla) {
-        //                 case '#usersTable':
-        //                     console.log(`Clic en el enlace con name=${name} y route=${route}`);
-        //                     routeClickUser(route, name);
-        //                     break;
-        //                 case '#refValTable':
-        //                     routeClickRefValueTabla(route, tabla);
-        //                     break;
-        //             }
-
-        //             //  const userT = lisTable(sectionDer, '#refValTable', '/refvalue', 'userLink');
-        //             console.log(`Clic en el enlace con name=${name} y route=${route} -> ${tabla}`);
-        //         });
-        //     });
-        // }
 
     },
     );
 }
 
 
+/**
+ * Ruteo segun clik en iconos tabla USER.
+ * @param {*} route 
+ * @param {*} name 
+ */
 async function routeClickUser(route, name) {
-    //    console.log(`Clic en el enlace con name=${name} y route=${route}`);
+    console.log(`Clic en el enlace con name=${name} y route=${route}`);
     let result;
     switch (route) {
 

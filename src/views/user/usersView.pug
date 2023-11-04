@@ -1,5 +1,4 @@
 table.table-responsive.table.table-striped.display.nowrap.justify-content-center#usersTable
-
     thead 
         tr
             td(class="text-center align-middle fs-6") Paciente
@@ -23,15 +22,15 @@ table.table-responsive.table.table-striped.display.nowrap.justify-content-center
 
                 td(class="text-center align-middle userEdit")
                     div.ordnes
-                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id route="viewOrdersUser") #3 
+                        i(class="fa-regular fa-folder-open   px-2   userLink" id=user.id+'0' name=user.id route="viewOrdersUser") #{user.id}-1 
                         br
-                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id route="viewOrdersUser") #4
+                        i(class="fa-regular fa-folder-open   px-2   userLink" id=user.id+'1' name=user.id route="viewOrdersUser") #{user.id}-2 
                         br
-                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id route="viewOrdersUser") #456
+                        i(class="fa-regular fa-folder-open   px-2   userLink" id=user.id+'2' name=user.id route="viewOrdersUser") #{user.id}-3 
                         br
-                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id route="viewOrdersUser") #4
+                        i(class="fa-regular fa-folder-open   px-2   userLink" id=user.id+'3' name=user.id route="viewOrdersUser") #{user.id}-4 
                         br
-                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id route="viewOrdersUser") #456
+                        i(class="fa-regular fa-folder-open   px-2   userLink" id=user.id+'4' name=user.id route="viewOrdersUser") #{user.id}-5 
                 //- td
                     p 1     
                 td(class="text-center align-middle userEdit")
