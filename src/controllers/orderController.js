@@ -3,17 +3,31 @@ import User from "../models/userModel.js";
 import Conexion from "../models/conexion.js";
 import { z } from 'zod';
 class orderController {
-  orderSchema= z.Schema({
-    diagnosis_id: z.number(),
-    observation: z.string(),
-    patient_id: z.number(),
+  static orderSchema = z.object({
+    diagnosis_id: z.number().optional(),
+    observation: z.string().optional(),
+    patient_id: z.union([z.number(), z.string()]).optional(),
     employee_id: z.number(),
-    doctor_id: z.number(),
-  })
+    doctor_id: z.number().optional(),
+})
+
   /*
    lo pude resolver con una query de sequelize
   sequelize no me tria datos 
    */
+
+  static async crearNuevaOrden(orden) {
+    try {
+      const { diagnosis_id, observation, patient_id, employee_id, doctor_id } = orden;
+      const ordenValida = this.orderSchema.parse(orden);
+      await Order.create(ordenValida);
+      console.log("Creación de nueva orden -> Exitosa");
+      return orden;
+    } catch (error) {
+      console.error('Error al crear una nueva orden:', error);
+      throw error;
+    }
+  }
   static async ordenesPorUsuario() {
     try {
       const query = `SELECT 
@@ -62,18 +76,7 @@ class orderController {
     }
   }
 
-  static async crearNuevaOrden(orden) {
-    try {
-      const { diagnosis_id, observation, patient_id, employee_id, doctor_id } = orden;
-      const ordenValida = this.orderSchema.parse(orden);
-      await Order.create(ordenValida);
-      console.log("Creación de nueva orden -> Exitosa");
-      return orden;
-    } catch (error) {
-      console.error('Error al crear una nueva orden:', error);
-      throw error;
-    }
-  }
+ 
   static async listarRegistros() {
     try {
 
@@ -191,7 +194,7 @@ class orderController {
     try {
       const estadosValidos = [0, 1, 2, 3, 4];
       const { orden_id, estado, observation, diagnosis_id } = orden;
-      const ordenValida = this.orderSchema.parse(orden);
+      const ordenValida =this.orderSchema.parse(orden);
       const newOrder = await Order.findByPk(orden_id);
       if (!newOrder) {
         console.log("La orden no se puede actualizar no existe.");

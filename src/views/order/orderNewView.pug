@@ -40,14 +40,7 @@ div(class="container mt-5")
                                         td(class="text-center align-middle fs-6")  #{exam.id}
                                         td(class="align-middle  fs-6")  #{exam.detail}
 script.
-    document.getElementById("sendButton").addEventListener("click", function() {
-    console.log('Clic en el botón Send');
-    let form = document.getElementById("form_new_order");
-    form.submit();
-});
-
-    document.getElementById("sendButton").addEventListener("click", function() {
-        console.log('dzf<f')
-            let form = document.getElementById("form_new_order");
-                form.submit();
-    });
+    document.getElementById("submitButton").addEventListener("click", function() {
+        let form = document.getElementById("form_new_order");
+        form.submit();
+    })
