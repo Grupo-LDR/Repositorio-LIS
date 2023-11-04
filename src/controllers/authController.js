@@ -9,6 +9,14 @@ class AuthController {
   static async compararPass(passActual, passHash) {
     return bcrypt.compare(passActual, passHash);
   }
+
+
+
+
+
+
+
+  
 /**
  * login
  * @param {} req 

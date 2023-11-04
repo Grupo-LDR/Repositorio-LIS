@@ -2,16 +2,72 @@ import User from '../models/userModel.js';
 import City from "../models/cityModel.js";
 import AuthController from "./authController.js"
 import Conexion from '../models/conexion.js';
+import { z } from 'zod';
+import  zxcvbn  from 'zxcvbn';
+
 /**
  *  REFERENCIAS:
  * ✅(Hecho) || ❌(sin hacer) || ⏳ (en proceso)
  */
 class UserController {
+     userSchema = z.object({
+        id: z.number(),
+        first_name: z.string().min(4).max(80),
+        last_name: z.string().min(4).max(80),
+        gender: z.enum(['M', 'F', 'X', '']),
+        sex: z.enum(['M', 'F']),
+        document: z.string().refine(document => /^\d{8}$/.test(document), {
+            message: 'El número de documento debe tener 8 dígitos.'
+        }),
+        email: z.string().email(),
+        phone: z.number().refine(phone => /^\d{9,15}$/.test(phone), {
+            message: 'El número de teléfono debe tener entre 9 y 15 dígitos.'
+        }),
+        address: z.string(),
+        birth_at: z.date(),
+        password: z.string().min(8).refine(password => zxcvbn(password).score >= 2, {
+            message: 'La contraseña debe tener al menos una puntuación de seguridad de 2.'
+        }),
+        pregnant: z.literal(0).or(z.literal(1))
+    });
+    /**
+     * verificacion de contraseña
+      const password = 'mi_contraseña_secreta';
+      const result = zxcvbn(password);
+      console.log(`Puntuación de seguridad: ${result.score}`);
+    */
+    // crear un nuevo usuario con validacion
+    static async crearUsuario(user) { //✅
+        try {
+            const nuevaPass = await AuthController.hashPassword(user.password);
+            const { first_name,
+                last_name,
+                gender,
+                sex,
+                active,
+                document,
+                phone,
+                email,
+                address,
+                birth_at,
+                create_user_id,
+                update_user_id,
+                city_id,
+                create_at,
+                update_at,
+                pregnant } = user;
+                const usuariosValido = userSchema.parse(user);
+            const nuevoUsuario = await User.create({usuariosValido});
+           return nuevoUsuario;
+        } catch (error) {
+            throw error;
+        }
+    };
 
-/**
- * Buscar Usuarios
- * @returns 
- */
+    /**
+     * Buscar Usuarios
+     * @returns 
+     */
     static async listUsers() { //✅
         try {
             const usersWithAgeQuery = 'SELECT User.*, YEAR(FROM_DAYS(DATEDIFF(CURDATE(), birth_at))) AS edad, City.id AS Cityid, City.name AS Cityname FROM users AS User LEFT OUTER JOIN citys AS City ON User.city_id = City.id';
@@ -75,55 +131,12 @@ class UserController {
             return edad;
         }
     }
-    // crear un nuevo usuario
-    static async crearUsuario(user) { //✅
-        try {
-            const nuevaPass = await AuthController.hashPassword(user.password);
-            const { first_name,
-                last_name,
-                gender,
-                sex,
-                active,
-                document,
-                phone,
-                email,
-                address,
-                birth_at,
-                create_user_id,
-                update_user_id,
-                city_id,
-                create_at,
-                update_at,
-                pregnant } = user;
 
-            const nuevoUsuario = await User.create({
-                first_name,
-                last_name,
-                gender,
-                sex,
-                active,
-                document,
-                phone,
-                email,
-                address,
-                birth_at,
-                password: nuevaPass,
-                create_user_id,
-                update_user_id,
-                city_id,
-                create_at,
-                update_at,
-                pregnant
-            });
-            return nuevoUsuario;
-        } catch (error) {
-            throw error;
-        }
-    };
     // actualizar un usuario
     // hashear contraseña ✅
     static async updateUsuario(user) {//✅
         try {
+            const userValido = userSchema.parse(user)
             const usuario = await User.findByPk(user.id);
             if (!usuario) {
                 throw new Error('Usuario no encontrado');
@@ -137,9 +150,9 @@ class UserController {
                 usuario.set({
                     password: nuevaPass,
                 });
-            } else {
-                usuario.set(user);
-            };
+              }else {
+                  usuario.set(userValido);
+                };
             console.log(usuario);
             await usuario.save();
             return usuario;

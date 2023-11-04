@@ -1,7 +1,15 @@
 import Order from "../models/orderModel.js";
 import User from "../models/userModel.js";
 import Conexion from "../models/conexion.js";
+import { z } from 'zod';
 class orderController {
+  orderSchema= z.Schema({
+    diagnosis_id: z.number(),
+    observation: z.string(),
+    patient_id: z.number(),
+    employee_id: z.number(),
+    doctor_id: z.number(),
+  })
   /*
    lo pude resolver con una query de sequelize
   sequelize no me tria datos 
@@ -57,9 +65,10 @@ class orderController {
   static async crearNuevaOrden(orden) {
     try {
       const { diagnosis_id, observation, patient_id, employee_id, doctor_id } = orden;
-      await Order.create({ diagnosis_id, observation, patient_id, employee_id, doctor_id });
+      const ordenValida = this.orderSchema.parse(orden);
+      await Order.create(ordenValida);
       console.log("Creación de nueva orden -> Exitosa");
-      return true;
+      return orden;
     } catch (error) {
       console.error('Error al crear una nueva orden:', error);
       throw error;
@@ -181,24 +190,30 @@ class orderController {
   static async actualizarOrdenDeTrabajo(orden) {
     try {
       const estadosValidos = [0, 1, 2, 3, 4];
-      const { orden_id, estado, observation } = orden;
-      const order = await Order.findByPk(orden_id);
-      if (order && estadosValidos.includes(estado) && estadosValidos.includes(order.status)) {
-        order.status = estado;
-        order.diagnosis = diagnosis;
-        order.observation = observation;
-        await order.save();
-        console.log(`Orden actualizada: -> "${estado}"`);
-        return true;
+      const { orden_id, estado, observation, diagnosis_id } = orden;
+      const ordenValida = this.orderSchema.parse(orden);
+      const newOrder = await Order.findByPk(orden_id);
+      if (!newOrder) {
+        console.log("La orden no se puede actualizar no existe.");
+        return false;
+      }
+      if (estadosValidos.includes(estado) && estadosValidos.includes(newOrder.status)) {
+        newOrder.diagnosis_id = diagnosis_id;
+        newOrder.status = estado;
+        newOrder.observation = observation;
+        await newOrder.save();
+        // console.log(`Orden actualizada: -> "${estado}"`);
+        return newOrder;
       } else {
-        console.log("La orden no se puede actualizar en este estado o no existe.");
+        console.log("La orden no se puede actualizar en este estado");
         return false;
       }
     } catch (error) {
       console.error('Error al actualizar la orden de trabajo:', error);
       throw error;
     }
-  }
+}
+
   static async cancelarOrden(orden_id, estado, observation) {
     try {
       //en observation iria el motivo de la cancelacion 

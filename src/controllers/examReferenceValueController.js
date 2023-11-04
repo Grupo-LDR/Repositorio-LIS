@@ -1,9 +1,24 @@
 import ExamReferenceValues from "../models/examReferenceValueModel.js";
+import z from 'zod';
 /**
  *  REFERENCIAS:
  * ✅(Hecho) || ❌(sin hacer) || ⏳ (en proceso)
  */
 class ExamReferenceValuesController {
+    valueSchema = z.object({
+        status: z.boolean(),
+        determination_id: z.number(),
+        sex: z.enum(['M', 'F', 'X']),
+        age_min: z.number().refine(age => age >= 0),
+        age_max: z.number().refine(age => age <= 80),
+        pregnant: z.boolean(),
+        value_min: z.number(),
+        value_max: z.number(),
+        value_ref_min: z.number(),
+        value_ref_max: z.number(),
+        unit_value_id: z.number(),
+        observation: z.string()
+    });
     //listar tdos los valores de referencia
     static async listValues() { //✅
         try {
