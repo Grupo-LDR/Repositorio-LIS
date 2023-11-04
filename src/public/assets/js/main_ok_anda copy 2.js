@@ -4,7 +4,7 @@ const sectionIzq = document.getElementById('izq');
 const sectionDer = document.getElementById('der');
 // captura menu 
 const navLink = document.getElementsByClassName('nav-link');
-const userTable = lisTable(sectionIzq, '#usersTable', 'user', 'userLink');
+const userTable = lisTable(sectionIzq, '#usersTable', '/user', 'userLink');
 // captura iconos
 const userLink = capturarLink('userLink');
 /****************************************************** */
@@ -31,7 +31,7 @@ Array.from(navLink).forEach(element => {
         //        await consultaLink(element.id);
         switch (element.id) {
             case 'admin':
-                const userT = await lisTable(sectionDer, '#refValTable', 'refvalue', 'userLink');
+                const userT = await lisTable(sectionDer, '#refValTable', '/refvalue', 'userLink');
                 break;
             case ('order'):
                 const derecha = await mostrarResultadoEnWeb(sectionDer, 'userLink');
@@ -63,7 +63,7 @@ async function mostrarResultadoEnWeb(elemento, htmlDocument) {
  */
 async function consultaWebServer(link) {
     try {
-        const response = await fetch(`/${link}`); //await fetch(link);
+        const response = await fetch(link);
         if (response.ok) {
             const htmlContent = await response.text();
             const parser = new DOMParser();
@@ -110,7 +110,7 @@ async function lisTable(section, tabla, link, idElement) {
                 "last": "Último"
             }
         },
-        "drawCallback": function () {
+        "drawCallback": function (settings) {
             // Captura los elementos con la clase "userLink" después de que se haya dibujado la tabla
             const userLinks = this.api().table().container().querySelectorAll(`.${idElement}`);
 
@@ -119,42 +119,16 @@ async function lisTable(section, tabla, link, idElement) {
                     const name = this.getAttribute('name');
                     const route = this.getAttribute('route');
                     // name e sel id user
-                    switch (tabla) {
-                        case '#usersTable':
-                            console.log(`Clic en el enlace con name=${name} y route=${route}`);
-                            routeClickUser(route, name);
-                            break;
-                        case '#refValTable':
-                            routeClickRefValueTabla(route, tabla);
-                            break;
-                    }
-
-                    //  const userT = lisTable(sectionDer, '#refValTable', '/refvalue', 'userLink');
-                    console.log(`Clic en el enlace con name=${name} y route=${route} -> ${tabla}`);
+                    const userT = lisTable(sectionDer, '#refValTable', '/refvalue', 'userLink');
+                    console.log(`Clic en el enlace con name=${name} y route=${route}`);
                 });
             });
         }
 
     },
+
+
     );
-}
 
 
-async function routeClickUser(route, name) {
-    console.log(`Clic en el enlace con name=${name} y route=${route}`);
-    switch (route) {
-        case 'editUser':
-            console.log(name);
-            const result = await consultaWebServer(`user/edit/${name}`);
-            //            console.log(result);
-            mostrarResultadoEnWeb(sectionDer, result);
-            //            lisTable(sectionDer, '#userTable', '/user', 'userLink');
-            break;
-        case 'newOrderUsers':
-            break;
-    }
-
-}
-function routeClickRefValueTabla(route) {
-    lisTable(sectionIzq, '#refValTable', '/refvalue', 'userLink');
 }

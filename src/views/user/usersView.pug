@@ -1,4 +1,5 @@
 table.table-responsive.table.table-striped.display.nowrap.justify-content-center#usersTable
+
     thead 
         tr
             td(class="text-center align-middle fs-6") Paciente
@@ -11,11 +12,13 @@ table.table-responsive.table.table-striped.display.nowrap.justify-content-center
     tbody()      
         each user in usuarios
             tr(class="tableTr responsive")                    
+
                 td                 
                     p(id="search"+user.id name=user.id) #{user.first_name}, #{user.last_name}
                     p #{user.email}
                     p #{user.document}
                     p #{user.phone}
+
 
 
                 td(class="text-center align-middle userEdit")
