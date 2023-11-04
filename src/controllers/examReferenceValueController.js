@@ -1,9 +1,24 @@
 import ExamReferenceValues from "../models/examReferenceValueModel.js";
+import z from 'zod';
 /**
  *  REFERENCIAS:
  * ✅(Hecho) || ❌(sin hacer) || ⏳ (en proceso)
  */
 class ExamReferenceValuesController {
+   static valueSchema = z.object({
+        status: z.boolean(),
+        determination_id: z.number().optional(),
+        sex: z.enum(['M', 'F', 'X']).optional(),
+        age_min: z.number().refine(age => age >= 0).optional(),
+        age_max: z.number().refine(age => age <= 80).optional(),
+        pregnant: z.boolean().optional(),
+        value_min: z.number().optional(),
+        value_max: z.number(),
+        value_ref_min: z.number().optional(),
+        value_ref_max: z.number().optional(),
+        unit_value_id: z.number().optional(),
+        observation: z.string().optional()
+    });
     //listar tdos los valores de referencia
     static async listValues() { //✅
         try {
@@ -41,21 +56,8 @@ class ExamReferenceValuesController {
                 value_ref_max,
                 unit_value_id,
                 observation } = value;
-
-            const nuevoValue = await ExamReferenceValues.create({
-                status,
-                determination_id,
-                sex,
-                age_min,
-                age_max,
-                pregnant,
-                value_max,
-                value_min,
-                value_ref_min,
-                value_ref_max,
-                unit_value_id,
-                observation
-            });
+                const valueValido= this.valueSchema.parse(value)
+            const nuevoValue = await ExamReferenceValues.create(valueValido);
             return nuevoValue;
         } catch (error) {
             console.log("error al ingresar un nuevo valor ->", error)
@@ -63,8 +65,8 @@ class ExamReferenceValuesController {
         }
     }
     static async update(value) {
-
         try {
+            const valueValido = this.valueSchema.parse(value);
             const id = (value.del) ? value.del : value.edit;
             console.log(id);
             const update = await ExamReferenceValues.findByPk(id);
@@ -77,6 +79,7 @@ class ExamReferenceValuesController {
                 console.log('line37 ', value.del);
                 await update.save();
             } else {
+                update.set(valueValido)
                 // aca se deberia hacer un update completo
                 // el formualrio todavia no ennvia lso datos
                 //

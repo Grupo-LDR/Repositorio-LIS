@@ -30,6 +30,8 @@
     "seedrandom": "^3.0.5",
     "sequelize": "^6.33.0",
     "sequelize-auto": "^0.8.8",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4",
+    "zxcvbn": "^4.4.2"
   }
 }
