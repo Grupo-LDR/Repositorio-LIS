@@ -3,30 +3,46 @@ table.table-responsive.table.table-striped.display.nowrap.justify-content-center
         tr
             td(class="text-center align-middle fs-6") Paciente
             td(class="text-center align-middle fs-6") Ordenes Status
-            td(class="text-center align-middle fs-6") Administration
-            td(class="text-center align-middle fs-6") Email
-            td(class="text-center align-middle fs-6") Document
-            td(class="text-center align-middle fs-6") Phone
-            td(class="text-center align-middle fs-6") Orders Details
+            td(class="text-center align-middle fs-6") Admi Paciente
+            //- td(class="text-center align-middle fs-6") Email
+            //- td(class="text-center align-middle fs-6") Document
+            //- td(class="text-center align-middle fs-6") Phone
+            //- td(class="text-center align-middle fs-6") Orders Details
     tbody()      
         each user in usuarios
             tr(class="tableTr responsive")                    
                 td                 
                     p(id="search"+user.id name=user.id) #{user.first_name}, #{user.last_name}
-                td
+                    p #{user.email}
+                    p #{user.document}
+                    p #{user.phone}
+
+
+                td(class="text-center align-middle userEdit")
+                    div.ordnes
+                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id accion="viewOrdersUser") #3 
+                        br
+                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id accion="viewOrdersUser") #4
+                        br
+                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id accion="viewOrdersUser") #456
+                        br
+                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id accion="viewOrdersUser") #4
+                        br
+                        i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id accion="viewOrdersUser") #456
+                //- td
                     p 1     
                 td(class="text-center align-middle userEdit")
                     i(class="fa-solid fa-pen-to-square px-2   userLink"  name=user.id accion="editUser")
-                    i(class="fa-solid fa-folder-plus fa-beat  px-2   userLink" name=user.id accion="newOrderUser")
-                    i(class="fa-regular fa-folder-open fa-beat  px-2   userLink" name=user.id accion="viewOrdersUser")
+                    i(class="fa-solid fa-folder-plus   px-2   userLink" name=user.id accion="newOrderUser")
+                    //- i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id accion="viewOrdersUser")
 
-                td(class="fs-6" ) #{user.email}
-                td(class="text-center align-middle fs-6") #{user.document}
-                td(class="text-center align-middle fs-6") #{user.phone}
-                    td(class="text-center align-middle userEdit")
-                        div.ordnes
-                            i(class="fa-regular fa-folder-open fa-beat  px-2   userLink" name=user.id accion="viewOrdersUser") #3
-                            i(class="fa-regular fa-folder-open fa-beat  px-2   userLink" name=user.id accion="viewOrdersUser") #4
-                            i(class="fa-regular fa-folder-open fa-beat  px-2   userLink" name=user.id accion="viewOrdersUser") #456
+                //- td(class="fs-6" ) #{user.email}
+                //- td(class="text-center align-middle fs-6") #{user.document}
+                //- td(class="text-center align-middle fs-6") #{user.phone}
+                //- td(class="text-center align-middle userEdit")
+                //-     div.ordnes
+                //-         i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id accion="viewOrdersUser") #3
+                //-         i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id accion="viewOrdersUser") #4
+                //-         i(class="fa-regular fa-folder-open   px-2   userLink" name=user.id accion="viewOrdersUser") #456
 
 
