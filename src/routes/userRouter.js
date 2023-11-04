@@ -8,7 +8,7 @@ class UserRouter {
         this.router = express.Router();
         this.router.get('/', this.getUsers);
         this.router.get('/edit/:id', this.getEditUser);
-       this.router.get('/list/order', this.listOrder);
+        this.router.get('/list/order', this.listOrder);
         this.router.get('/new', this.getNewUser);
         this.router.post('/new', this.postNewUser);
         this.router.post('/edit/:id', this.postEditUser);
@@ -16,7 +16,7 @@ class UserRouter {
         this.router.get('/order/new/:id', this.getNewOrderUser);
         this.router.get('/order/list/:id', this.listarOrdenPaciente);
     }
-    async listOrder(req,res){
+    async listOrder(req, res) {
         try {
             /**esto deberia pasar un id para filtrar */
             const ordenes = await orderController.ordenesPorUsuario()
@@ -31,17 +31,27 @@ class UserRouter {
      * @argument{id}
      */
     async getNewOrderUser(req, res) {
+
         try {
             const id = req.params.id;
             // validacion si usairo exite
             const user = await UserController.findUser(id);
-            console.log(user);
+            // verificacion
             if (!user) {
                 return res.status(404).send('Usuario no encontrado');
             }
+            const orderData = {
+                patient_id: id,
+                employee_id: 2
+            }
+            // creacion orden
+            await orderController.crearNuevaOrden(orderData);
+            // verificacion orden
+            const orderNewId = await orderController.ultimaOrden(orderData.employee_id);
+
             const baseUrl = req.protocol + '://' + req.get('host');
             const exams = await ExamController.listExams();
-            res.render('./order/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl });
+            res.render('./order/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl, orderNewId: orderNewId });
             // res.status(200).json(user)
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
@@ -54,7 +64,7 @@ class UserRouter {
     async getUsers(req, res) {
         try {
             const usuarios = await UserController.listUsers();
-            console.log(usuarios);
+            //   console.log(usuarios);
             res.render('./user/usersView.pug', { usuarios });
             // res.status(200).send(JSON.stringify(usuarios))
         } catch (error) {
@@ -72,7 +82,7 @@ class UserRouter {
             if (!user) {
                 return res.status(404).send('Usuario no encontrado');
             }
-            console.log(user);
+            //   console.log(user);
             const ciudades = await CitysController.listCitys();
             // console.log("CIUDADES: ->", ciudades[0].name, ' - ', ciudades[0].id)
             // console.log('ciudad--->>> ', ciudades[0]);

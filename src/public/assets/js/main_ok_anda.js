@@ -142,15 +142,22 @@ async function lisTable(section, tabla, link, idElement) {
 
 async function routeClickUser(route, name) {
     console.log(`Clic en el enlace con name=${name} y route=${route}`);
+    let result;
     switch (route) {
+
         case 'editUser':
             console.log(name);
-            const result = await consultaWebServer(`user/edit/${name}`);
+            result = await consultaWebServer(`user/edit/${name}`);
             //            console.log(result);
             mostrarResultadoEnWeb(sectionDer, result);
             //            lisTable(sectionDer, '#userTable', '/user', 'userLink');
             break;
-        case 'newOrderUsers':
+        case 'newOrderUser':
+            result = await consultaWebServer(`user/order/new/${name}`);
+            //result = await consultaWebServer(`order/new/${name}`);
+            console.log(result);
+            mostrarResultadoEnWeb(sectionDer, result);
+            //            console.log(result);
             break;
     }
 

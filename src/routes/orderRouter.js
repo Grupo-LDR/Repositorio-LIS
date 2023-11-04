@@ -10,9 +10,10 @@ class OrderRouter {
         this.router.get('/sample/pending', this.muestraPendiente);
         this.router.post('/sample', this.addSample);
         this.router.get('/list/:id', this.informDate);
-        // this.router.get('/new/:id', this.getOrder);
+        //        this.router.get('/new/:id', this.getOrder);
         this.router.post('/', this.postNewOrder);
-        this.router.put('/edit/:id', this.editOrder);
+        //this.router.get('/new/:id', this.getNewOrder);
+        this.router.post('/edit/:id', this.editOrder);
     }
     async addSample(req, res) {
         try {
@@ -47,18 +48,18 @@ class OrderRouter {
     }
     async muestraPendiente(req, res) {
         try {
-          const muestra = await StudiesController.muestraPendiente();
-          const muestrasConNullSample = muestra.filter(item => item.Sample === null);
-          if (muestrasConNullSample.length > 0) {
-            res.status(200).json({ mensaje: 'Al menos una muestra tiene el campo "Sample" nulo.', muestra: muestrasConNullSample });
-          } else {
-            res.status(200).json({ mensaje: 'Todas las muestras tienen "Sample" definido.', muestra });
-          }
+            const muestra = await StudiesController.muestraPendiente();
+            const muestrasConNullSample = muestra.filter(item => item.Sample === null);
+            if (muestrasConNullSample.length > 0) {
+                res.status(200).json({ mensaje: 'Al menos una muestra tiene el campo "Sample" nulo.', muestra: muestrasConNullSample });
+            } else {
+                res.status(200).json({ mensaje: 'Todas las muestras tienen "Sample" definido.', muestra });
+            }
         } catch (error) {
-          console.error(error);
-          res.status(500).json({ error: 'Hubo un error al procesar la solicitud.' });
+            console.error(error);
+            res.status(500).json({ error: 'Hubo un error al procesar la solicitud.' });
         }
-      }
+    }
     async informDate(req, res) {
         try {
             const id = req.params.id;
@@ -119,6 +120,11 @@ class OrderRouter {
             await orderController.crearNuevaOrden(orderData);
             // verificacion orden
             const orderNewId = await orderController.ultimaOrden(orderData.employee_id);
+            if (orderNewId) {
+                const order = await orderController.actualizarOrdenDeTrabajo(id, estado, diagnosis, observation);
+            } else {
+                throw new Error('Hubo un error al crear la nueva orden.');
+            }
             console.log(orderNewId);
             StudiesController.registerStudies(orderNewId.id, req.body);
             res.status(200).json(orderNewId);
@@ -139,6 +145,29 @@ class OrderRouter {
         */
         // console.log(req.body);
         //  res.send('Responder con POST user');
+    }
+
+    async getNewOrder(req, res, next) {
+
+        const id = req.params.id;
+        try {
+            const orderData = {
+                patient_id: id,
+                employee_id: 2
+            }
+            console.log('conca');
+            console.log(orderData);
+            // creacion orden
+            await orderController.crearNuevaOrden(orderData);
+            // verificacion orden
+            const orderNewId = await orderController.ultimaOrden(orderData.employee_id);
+            res.render('./orders/orderView.pug', { order: orderNewId });
+            //            res.status(200).json(orderNewId);
+        } catch (error) {
+            // Manejo de errores
+            console.error(error);
+            res.status(500).json({ error: 'GET Hubo un error al crear la nueva orden.' });
+        }
     }
 
     getRouter() {
