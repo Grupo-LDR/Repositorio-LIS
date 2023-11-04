@@ -28,6 +28,7 @@ function userListTable() {
         "ordering": true,
         "info": true,
         "autoWidth": true,
+        "fixedHeader": true,
         "language": {
             "search": "Buscar:",
             "searchPlaceholder": "Escribe para buscar",
