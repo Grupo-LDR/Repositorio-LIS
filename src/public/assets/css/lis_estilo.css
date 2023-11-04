@@ -66,9 +66,10 @@ html {
     margin-bottom: 5px;
 }
 
-.p-container {
+/* .p-container {
     display: flex;
     flex-direction: column;
+    height: 12%;
     align-items: center;
     padding: 4px;
     justify-content: space-between;
@@ -76,7 +77,27 @@ html {
     background-color: var(--color-primario-trasp);
     font-size: large;
     font-weight: bold;
+} */
+.p-container {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    align-items: center;
+    padding: 4px;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: var(--color-primario-trasp);
+    font-size: large;
+    font-weight: bold;
 }
+
+.alert-title {
+    /* display: flex; */
+    margin: 0px;
+    color: #000;
+    font-weight: 900;
+}
+
 
 /* 
 .info-alert {

@@ -42,8 +42,8 @@ class UserRouter {
     async getUsers(req, res) {
         try {
             const usuarios = await UserController.listUsers();
-            // console.log(usuarios);
-               res.render('./user/usersView.pug', { usuarios });
+            console.log(usuarios);
+            res.render('./user/usersView.pug', { usuarios });
             // res.status(200).send(JSON.stringify(usuarios))
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
