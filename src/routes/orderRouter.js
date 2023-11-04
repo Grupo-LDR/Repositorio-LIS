@@ -95,7 +95,7 @@ class OrderRouter {
             const estado = req.body.status;
             const { diagnosis, observation } = req.body
             //actualizar segun estado
-            const order = await orderController.actualizarOrdenDeTrabajo(id, estado, diagnosis, observation);
+            const order = await orderController.actualizarOrdenDeTrabajo(id);
             res.status(200).json(order);
         } catch (error) {
             // Manejo de errores
@@ -103,8 +103,6 @@ class OrderRouter {
             res.status(500).json({ error: 'Hubo un error al crear la nueva orden.' });
         }
     }
-
-
     async postNewOrder(req, res, next) {
         console.trace(req.body);
         try {
@@ -115,7 +113,7 @@ class OrderRouter {
                 employee_id: req.body.employee_id,
                 doctor_id: req.body.doctor_id
             }
-            console.log(orderData);
+            // console.log(orderData);
             // creacion orden
             await orderController.crearNuevaOrden(orderData);
             // verificacion orden
