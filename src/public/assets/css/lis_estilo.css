@@ -1,3 +1,5 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200'); */
+
 /* Lis estilo CSS */
 :root {
     --paddin-lis-div: 2vh;
@@ -7,9 +9,23 @@
     --paddin-lis-izq: 2px;
     --paddin-lis-der: 2px;
     /* -- colores --*/
-    --lis-primario: #adbce6;
-    --lis-primario-trasp: #4978f885;
+    --color-primario: #adbce6;
+    --color-primario-trasp: #4978f885;
+    --color-primary: #586ff0b6;
+    --color-main: #b3aeae;
+    --color-secondary: #222121;
+    --color-dark: rgb(9, 9, 9);
+    --color-ligth: rgb(247, 243, 243);
+    --color-hover: #f8b66a;
+    --color-hover-icon: #9cec09;
+    --color-hover-link: #3f5713;
+    --color-icon-red: #f31628c0;
+    --color-icon-green: #42ac38c0;
 
+}
+
+body {
+    font-family: 'Material Symbols Outlined', sans-serif;
 }
 
 separada o en línea body,
@@ -20,34 +36,78 @@ html {
 
 .lis-div {
     height: 100vh;
-    border: 3px solid var(--lis-primario);
+    border: 3px solid var(--color-primario);
     border-radius: 5px;
     padding: 1px;
     margin: 0;
 
 }
 
-.lis-izq-section {
-    width: 40%;
+/*
+.lis-section {
+    width: 50%;
     float: left;
-    /* border: 1px solid #000; */
     border-radius: 5px;
     padding: 10px;
-    margin: 5px;
+}
+*/
+.info-alert {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border: var(--color-primario) solid 2px;
+    border: 2px solid var(--color-primario);
+    ;
+    border-radius: 5px;
+    width: 100%;
+    height: 10%;
+    align-items: center;
+    align-content: space-between;
+    margin-bottom: 5px;
 }
 
-.lis-der-section {
-    width: 60%;
+.p-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px;
+    justify-content: space-between;
+    border-radius: 5px;
+    background-color: var(--color-primario-trasp);
+    font-size: large;
+    font-weight: bold;
+}
+
+/* 
+.info-alert {
+    display: flex;
+    justify-content: space-evenly;
+    border: red solid 2px;
+    border-radius: 5px;
+    width: 100%;
+    height: 10%;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    align-items: center;
+} */
+
+
+
+.lis-section {
+    /* display: flex; */
+    width: 50%;
     float: left;
-    /* border: 1px solid #000; */
+    border: 1px solid #000;
     border-radius: 5px;
     padding: 10px;
-    margin: 5px;
+    /* margin: 5px; */
+    flex-direction: column;
+    align-items: center;
 }
 
 main {
     display: flex;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
     height: var(--altura-main)
 }
 
@@ -55,30 +115,68 @@ main {
 .nav-link,
 .btn {
     font-family: Arial, sans-serif;
-    font-size: 16px;
+    font-size: 1.6rem;
     /* color: #f10d0d; */
-    /* Otros estilos de fuente aquí */
+
 }
 
+.nav-link:hover {
+    font-weight: 500;
+    color: rgb(11, 230, 11);
+    font-size: 1.8rem;
+
+}
+
+/*
 .navbar {
-    background-color: var(--lis-primario);
+    background-color: var(--color-primario);
     border-radius: 5px 5px 0px 0px;
     height: var(--altura-bar);
 }
+*/
+.navbar {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-primario);
+    border-radius: 5px 5px 0px 0px;
+    height: var(--altura-bar);
+    justify-content: space-between;
+}
 
 .nav-container {
-
     margin-left: 5px;
-
 }
 
 .nav-button {
     margin: 5px;
 }
 
+.table {
+    width: 100% !important;
+}
+
+
+.icon {
+    font-size: 36px;
+    /* Tamaño del icono */
+}
+
+#lis-logo {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 1000;
+    width: 80px;
+    height: auto;
+}
+
+#logo {}
+
+
 @media (max-width: 768px) {
     #navbarLis {
-        background-color: var(--lis-primario-trasp);
+        background-color: var(--color-primario-trasp);
         width: 140px;
         border-radius: 0 0 10px 10px;
         width: 25vw;
@@ -88,7 +186,9 @@ main {
     }
 
     #lis-logo {
-        display: none;
+        width: 8vh;
+        height: auto;
+        margin-right: 5px;
     }
 
     .navbar {

@@ -1,0 +1,62 @@
+//- include ../head.pug
+doctype html
+html(lang='es' data-lis='Laboratorio LIS')
+    head
+        meta(charset='utf-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1')
+        title LIS
+
+        link(href='./assets/css/bootstrap.css' rel='stylesheet')
+        link(href='./assets/css/datatables.css' rel='stylesheet')
+        link(href='./assets/css/lis_estilo.css' rel='stylesheet')
+        //- script(src='./assets/jquery-3.7.1.js')
+        //- script(src='./assets/datatables.js')
+        script(src="https://code.jquery.com/jquery-3.7.0.js")
+        script(src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js")
+        script(src='./assets/js/bootstrap.js')
+        script(src='./assets/js/main.js' defer)
+    body    
+
+//- include navbar
+div(class="container mt-5")
+    div(class="row justify-content-center")
+        div(class="col-12")
+            div
+            p mierda
+                table#usersTable                    
+                    thead
+                        tr
+                            td(class="text-center align-middle fs-6") #
+                            td(class="text-center align-middle fs-6") Edit Patient
+                            td(class="text-center align-middle fs-6") status order
+                            //- td(class="text-center align-middle fs-6") New Order
+                            //- td(class="text-center align-middle fs-6") View Orders                           
+                            td(class="text-center align-middle fs-6") User
+                            td(class="text-center align-middle fs-6") Email
+                            td(class="text-center align-middle fs-6") Document
+                            td(class="text-center align-middle fs-6") Phone
+                    tbody()      
+                        each user in usuarios
+                            tr(class="tableTr")
+                                td(class="text-center align-middle fs-5")  #{user.id}
+                                td(class="text-center align-middle userEdit")
+                                    i(class="fa-solid fa-pen-to-square px-2   userLink"  name=user.id accion="editUser")
+                                    i(class="fa-solid fa-folder-plus fa-beat  px-2   userLink" name=user.id accion="newOrderUser")
+                                    i(class="fa-regular fa-folder-open fa-beat  px-2   userLink" name=user.id accion="viewOrdersUser")                                                            
+                                //- td(class="text-center align-middle userOrder" )
+                                    i(class="fa-solid fa-folder-plus fa-beat  px-1 text-dark fs-6" name=user.id accion="newOrderUser")
+                                //- td(class="text-center align-middle userOrders" )    
+                                    i(class="fa-regular fa-folder-open fa-beat  px-1 text-dark fs-6" name=user.id accion="viewOrdersUser")                                                            
+                                td(class="text-center align-middle userEdit")    
+                                td 
+                                    p(class="w-100 h-100 -usuario" id="search"+user.id name=user.id) #{user.first_name}, #{user.last_name}
+                                td(class="fs-6 " ) #{user.email}
+                                td(class="text-center align-middle fs-6") #{user.document}
+                                td(class="text-center align-middle fs-6") #{user.phone}
+script.
+    new DataTable('#usersTable');
+
+
+//- script(src="/assets/js/utiles.js" )    
+
+//-  //BUG falla al momento editar y falla mostrnado ciudad
