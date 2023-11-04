@@ -112,7 +112,6 @@ async function lisTable(section, tabla, link, idElement) {
         },
         "drawCallback": function () {
             const userLinks = this.api().table().container().querySelectorAll('.userEdit i');
-
             userLinks.forEach(link => {
                 link.addEventListener('click', function (event) {
                     event.stopPropagation();
@@ -130,88 +129,36 @@ async function lisTable(section, tabla, link, idElement) {
                                 routeClickRefValueTabla(route, tabla);
                                 break;
                         }
-
-                        //                        console.log(`Clic en el enlace con name=${name} y route=${route} -> ${tabla}`);
                     }
                 });
             });
         }
-
-
-
-        /*
-
-        "drawCallback": function () {
-            const userLinks = this.api().table().container().querySelectorAll('.userEdit i');
-
-            userLinks.forEach(link => {
-                link.addEventListener('click', function () {
-                    const name = this.getAttribute('name');
-                    const route = this.getAttribute('route');
-
-                    switch (tabla) {
-                        case '#usersTable':
-                            console.log(`Clic en el enlace con name=${name} y route=${route}`);
-                            routeClickUser(route, name);
-                            break;
-                        case '#refValTable':
-                            routeClickRefValueTabla(route, tabla);
-                            break;
-                    }
-
-                    console.log(`Clic en el enlace con name=${name} y route=${route} -> ${tabla}`);
-                });
-            });
-        }
-        */
-
-
-
-        // "drawCallback": function () {
-        //     // Captura los elementos con la clase "userLink" después de que se haya dibujado la tabla
-        //     const userLinks = this.api().table().container().querySelectorAll(`.${idElement}`);
-
-        //     userLinks.forEach(link => {
-        //         link.addEventListener('click', function () {
-        //             const name = this.getAttribute('name');
-        //             const route = this.getAttribute('route');
-        //             // name e sel id user
-        //             switch (tabla) {
-        //                 case '#usersTable':
-        //                     console.log(`Clic en el enlace con name=${name} y route=${route}`);
-        //                     routeClickUser(route, name);
-        //                     break;
-        //                 case '#refValTable':
-        //                     routeClickRefValueTabla(route, tabla);
-        //                     break;
-        //             }
-
-        //             //  const userT = lisTable(sectionDer, '#refValTable', '/refvalue', 'userLink');
-        //             console.log(`Clic en el enlace con name=${name} y route=${route} -> ${tabla}`);
-        //         });
-        //     });
-        // }
 
     },
     );
 }
 
-
+/**
+ * Seccion ruteo cliks
+ * @param {*} route 
+ * @param {*} name 
+ */
 async function routeClickUser(route, name) {
     //    console.log(`Clic en el enlace con name=${name} y route=${route}`);
     let result;
     switch (route) {
-
         case 'editUser':
             console.log(name);
+            console.time('miTiempo');
             result = await consultaWebServer(`user/edit/${name}`);
-            //            console.log(result);
+            // LLAMAR  A LAS FUCIONES CORRESPONDIENTES
             mostrarResultadoEnWeb(sectionDer, result);
-            //            lisTable(sectionDer, '#userTable', '/user', 'userLink');
+            recorrerFormEdit();
             break;
         case 'newOrderUser':
             result = await consultaWebServer(`user/order/new/${name}`);
             //result = await consultaWebServer(`order/new/${name}`);
+            // LLAMA RFUNCION ESPEFICIA PARA ESTE FORMULARIO
             console.log(result);
             mostrarResultadoEnWeb(sectionDer, result);
             //            console.log(result);
@@ -222,3 +169,138 @@ async function routeClickUser(route, name) {
 function routeClickRefValueTabla(route) {
     lisTable(sectionIzq, '#refValTable', '/refvalue', 'userLink');
 }
+/**
+ * recorre formulario user para permitir editar.
+ */
+function recorrerFormEdit() {
+    console.log('en seccion edit user');
+    const botonEdit = document.getElementById("button_edit");
+    const botonConfirm = document.getElementById("button_confirm");
+    const botonCancel = document.getElementById("button_cancel");
+    const divButton = document.getElementById("div_button");
+    const formEdit = document.getElementById("form_edit");
+    // escucha evento click en edi button
+    botonEdit.addEventListener("click", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        console.log(`ACA ESTOY EN ${event}`);
+        botonEdit.classList.add('d-none');
+        botonConfirm.classList.remove('d-none');
+        botonConfirm.onclick = null;
+        botonCancel.classList.remove('d-none');
+        formEdit.onclick = null;
+        removeReadOnly(formEdit);
+        console.log('ACA ESTOY EN edit');
+    });
+    botonConfirm.addEventListener("click", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        //sendFormUser(formEdit);
+        sendPostman(formEdit);
+        console.log('ACA ESTOY EN envio formualrio');
+    });
+    function sendPostman(formEdit) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+        var urlencoded = new URLSearchParams();
+
+        // Recorre los elementos del formulario y agrega sus datos a urlencoded
+        formEdit.querySelectorAll('input, textarea, select').forEach(function (element) {
+            var name = element.getAttribute('name');
+            var value = element.value;
+            if (name) {
+                urlencoded.append(name, value);
+            }
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow'
+        };
+
+        fetch("/user/edit", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .then(() => {
+                lisTable(sectionIzq, '#usersTable', 'user', 'userLink');
+            })
+            .catch(error => console.log('error', error));
+    }
+
+    function sendPostman1(formEdit) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+        //myHeaders.append("Cookie", "connect.sid=s%3As2twccX8DR6kPyuAvcmvh4PKEehdwLZo.Xj0TtWNQKMgsi65oTtAqmrhjKm5If2m8SGyUqrUz22c");
+
+        var urlencoded = new URLSearchParams();
+        formEdit.foreach(formEdit, (value, name) => {
+            urlencoded.append(name, value);
+        })
+
+        //        urlencoded.append("id", "9");
+        //        urlencoded.append("email", "sdfgsdfg@asfsadf.com");
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:8085/user/edit", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+
+
+
+
+    function sendFormUser(formEdit) {
+        const formData = new FormData(formEdit);
+        data = JSON.stringify(Object.fromEntries(formData));
+        console.log(data);
+        console.log(data);
+        fetch('/user/edit', {
+            method: 'POST',
+            body: data,
+
+        })
+            .then(response => {
+                if (response.ok) {
+                    //    lisTable(sectionIzq, '#usersTable', 'user', 'userLink');
+                    return response.text();
+                } else {
+                    throw new Error('Error al enviar el formulario');
+                }
+            })
+            .then(data => {
+
+                console.log('lina 279');
+
+
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        //        formEdit.submit();
+    }
+
+    function removeReadOnly(element) {
+        const elementosForm = element.elements;
+        for (let i = 0; i < elementosForm.length; i++) {
+            const elemento = elementosForm[i];
+            if (elemento.tagName === "INPUT" || elemento.tagName === "TEXTAREA") {
+                // Habilita el elemento para edición
+                elemento.removeAttribute("readonly");
+                elemento.removeAttribute(" ");
+            }
+        }
+    }
+
+}
+

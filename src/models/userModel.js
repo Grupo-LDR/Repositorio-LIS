@@ -48,9 +48,9 @@ User.init({
         args: [3, 80],
         msg: 'El nombre debe tener entre 3 y 80 caracteres.',
       },
-      isAlpha: {
-        msg: 'El nombre debe contener solo letras.',
-      },
+      // isAlpha: {
+      //   msg: 'El nombre debe contener solo letras.',
+      // },
     },
   },
   last_name: {

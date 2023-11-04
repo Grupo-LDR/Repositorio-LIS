@@ -11,7 +11,7 @@ class UserRouter {
         this.router.get('/list/order', this.listOrder);
         this.router.get('/new', this.getNewUser);
         this.router.post('/new', this.postNewUser);
-        this.router.post('/edit/:id', this.postEditUser);
+        this.router.post('/edit', this.postEditUser);//edita usuario
         //NEW
         this.router.get('/order/new/:id', this.getNewOrderUser);
         this.router.get('/order/list/:id', this.listarOrdenPaciente);
@@ -106,11 +106,15 @@ class UserRouter {
     }
 
     async postEditUser(req, res) {
+
         try {
             const usuario = req.body;
+            //            const id=
+            console.log(req.body);
             await UserController.updateUsuario(usuario);
+            res.status(200).send('ok');
             //res.redirect('/user')
-            res.redirect(`/user/edit/${usuario.id}`)
+            //            res.redirect(`/user/edit/${usuario.id}`)
         } catch (error) {
             console.clear;
             console.error('Error al obtener actualizar user:', error);
