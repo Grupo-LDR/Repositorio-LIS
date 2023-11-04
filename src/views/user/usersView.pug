@@ -7,11 +7,12 @@ table.table-responsive.table.table-striped.display.nowrap.justify-content-center
             td(class="text-center align-middle fs-6") Email
             td(class="text-center align-middle fs-6") Document
             td(class="text-center align-middle fs-6") Phone
+            td(class="text-center align-middle fs-6") Orders Details
     tbody()      
         each user in usuarios
             tr(class="tableTr responsive")                    
                 td                 
-                    p(class="w-100 h-100 -usuario" id="search"+user.id name=user.id) #{user.first_name}, #{user.last_name}
+                    p(id="search"+user.id name=user.id) #{user.first_name}, #{user.last_name}
                 td
                     p 1     
                 td(class="text-center align-middle userEdit")
@@ -22,3 +23,10 @@ table.table-responsive.table.table-striped.display.nowrap.justify-content-center
                 td(class="fs-6" ) #{user.email}
                 td(class="text-center align-middle fs-6") #{user.document}
                 td(class="text-center align-middle fs-6") #{user.phone}
+                    td(class="text-center align-middle userEdit")
+                        div.ordnes
+                            i(class="fa-regular fa-folder-open fa-beat  px-2   userLink" name=user.id accion="viewOrdersUser") #3
+                            i(class="fa-regular fa-folder-open fa-beat  px-2   userLink" name=user.id accion="viewOrdersUser") #4
+                            i(class="fa-regular fa-folder-open fa-beat  px-2   userLink" name=user.id accion="viewOrdersUser") #456
+
+

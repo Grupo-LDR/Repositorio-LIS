@@ -49,7 +49,6 @@ function userListTable() {
     // ... (el resto del código se mantiene igual)
 }
 
-userList('/user');
 async function userList(link) {
     fetch(link)
         .then(response => response.text())

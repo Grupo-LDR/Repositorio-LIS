@@ -1,12 +1,5 @@
 const contenido = document.getElementById('contenido');
 const menu = document.getElementsByClassName('menu-link');
-// let tdUsers = '';
-// let userEdit = '';
-// let userOrder = '';
-// let userOrders = '';
-
-console.log(menu);
-contenido.innerHTML = `Hola Mundo`;
 
 Array.from(menu).forEach(element => {
     console.log(element.textContent);
@@ -17,7 +10,7 @@ Array.from(menu).forEach(element => {
         await consultaLink(element.id);
         switch (element.id.substring(1)) {
             case 'user':
-                userList();
+                // userList();
                 //     userListEventos();
                 userListEventos2();
                 break;
@@ -30,13 +23,13 @@ Array.from(menu).forEach(element => {
 // TODO: userEdit, userOrder (new), userOrders (lista)
 async function consultaLink(menuLink) {
     try {
-        const response = await fetch(`http://localhost:8082${menuLink}`);
+        const response = await fetch(menuLink);
         const data = await response.text();
         contenido.innerHTML = data;
         userEdit = document.querySelectorAll('.userEdit');
         userOrder = document.querySelectorAll('.userOrder');
         userOrders = document.querySelectorAll('.userOrders');
-        userList();
+        //  userList();
     } catch (error) {
         console.error('Error en consultaLink:', error);
     }
