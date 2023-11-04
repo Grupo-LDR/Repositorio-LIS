@@ -1,9 +1,59 @@
 import Order from "../models/orderModel.js";
 import User from "../models/userModel.js";
 import Conexion from "../models/conexion.js";
-import SampleController from "./sampleController.js";
-import Sample from "../models/sampleModel.js";
 class orderController {
+  /*
+   lo pude resolver con una query de sequelize
+  sequelize no me tria datos 
+   */
+  static async ordenesPorUsuario() {
+    try {
+      const query = `SELECT 
+     users.*,
+     orders.id,
+     orders.diagnosis_id,
+     orders.observation,
+     orders.status,
+     orders.doctor_id,
+     citys.name
+ FROM
+     users,
+     orders,
+     citys
+ WHERE
+     users.id = orders.patient_id
+         AND users.city_id = citys.id
+         AND orders.created_at > DATE_SUB(NOW(), INTERVAL 30 DAY);`
+      const results = await Conexion.sequelize.query(query)
+      return results;
+    } catch (error) {
+      console.error('Error en la consulta Sequelize:', error);
+      throw error;
+    }
+  }
+  static async listarOrdenesPorUsuario(patient_id) {
+    try {
+      const ordenes = await User.findAll({
+        attributes: ['first_name', 'last_name'],
+        include: [
+          {
+            model: Order,
+            attributes: ['id'],
+          },
+        ],
+        where: {
+          id: patient_id,
+        },
+        raw: true, // Para obtener resultados en formato JSON plano
+      });
+
+      return ordenes;
+    } catch (error) {
+      console.error('Error al listar las órdenes de un paciente: ', error);
+      throw error;
+    }
+  }
+
   static async crearNuevaOrden(orden) {
     try {
       const { diagnosis_id, observation, patient_id, employee_id, doctor_id } = orden;
@@ -196,6 +246,9 @@ WHERE o.id = :order_id;
    * una determinacion puede tener varios valores de referencia
    * pero un valor de referencia puede tener una sola determinacion
    */
+
+  /* este metodo no lo estoy usando, pero no lo quise borras
+  */
   static async verMuestra2(id) {
     const query = `SELECT 
   s.order_id as Numero_orden, 

@@ -8,6 +8,7 @@ class UserRouter {
         this.router = express.Router();
         this.router.get('/', this.getUsers);
         this.router.get('/edit/:id', this.getEditUser);
+       this.router.get('/list/order', this.listOrder);
         this.router.get('/new', this.getNewUser);
         this.router.post('/new', this.postNewUser);
         this.router.post('/edit/:id', this.postEditUser);
@@ -15,6 +16,17 @@ class UserRouter {
         this.router.get('/order/new/:id', this.getNewOrderUser);
         this.router.get('/order/list/:id', this.listarOrdenPaciente);
     }
+    async listOrder(req,res){
+        try {
+            /**esto deberia pasar un id para filtrar */
+            const ordenes = await orderController.ordenesPorUsuario()
+            res.status(200).json(ordenes)
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
     /**
      * @argument{id}
      */
