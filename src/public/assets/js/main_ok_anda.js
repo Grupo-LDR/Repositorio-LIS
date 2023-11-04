@@ -8,7 +8,27 @@ const userTable = lisTable(sectionIzq, '#usersTable', 'user', 'userLink');
 // captura iconos
 const userLink = capturarLink('userLink');
 /****************************************************** */
-console.log(userLink);
+//console.log(userLink);
+document.addEventListener("DOMContentLoaded", function() {
+    const notificacion = document.getElementById('alert');
+
+    notificacion.addEventListener('click', () => {
+        Toastify({
+            text: "This is a toast",
+            duration: 3000,
+            destination: "/user",
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+            onClick: function(){}
+          }).showToast();
+    });
+});
 
 
 
