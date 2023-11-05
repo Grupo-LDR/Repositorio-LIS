@@ -127,7 +127,7 @@ Order.init({
 /**
  * relaiones
  */
-Order.belongsTo(User, {foreignKey: "patient_id"});
+Order.belongsTo(User, {as:'paciente',foreignKey: "patient_id"});
 Order.belongsTo(User, {foreignKey: "employee_id"});
 Order.belongsTo(User, {foreignKey: "doctor_id"});
 Order.belongsTo(User,{foreignKey:"validate_users_id"});

@@ -14,7 +14,7 @@ StudieResult.init({
   },
   studies_id: {
     type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: 'studies',
       key: 'id'
@@ -45,7 +45,7 @@ StudieResult.init({
   },
   update_at: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: true
   }
 }, {
   sequelize:Conexion.sequelize,

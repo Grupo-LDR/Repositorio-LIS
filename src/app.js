@@ -39,6 +39,7 @@ import CityRouter from './routes/cityRouter.js';
 import OrderRouter from './routes/orderRouter.js';
 import SampleTypeRouter from './routes/sampleTypeRouter.js';
 import ExamReferenceValuesRouter from './routes/examReferenceValueRouter.js';
+import StudieResultRouter from './routes/studieResultRouter.js';
 /**
  * variables y constantes App
  */
@@ -85,6 +86,7 @@ class App {
         this.orderRouter = new OrderRouter();
         this.examReferenceValuesRouter = new ExamReferenceValuesRouter();
         this.sampleTypeRouter = new SampleTypeRouter();
+        this.StudieResultRouter= new StudieResultRouter();
     }
     /**
      * Ruteo de peticiones  
@@ -135,6 +137,10 @@ class App {
          * Ruteo de peticiones sampletype
          */
         this.app.use('/sampletype', this.sampleTypeRouter.getRouter());
+        /**
+         * Ruteo de peticiones de RESULTADOS
+         */
+        this.app.use('/result', this.StudieResultRouter.getRouter());
 
         /**
          * Ruteo de error
