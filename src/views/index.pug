@@ -1,6 +1,6 @@
 extends head
 block contenido
-    - const employee = 2
+    - const employee = 3
     script(src='./assets/js/main.js' defer)
     script(src='./assets/js/accionOpenWindows.js' defer)
     body
@@ -64,7 +64,7 @@ block contenido
                                                     - sta="status-green"
                                                 default
                                                     - sta="status-black"
-                                            i(class=`fa-solid fa-folder-open ${sta} px-2 userLink` empId=employee id=order.id order=order.id user=user_id route=`order/viewOrdersUser/${order.id}/${employee}`) #{order.id}
+                                            i(class=`fa-solid fa-folder-open ${sta} px-2 userLink` empId=employee id=order.id order=order.id user=user_id route=`order/viewOrder/${order.id}`) #{order.id}
                                     td(class="text-center align-middle userEdit nowrap-column")
                                         i(class="fa-solid fa-pen-to-square px-2 userLink" empId=employee user=user.id route=`user/editUser/${user.id}/${employee}`)
-                                        i(class="fa-solid fa-folder-plus px-2 userLink" empId=employee user=user.id route=`order/newOrderUser/${user.id}/${employee}`)
+                                        i(class="fa-solid fa-folder-plus px-2 userLink" empId=employee user=user.id route=`order/newOrder/${user.id}/${employee}`)

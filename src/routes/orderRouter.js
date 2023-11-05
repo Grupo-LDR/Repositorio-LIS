@@ -12,8 +12,11 @@ class OrderRouter {
         this.router.get('/list/:id', this.informDate);
         //        this.router.get('/new/:id', this.getOrder);
         this.router.post('/', this.postNewOrder);
-        //this.router.get('/new/:id', this.getNewOrder);
+        this.router.get('/new/:id', this.getNewOrder);
         this.router.post('/edit/:id', this.editOrder);
+        /** V2  */
+        this.router.get('/newOrder/:id/:employee', this.getNewOrder2);
+        this.router.get('/viewOrder/:id', this.getViewOrder2);
     }
     async addSample(req, res) {
         try {
@@ -171,6 +174,44 @@ class OrderRouter {
     getRouter() {
         return this.router;
     }
+    /** Version 2 */
+    async getNewOrder2(req, res, next) {
+
+        const id = req.params.id;
+        const employee_id = req.params.employee;
+        try {
+            const orderData = {
+                patient_id: id,
+                employee_id: parseInt(employee_id, 10),
+            }
+            console.log('conca');
+            console.log(orderData);
+            // creacion orden
+            await orderController.crearNuevaOrden(orderData);
+            // verificacion orden
+            const orderNewId = await orderController.ultimaOrden(orderData.employee_id);
+            //  res.render('./orderView.pug', { order: orderNewId });
+            res.status(200).json(orderNewId);
+        } catch (error) {
+            // Manejo de errores
+            console.error(error);
+            res.status(500).json({ error: 'GET Hubo un error al crear la nueva orden.' });
+        }
+    }
+    async getViewOrder2(req, res, next) {
+        try {
+            const id = req.params.id;
+            const order = await orderController.listarRegistrosPorId(id);
+            res.status(200).json(order);
+        } catch (error) {
+            // Manejo de errores
+            console.error(error);
+            res.status(500).json({ error: 'GET Hubo un error al crear la nueva orden.' });
+        }
+
+    }
+
 }
 
 export default OrderRouter;
+
