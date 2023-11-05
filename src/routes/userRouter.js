@@ -6,13 +6,17 @@ import orderController from "../controllers/orderController.js";
 class UserRouter {
     constructor() {
         this.router = express.Router();
+        /**version 2 */
         this.router.get('/', this.userConOrder);
+        this.router.get('/editUser/:id/:employee', this.getEditUser);
+        this.router.post('/editUser', this.postEditUser);
+
+        /** version 1 */
         // this.router.get('/', this.getUsers);
-        this.router.get('/edit/:id', this.getEditUser);
         this.router.get('/list/order', this.listOrder);
         this.router.get('/new', this.getNewUser);
         this.router.post('/new', this.postNewUser);
-        this.router.post('/edit', this.postEditUser);//edita usuario
+        //this.router.post('/edit', this.postEditUser);
         //NEW
         this.router.get('/order/new/:id', this.getNewOrderUser);
         this.router.get('/order/list/:id', this.listarOrdenPaciente);
@@ -109,19 +113,23 @@ class UserRouter {
      *  responde peticion /users con listado de usuarios
      */
     async getEditUser(req, res) {
+        console.log('linea112');
         try {
             const id = req.params.id;
+            const employee_id = req.params.employee;
             const user = await UserController.findUser(id);
+            console.log(user);
             if (!user) {
                 return res.status(404).send('Usuario no encontrado');
             }
             //   console.log(user);
             const ciudades = await CitysController.listCitys();
+
             // console.log("CIUDADES: ->", ciudades[0].name, ' - ', ciudades[0].id)
             // console.log('ciudad--->>> ', ciudades[0]);
             //let ciudad = ciudades[0];
-            res.render('./user/userEditView.pug', { user, ciudades: ciudades });
-            //res.status(200).send(JSON.stringify(user));
+            res.render('./userEditView.pug', { user, ciudades: ciudades, employee_id });
+            //res.status(200).json(ciudades);
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
             res.status(500).send('Error interno del servidor');
@@ -140,15 +148,18 @@ class UserRouter {
 
     async postEditUser(req, res) {
         const usuario = req.body;
+        console.log(req.body);
+        //  res.status(200).send('ok');
+        //  return;
 
         try {
 
             //            const id=
             console.log(req.body);
             await UserController.updateUsuario(usuario);
-            res.status(200).send('ok');
+            //     res.status(200).send('ok');
             //res.redirect('/user')
-            //            res.redirect(`/user/edit/${usuario.id}`)
+            res.status(200).send(true);
         } catch (error) {
             console.clear;
             console.error('Error al obtener actualizar user:', error);

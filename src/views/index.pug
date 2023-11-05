@@ -6,7 +6,10 @@ block contenido
     body
         .lis-div
             nav.navbar.navbar-expand-md
+
                 .nav-container
+                    button logout       
+
                     button.navbar-toggler.nav-button(type='button' data-bs-toggle='collapse' data-bs-target='#navbarLis' aria-controls='navbarTogglerDemo01' aria-expanded='false')
                         span.navbar-toggler-icon
                     div.nav-container.navbar-collapse#navbarLis
@@ -17,7 +20,9 @@ block contenido
                                 p.nav-link#estudios Estudios
                             li.nav-item
                                 p.nav-link#order Ordenes
+
                 .nav-container
+
                     img#lis-logo(src="./assets/img/lis1.png" alt="Logo Laboratorio")
             main.col-md-12
                 .info-alert
