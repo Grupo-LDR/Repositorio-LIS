@@ -1,0 +1,70 @@
+extends head
+block contenido
+    - const employee = 2
+    script(src='./assets/js/main.js' defer)
+    script(src='./assets/js/accionOpenWindows.js' defer)
+    body
+        .lis-div
+            nav.navbar.navbar-expand-md
+                .nav-container
+                    button.navbar-toggler.nav-button(type='button' data-bs-toggle='collapse' data-bs-target='#navbarLis' aria-controls='navbarTogglerDemo01' aria-expanded='false')
+                        span.navbar-toggler-icon
+                    div.nav-container.navbar-collapse#navbarLis
+                        ul.navbar-nav.me-auto.mb-2.mb-lg-0
+                            li.nav-item
+                                p.nav-link#admin Administracion
+                            li.nav-item
+                                p.nav-link#estudios Estudios
+                            li.nav-item
+                                p.nav-link#order Ordenes
+                .nav-container
+                    img#lis-logo(src="./assets/img/lis1.png" alt="Logo Laboratorio")
+            main.col-md-12
+                .info-alert
+                    .p-container
+                        p.alert-title Proximo Turno
+                        p.alert-title#turno-value 54
+                    .p-container
+                        p.alert-title Proxima orden
+                        p.alert-title#orden-value 1086
+                    .p-container#alert
+                        p.alert-title Notificaciones
+                        p.alert-title#oalert-value 1086
+                .lis-section.col-md-12#main
+                    table.table-responsive.table.table-striped.display.nowrap.justify-content-center#usersTable
+                        thead
+                            tr(class="tableTr responsive")
+                                th(colspan="5") 
+                                    button.btn.btn-primary#miBoton Agregar Paciente
+                            tr(class="tableTr responsive")
+                                th(class="text-center align-middle fs-6") Full Name Pacients
+                                th(class="text-center align-middle fs-6") Email and Phone
+                                th(class="text-center align-middle fs-6") Document
+                                th(class="text-center align-middle fs-6") Ordenes Status
+                                th(class="text-center align-middle fs-6 nowrap-column ") Admi Paciente
+                        tbody()
+                            each user in usuarios
+                                tr(class="tableTr responsive")
+                                    td.align-middle.userEdit#usersTd
+                                        p(id="search"+user.id name=user.id) #{user.first_name}, #{user.last_name}
+                                    td(class="align-middle userEdit")
+                                        p Email: #{user.email}
+                                        p Phone: #{user.phone}
+                                    td(class="align-middle userEdit")
+                                        p Doc #{user.document}
+                                    td(class="text-center align-middle userEdit")
+                                        each order in user.orders
+                                            - let sta
+                                            case order.status
+                                                when 1
+                                                    - sta="status-orange"
+                                                when 2
+                                                    - sta="status-red"
+                                                when 3
+                                                    - sta="status-green"
+                                                default
+                                                    - sta="status-black"
+                                            i(class=`fa-solid fa-folder-open ${sta} px-2 userLink` empId=employee id=order.id order=order.id user=user_id route=`order/viewOrdersUser/${order.id}/${employee}`) #{order.id}
+                                    td(class="text-center align-middle userEdit nowrap-column")
+                                        i(class="fa-solid fa-pen-to-square px-2 userLink" empId=employee user=user.id route=`user/editUser/${user.id}/${employee}`)
+                                        i(class="fa-solid fa-folder-plus px-2 userLink" empId=employee user=user.id route=`order/newOrderUser/${user.id}/${employee}`)

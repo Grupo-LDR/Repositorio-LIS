@@ -1,0 +1,276 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200'); */
+
+/* Lis estilo CSS */
+:root {
+    --paddin-lis-div: 2vh;
+    --margin-lis-div: 5vh;
+    --altura-bar: 8vh;
+    --top-alert: 8vh;
+    --altura-main: 82vh;
+    --paddin-lis-izq: 2px;
+    --paddin-lis-der: 2px;
+    /* -- colores --*/
+    --color-primario: #adbce6;
+    --color-primario-trasp: #4978f885;
+    --color-primary: #586ff0b6;
+    --color-main: #b3aeae;
+    --color-secondary: #222121;
+    --color-dark: rgb(9, 9, 9);
+    --color-ligth: rgb(247, 243, 243);
+    --color-hover: #f8b66a;
+    --color-hover-icon: #9cec09;
+    --color-hover-link: #3f5713;
+    --color-icon-red: #f31628c0;
+    --color-green-50: #42ac38c0;
+
+}
+
+.frame-der {
+    width: 100%;
+    height: 82vh;
+}
+
+separada o en línea body,
+html {
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    font-family: 'Material Symbols Outlined', sans-serif;
+}
+
+.lis-div {
+    height: 100vh;
+    border: 3px solid var(--color-primario);
+    border-radius: 5px;
+    padding: 1px;
+    margin: 0;
+}
+
+.info-alert {
+    position: fixed;
+    top: var(--top-alert);
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-radius: 5px;
+    width: 100%;
+    height: 8vh;
+    align-items: center;
+    align-content: space-between;
+    margin-bottom: 5px;
+}
+
+
+.p-container {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    align-items: center;
+    padding: 4px;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: var(--color-primario-trasp);
+    font-size: large;
+    font-weight: bold;
+}
+
+#alert {
+    width: 20vw;
+    background-color: var(--color-green-50);
+}
+
+.alert-title {
+
+    margin: 0px;
+    color: #000;
+    font-weight: 900;
+}
+
+
+
+
+
+.lis-section {
+    display: flex;
+    /* width: 100vw; */
+    height: var(--altura-main);
+    overflow-y: auto;
+    float: left;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-top: 16vh;
+    flex-direction: column;
+    align-items: center;
+}
+
+main {
+
+    height: var(--altura-main)
+}
+
+.navbar-brand,
+.nav-link,
+.btn {
+    font-family: Arial, sans-serif;
+    font-size: 1.6rem;
+
+}
+
+.nav-link:hover {
+    font-weight: 500;
+    color: rgb(16, 184, 16);
+    font-size: 1.8rem;
+
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1010;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-primario);
+    border-radius: 5px 5px 0px 0px;
+    height: var(--altura-bar);
+    align-content: space-between;
+    align-items: stretch;
+}
+
+.nav-container {
+    margin-left: 5px;
+}
+
+.nav-button {
+    margin: 5px;
+}
+
+.table {
+    width: 100% !important;
+}
+
+.table-order {
+    margin-top: 16vh;
+}
+
+
+.icon {
+    font-size: 36px;
+    /* Tamaño del icono */
+}
+
+#lis-logo {
+    position: fixed;
+    top: 0.5vh;
+    right: 2vw;
+    /* padding: 0px; */
+    z-index: 1000;
+    width: 7vh;
+    height: auto;
+}
+
+#logo {
+    color: red;
+}
+
+/* colors iconos */
+.status-black {
+    color: black;
+}
+
+.status-red {
+    color: red;
+
+}
+
+.status-green {
+    color: green;
+}
+
+.status-orange {
+    color: orange;
+}
+
+/* order style*/
+.order-form {
+    height: 400px;
+}
+
+/* .order-head {
+    position: fixed;
+    top: 16vh;
+    z-index: 1001;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+} */
+.order-head {
+    position: fixed;
+    top: 16vh;
+    right: 16px;
+    width: 49vw;
+    z-index: 1001;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    border: red 6px solid;
+}
+
+#btsn-order {
+    display: flex;
+    flex-direction: row;
+}
+
+/* datatables*/
+.dataTables_filter {
+    float: left;
+}
+
+.dataTables_add-button {
+    float: right;
+    margin-top: 10px;
+}
+
+.nowrap-column {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+@media (max-width: 768px) {
+    #navbarLis {
+        background-color: var(--color-primario-trasp);
+        width: 140px;
+        border-radius: 0 0 10px 10px;
+        width: 25vw;
+        margin-left: 16px;
+        padding-left: 10px;
+        font-weight: 600;
+    }
+
+    #lis-logo {
+        width: 8vh;
+        height: auto;
+        margin-right: 5px;
+    }
+
+    .navbar {
+        /* background-color: #f8495a; */
+        /* margin-top: 20px; */
+        /* margin-right: 20px; */
+        /* padding: 5px; */
+    }
+
+    .navbar-brand {
+        margin-top: 20px;
+        margin-right: 20px;
+        /* background-color: rgb(176, 170, 170); */
+        /* Ajusta la cantidad de espacio en la parte superior según tus preferencias */
+    }
+
+}
