@@ -32,44 +32,23 @@ class UserRouter {
             })
             const orders = await orderController.listOrderUser();
             usuarios.forEach(user => {
-                //                user.orders = [];
                 orders.forEach(order => {
                     let ord = [];
                     order.forEach(or => {
-
                         if (user.id === or.patient_id) {
-                            console.log('Igual');
                             ord.push(or);
                         }
                     })
                     user.orders = ord;
                 })
             });
-            //  console.log(orders);
-            /*           usuarios.map(user => {
-                           user.orders = [];
-                           orders.map(order => {
-                               let ordenes = [];
-                               order.map(or => {
-                                   if (user.id === or.patient_id) {
-                                       console.log('Igual');
-                                       user.orders.push(or);
-                                   }
-                               })
-           
-                           })
-                       });
-             */
             console.log(usuarios);
             res.render('./user/usersView.pug', { usuarios });
-
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error al obtener datos de usuarios y órdenes.' });
         }
     }
-
-
 
     async listOrder(req, res) {
         try {

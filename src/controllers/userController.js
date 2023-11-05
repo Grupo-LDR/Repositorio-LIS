@@ -82,6 +82,7 @@ class UserController {
             throw error;
         }
     }
+
     //listar todos los usuarios
     static async listUsers_2() { //✅ 
         try {

@@ -30,9 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }).showToast();
     });
 });
-
-
-
 /***************************************************** */
 
 async function capturarLink(link) {
@@ -56,6 +53,7 @@ Array.from(navLink).forEach(element => {
                 break;
             case ('order'):
                 const derecha = await mostrarResultadoEnWeb(sectionDer, 'userLink');
+            //                const userOrder = await lisTable(sectionDer, '#orderTable', 'userLink', 'userLink');
 
 
         }
@@ -69,9 +67,7 @@ Array.from(navLink).forEach(element => {
  */
 async function mostrarResultadoEnWeb(elemento, htmlDocument) {
     elemento.innerHTML = '';
-    //const htmlDocument = await consultaWebServer(link);
     if (htmlDocument) {
-        //     elemento.innerHTML = htmlDocument.body.innerHTML;
         elemento.innerHTML = htmlDocument;
     } else {
         elemento.innerHTML = 'No se pudo obtener el contenido.';
@@ -102,10 +98,16 @@ async function consultaWebServer(link) {
     }
 }
 
+/**
+ * 
+ * @param {*} section para mostrar
+ * @param {*} id tabla a mostrar
+ * @param {*} link 
+ * @param {*} idElement 
+ */
 async function lisTable(section, tabla, link, idElement) {
     const result = await consultaWebServer(link);
     await mostrarResultadoEnWeb(section, result);
-
     const table = $(tabla).DataTable({
         "paging": true,
         "responsive": true,
@@ -169,23 +171,17 @@ async function routeClickUser(route, name) {
     let result;
     switch (route) {
         case 'editUser':
-            console.log(name);
-            console.time('miTiempo');
             result = await consultaWebServer(`user/edit/${name}`);
             // LLAMAR  A LAS FUCIONES CORRESPONDIENTES
             mostrarResultadoEnWeb(sectionDer, result);
             recorrerFormEdit();
             break;
         case 'newOrderUser':
-            result = await consultaWebServer(`user/order/new/${name}`);
-            //result = await consultaWebServer(`order/new/${name}`);
-            // LLAMA RFUNCION ESPEFICIA PARA ESTE FORMULARIO
-            console.log(result);
-            mostrarResultadoEnWeb(sectionDer, result);
-            //            console.log(result);
+            result = await lisTable(sectionDer, '#orderTable', `user/order/new/${name}`, 'userLink');
+            //     result = await consultaWebServer(`user/order/new/${name}`);
+            //    mostrarResultadoEnWeb(sectionDer, result);
             break;
     }
-
 }
 function routeClickRefValueTabla(route) {
     lisTable(sectionIzq, '#refValTable', '/refvalue', 'userLink');
@@ -200,7 +196,6 @@ function recorrerFormEdit() {
     const botonCancel = document.getElementById("button_cancel");
     const divButton = document.getElementById("div_button");
     const formEdit = document.getElementById("form_edit");
-    // escucha evento click en edi button
     botonEdit.addEventListener("click", function (event) {
         event.stopPropagation();
         event.preventDefault();
@@ -216,11 +211,9 @@ function recorrerFormEdit() {
     botonConfirm.addEventListener("click", function (event) {
         event.stopPropagation();
         event.preventDefault();
-        //sendFormUser(formEdit);
-        sendPostman(formEdit);
-        console.log('ACA ESTOY EN envio formualrio');
+        sendPostUser(formEdit);
     });
-    function sendPostman(formEdit) {
+    function sendPostUser(formEdit) {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
         var urlencoded = new URLSearchParams();
@@ -228,22 +221,16 @@ function recorrerFormEdit() {
             if (element.tagName === 'INPUT') {
                 if (element.type === 'text') {
                     urlencoded.append(element.name, element.value);
-                    console.log('Campo de texto:', element.name, '-', element.value);
                 } else if (element.type === 'radio') {
-                    console.log('linea 233 Radio button:', element.name, '-', element.checked);
                     if (element.checked) {
                         urlencoded.append(element.name, element.value);
-                        console.log('linea 236 Seleccionado:', element.name, '-', element.value);
                     }
                 }
             } else if (element.tagName === 'TEXTAREA') {
                 urlencoded.append(element.name, element.value);
-                console.log('Área de texto:', element.name);
             } else if (element.tagName === 'SELECT') {
                 urlencoded.append(element.name, element.value);
-                console.log('linea 244 Cuadro de selección:', element.name, '-', element.value);
             }
-
         });
 
         /*
@@ -283,67 +270,6 @@ function recorrerFormEdit() {
             })
             .catch(error => console.log('error', error));
     }
-
-    function sendPostman1(formEdit) {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-        //myHeaders.append("Cookie", "connect.sid=s%3As2twccX8DR6kPyuAvcmvh4PKEehdwLZo.Xj0TtWNQKMgsi65oTtAqmrhjKm5If2m8SGyUqrUz22c");
-
-        var urlencoded = new URLSearchParams();
-        formEdit.foreach(formEdit, (value, name) => {
-            urlencoded.append(name, value);
-        })
-
-        //        urlencoded.append("id", "9");
-        //        urlencoded.append("email", "sdfgsdfg@asfsadf.com");
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: urlencoded,
-            redirect: 'follow'
-        };
-
-        fetch("http://localhost:8085/user/edit", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-    }
-
-
-
-
-    function sendFormUser(formEdit) {
-        const formData = new FormData(formEdit);
-        data = JSON.stringify(Object.fromEntries(formData));
-        console.log(data);
-        console.log(data);
-        fetch('/user/edit', {
-            method: 'POST',
-            body: data,
-
-        })
-            .then(response => {
-                if (response.ok) {
-                    //    lisTable(sectionIzq, '#usersTable', 'user', 'userLink');
-                    return response.text();
-                } else {
-                    throw new Error('Error al enviar el formulario');
-                }
-            })
-            .then(data => {
-
-                console.log('lina 279');
-
-
-                console.log(data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        //        formEdit.submit();
-    }
-
     function removeReadOnly(element) {
         const elementosForm = element.elements;
         for (let i = 0; i < elementosForm.length; i++) {

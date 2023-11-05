@@ -25,14 +25,14 @@
 
 }
 
-body {
-    font-family: 'Material Symbols Outlined', sans-serif;
-}
-
 separada o en línea body,
 html {
     width: 100vw;
     height: 100vh;
+}
+
+body {
+    font-family: 'Material Symbols Outlined', sans-serif;
 }
 
 .lis-div {
@@ -41,7 +41,6 @@ html {
     border-radius: 5px;
     padding: 1px;
     margin: 0;
-
 }
 
 /*
@@ -201,7 +200,7 @@ main {
 .navbar {
     position: fixed;
     width: 100%;
-    z-index: 1001;
+    z-index: 1010;
     top: 0;
     display: flex;
     flex-direction: row;
@@ -222,6 +221,10 @@ main {
 
 .table {
     width: 100% !important;
+}
+
+.table-order {
+    margin-top: 16vh;
 }
 
 
@@ -260,6 +263,38 @@ main {
 
 .status-orange {
     color: orange;
+}
+
+/* order style*/
+.order-form {
+    height: 400px;
+}
+
+/* .order-head {
+    position: fixed;
+    top: 16vh;
+    z-index: 1001;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+} */
+.order-head {
+    position: fixed;
+    top: 16vh;
+    right: 16px;
+    width: 49vw;
+    z-index: 1001;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    border: red 6px solid;
+}
+
+#btsn-order {
+    display: flex;
+    flex-direction: row;
 }
 
 @media (max-width: 768px) {
