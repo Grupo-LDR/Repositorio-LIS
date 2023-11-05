@@ -1,4 +1,5 @@
 /**Seccion captura elementos de sistema */
+
 // captura div secciones 
 const sectionIzq = document.getElementById('izq');
 const sectionDer = document.getElementById('der');
@@ -9,7 +10,7 @@ const userTable = lisTable(sectionIzq, '#usersTable', 'user', 'userLink');
 const userLink = capturarLink('userLink');
 /****************************************************** */
 //console.log(userLink);
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const notificacion = document.getElementById('alert');
 
     notificacion.addEventListener('click', () => {
@@ -23,10 +24,10 @@ document.addEventListener("DOMContentLoaded", function() {
             position: "right", // `left`, `center` or `right`
             stopOnFocus: true, // Prevents dismissing of toast on hover
             style: {
-              background: "linear-gradient(to right, #00b09b, #96c93d)",
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
             },
-            onClick: function(){}
-          }).showToast();
+            onClick: function () { }
+        }).showToast();
     });
 });
 
@@ -222,17 +223,50 @@ function recorrerFormEdit() {
     function sendPostman(formEdit) {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
         var urlencoded = new URLSearchParams();
-
-        // Recorre los elementos del formulario y agrega sus datos a urlencoded
         formEdit.querySelectorAll('input, textarea, select').forEach(function (element) {
-            var name = element.getAttribute('name');
-            var value = element.value;
-            if (name) {
-                urlencoded.append(name, value);
+            if (element.tagName === 'INPUT') {
+                if (element.type === 'text') {
+                    urlencoded.append(element.name, element.value);
+                    console.log('Campo de texto:', element.name, '-', element.value);
+                } else if (element.type === 'radio') {
+                    console.log('linea 233 Radio button:', element.name, '-', element.checked);
+                    if (element.checked) {
+                        urlencoded.append(element.name, element.value);
+                        console.log('linea 236 Seleccionado:', element.name, '-', element.value);
+                    }
+                }
+            } else if (element.tagName === 'TEXTAREA') {
+                urlencoded.append(element.name, element.value);
+                console.log('Área de texto:', element.name);
+            } else if (element.tagName === 'SELECT') {
+                urlencoded.append(element.name, element.value);
+                console.log('linea 244 Cuadro de selección:', element.name, '-', element.value);
+            }
+
+        });
+
+        /*
+        const genderRadio=formEdit.querySelectorAll('input[name="gender"]');
+        genderRadio.forEach(radio => {         
+            if(radio.checked){
+                urlencoded.append('gender', radio.value);
             }
         });
+        const sexRadio=formEdit.querySelectorAll('input[name="sex"]');
+        sexRadio.forEach(radio => {         
+            if(radio.checked){
+                urlencoded.append('sex', radio.value);
+            }
+        });
+        const activeRadio=formEdit.querySelectorAll('input[name="active"]');
+        activeRadio.forEach(radio => {         
+            if(radio.checked){
+                urlencoded.append('active', radio.value);
+            }
+        });
+*/
+
 
         var requestOptions = {
             method: 'POST',

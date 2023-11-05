@@ -6,7 +6,8 @@ import orderController from "../controllers/orderController.js";
 class UserRouter {
     constructor() {
         this.router = express.Router();
-        this.router.get('/', this.getUsers);
+        this.router.get('/', this.userConOrder);
+        // this.router.get('/', this.getUsers);
         this.router.get('/edit/:id', this.getEditUser);
         this.router.get('/list/order', this.listOrder);
         this.router.get('/new', this.getNewUser);
@@ -15,7 +16,61 @@ class UserRouter {
         //NEW
         this.router.get('/order/new/:id', this.getNewOrderUser);
         this.router.get('/order/list/:id', this.listarOrdenPaciente);
+        this.router.get('/userOrders', this.userConOrder);
+
     }
+
+
+    async userConOrder(req, res) {
+        try {
+            const users = await UserController.listUsers();
+
+            let usuarios = [];
+
+            users.map(user => {
+                usuarios.push(user.dataValues)
+            })
+            const orders = await orderController.listOrderUser();
+            usuarios.forEach(user => {
+                //                user.orders = [];
+                orders.forEach(order => {
+                    let ord = [];
+                    order.forEach(or => {
+
+                        if (user.id === or.patient_id) {
+                            console.log('Igual');
+                            ord.push(or);
+                        }
+                    })
+                    user.orders = ord;
+                })
+            });
+            //  console.log(orders);
+            /*           usuarios.map(user => {
+                           user.orders = [];
+                           orders.map(order => {
+                               let ordenes = [];
+                               order.map(or => {
+                                   if (user.id === or.patient_id) {
+                                       console.log('Igual');
+                                       user.orders.push(or);
+                                   }
+                               })
+           
+                           })
+                       });
+             */
+            console.log(usuarios);
+            res.render('./user/usersView.pug', { usuarios });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Error al obtener datos de usuarios y órdenes.' });
+        }
+    }
+
+
+
     async listOrder(req, res) {
         try {
             /**esto deberia pasar un id para filtrar */
@@ -25,7 +80,6 @@ class UserRouter {
             throw error;
         }
     }
-
 
     /**
      * @argument{id}
@@ -106,9 +160,10 @@ class UserRouter {
     }
 
     async postEditUser(req, res) {
+        const usuario = req.body;
 
         try {
-            const usuario = req.body;
+
             //            const id=
             console.log(req.body);
             await UserController.updateUsuario(usuario);

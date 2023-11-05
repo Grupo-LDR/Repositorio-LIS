@@ -3,7 +3,7 @@ import City from "../models/cityModel.js";
 import AuthController from "./authController.js"
 import Conexion from '../models/conexion.js';
 import { z } from 'zod';
-import  zxcvbn  from 'zxcvbn';
+import zxcvbn from 'zxcvbn';
 
 /**
  *  REFERENCIAS:
@@ -11,24 +11,24 @@ import  zxcvbn  from 'zxcvbn';
  */
 class UserController {
     static userSchema = z.object({
-        id: z.number(),
-        first_name: z.string().min(4).max(80).optional(),
-        last_name: z.string().min(4).max(80).optional(),
-        gender: z.enum(['M', 'F', 'X', '']),
-        sex: z.enum(['M', 'F']),
-        document: z.string().refine(document => /^\d{8}$/.test(document), {
-            message: 'El número de documento debe tener 8 dígitos.'
-        }).optional(),
-        email: z.string().email().optional(),
-        phone: z.number().refine(phone => /^\d{9,15}$/.test(phone), {
-            message: 'El número de teléfono debe tener entre 9 y 15 dígitos.'
-        }).optional(),
-        address: z.string().optional(),
-        birth_at: z.date().optional(),
-        password: z.string().min(8).refine(password => zxcvbn(password).score >= 2, {
-            message: 'La contraseña debe tener al menos una puntuación de seguridad de 2.'
-        }),
-        pregnant: z.literal(0).or(z.literal(1)).optional()
+        // id: z.number(),
+        // first_name: z.string().min(4).max(80).optional(),
+        // last_name: z.string().min(4).max(80).optional(),
+        // gender: z.enum(['M', 'F', 'X', '']),
+        // sex: z.enum(['M', 'F']),
+        // document: z.string().refine(document => /^\d{8}$/.test(document), {
+        //     message: 'El número de documento debe tener 8 dígitos.'
+        // }).optional(),
+        // email: z.string().email().optional(),
+        // phone: z.number().refine(phone => /^\d{9,15}$/.test(phone), {
+        //     message: 'El número de teléfono debe tener entre 9 y 15 dígitos.'
+        // }).optional(),
+        // address: z.string().optional(),
+        // birth_at: z.date().optional(),
+        // password: z.string().min(8).refine(password => zxcvbn(password).score >= 2, {
+        //     message: 'La contraseña debe tener al menos una puntuación de seguridad de 2.'
+        // }),
+        // pregnant: z.literal(0).or(z.literal(1)).optional()
     });
     /**
      * verificacion de contraseña
@@ -56,9 +56,9 @@ class UserController {
                 create_at,
                 update_at,
                 pregnant } = user;
-                const usuariosValido = this.userSchema.parse(user);
-            const nuevoUsuario = await User.create({usuariosValido});
-           return nuevoUsuario;
+            const usuariosValido = this.userSchema.parse(user);
+            const nuevoUsuario = await User.create({ usuariosValido });
+            return nuevoUsuario;
         } catch (error) {
             throw error;
         }
@@ -136,7 +136,7 @@ class UserController {
     // hashear contraseña ✅
     static async updateUsuario(user) {//✅
         try {
-            const userValido = this.userSchema.parse(user)
+            //const userValido = this.userSchema.parse(user)
             const usuario = await User.findByPk(user.id);
             if (!usuario) {
                 throw new Error('Usuario no encontrado');
@@ -150,9 +150,9 @@ class UserController {
                 usuario.set({
                     password: nuevaPass,
                 });
-              }else {
-                  usuario.set(userValido);
-                };
+            } else {
+                usuario.set(user);
+            };
             console.log(usuario);
             await usuario.save();
             return usuario;

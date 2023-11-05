@@ -240,8 +240,27 @@ main {
     height: auto;
 }
 
-#logo {}
+#logo {
+    color: red;
+}
 
+/* colors iconos */
+.status-black {
+    color: black;
+}
+
+.status-red {
+    color: red;
+
+}
+
+.status-green {
+    color: green;
+}
+
+.status-orange {
+    color: orange;
+}
 
 @media (max-width: 768px) {
     #navbarLis {

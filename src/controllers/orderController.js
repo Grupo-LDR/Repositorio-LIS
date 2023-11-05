@@ -9,7 +9,7 @@ class orderController {
     patient_id: z.union([z.number(), z.string()]).optional(),
     employee_id: z.number(),
     doctor_id: z.number().optional(),
-})
+  })
 
   /*
    lo pude resolver con una query de sequelize
@@ -25,6 +25,18 @@ class orderController {
       return orden;
     } catch (error) {
       console.error('Error al crear una nueva orden:', error);
+      throw error;
+    }
+  }
+  static async listOrderUser() {
+    try {
+      //   const query = 'select orders.*,users.id from orders, users WHERE orders.created_at > DATE_SUB(NOW(), INTERVAL 30 DAY) ORDER BY `orders`.`patient_id` ASC;';
+      //const query = 'SELECT orders.*, users.id AS user_id, users.last_name as apellido FROM orders INNER JOIN users ON users.id = orders.patient_id WHERE orders.created_at > DATE_SUB(NOW(), INTERVAL 30 DAY) ORDER BY orders.patient_id ASC;';
+      const query = 'SELECT * FROM orders  WHERE orders.created_at > DATE_SUB(NOW(), INTERVAL 30 DAY) ;';
+      const results = await Conexion.sequelize.query(query)
+      return results;
+    } catch (error) {
+      console.error('Error en la consulta Sequelize:', error);
       throw error;
     }
   }
@@ -76,7 +88,7 @@ class orderController {
     }
   }
 
- 
+
   static async listarRegistros() {
     try {
 
@@ -194,7 +206,7 @@ class orderController {
     try {
       const estadosValidos = [0, 1, 2, 3, 4];
       const { orden_id, estado, observation, diagnosis_id } = orden;
-      const ordenValida =this.orderSchema.parse(orden);
+      const ordenValida = this.orderSchema.parse(orden);
       const newOrder = await Order.findByPk(orden_id);
       if (!newOrder) {
         console.log("La orden no se puede actualizar no existe.");
@@ -215,7 +227,7 @@ class orderController {
       console.error('Error al actualizar la orden de trabajo:', error);
       throw error;
     }
-}
+  }
 
   static async cancelarOrden(orden_id, estado, observation) {
     try {

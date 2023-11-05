@@ -49,17 +49,17 @@ div(class="container mt-5")
                                 input(type="text" class="form-control" id="address" name="address" placeholder="Address"  value=user.address)
                         div(class="form-group col-md-4")
                             label(for="city_select") City:
-                                select(name="city" class="form-control" id="city" placeholder="City" )
+                                select(name="city_id" class="form-control" id="city" placeholder="City" )
                                     each cit in ciudades
                                         option(value=cit.id, selected=(cit.id === user.city_id)) #{cit.name}
                             div(class="form-group col-md-4 p-2")
                                 label(class="p2 m-2") Active:                     
                                 div(class="form-check form-check-inline")
-                                    input(type="radio" class="form-check-input" id="active" name="active" value=true checked=user.active === true  )
-                                    label(class="form-check-label" for="male") Active
+                                    input(type="radio" class="form-check-input" id="active" name="active" value="1" checked=user.active === true  )
+                                    label(class="form-check-label" for="active") Active
                                 div(class="form-check form-check-inline")
-                                    input(type="radio" class="form-check-input" id="inactive" name="active" value=false checked=user.active === false  )
-                                    label(class="form-check-label" for="female") Inactive                                
+                                    input(type="radio" class="form-check-input" id="inactive" name="active" value="0" checked=user.active === false  )
+                                    label(class="form-check-label" for="inactive") Inactive                                
                                 div(class="row")            
                                     div(class="form-group p-2" id="div_button")    
                                         input(hidden="true" id="id_user" name="id" value=user.id)    
