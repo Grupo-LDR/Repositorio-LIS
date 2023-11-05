@@ -11,24 +11,24 @@ import zxcvbn from 'zxcvbn';
  */
 class UserController {
     static userSchema = z.object({
-        // id: z.number(),
-        // first_name: z.string().min(4).max(80).optional(),
-        // last_name: z.string().min(4).max(80).optional(),
-        // gender: z.enum(['M', 'F', 'X', '']),
-        // sex: z.enum(['M', 'F']),
-        // document: z.string().refine(document => /^\d{8}$/.test(document), {
-        //     message: 'El número de documento debe tener 8 dígitos.'
-        // }).optional(),
-        // email: z.string().email().optional(),
-        // phone: z.number().refine(phone => /^\d{9,15}$/.test(phone), {
-        //     message: 'El número de teléfono debe tener entre 9 y 15 dígitos.'
-        // }).optional(),
-        // address: z.string().optional(),
-        // birth_at: z.date().optional(),
-        // password: z.string().min(8).refine(password => zxcvbn(password).score >= 2, {
-        //     message: 'La contraseña debe tener al menos una puntuación de seguridad de 2.'
-        // }),
-        // pregnant: z.literal(0).or(z.literal(1)).optional()
+        id: z.number(),
+        first_name: z.string().min(4).max(80).optional(),
+        last_name: z.string().min(4).max(80).optional(),
+        gender: z.enum(['M', 'F', 'X', '']),
+        sex: z.enum(['M', 'F']),
+        document: z.string().refine(document => /^\d{8}$/.test(document), {
+            message: 'El número de documento debe tener 8 dígitos.'
+        }).optional(),
+        email: z.string().email().optional(),
+        phone: z.number().refine(phone => /^\d{9,15}$/.test(phone), {
+            message: 'El número de teléfono debe tener entre 9 y 15 dígitos.'
+        }).optional(),
+        address: z.string().optional(),
+        birth_at: z.date().optional(),
+        password: z.string().min(8).refine(password => zxcvbn(password).score >= 0, {
+            message: 'La contraseña debe tener al menos una puntuación de seguridad de 0.'
+        }),
+        pregnant: z.literal(0).or(z.literal(1)).optional()
     });
     /**
      * verificacion de contraseña
@@ -56,7 +56,7 @@ class UserController {
                 create_at,
                 update_at,
                 pregnant } = user;
-            const usuariosValido = this.userSchema.parse(user);
+           const usuariosValido = this.userSchema.parse(user);
             const nuevoUsuario = await User.create({ usuariosValido });
             return nuevoUsuario;
         } catch (error) {
@@ -135,26 +135,40 @@ class UserController {
 
     // actualizar un usuario
     // hashear contraseña ✅
-    static async updateUsuario(user) {//✅
+    static async updateUsuario(user) {
         try {
-            //const userValido = this.userSchema.parse(user)
+            const userValido = this.userSchema.parse(user);
+            // console.log("USUARIO VALIDO----->", userValido);
+            // console.log("USER----->", user.password);
             const usuario = await User.findByPk(user.id);
             if (!usuario) {
                 throw new Error('Usuario no encontrado');
             }
-            if (user.pass && user.newPassword) {
+            if (user.password) {
+                const nuevaPass = await AuthController.hashPassword(user.password);
+                usuario.set({
+                    password: nuevaPass,
+                });
+                // console.log("CONTRASEÑA:----->",nuevaPass)
+            }
+            if (user.password && usuario.nuevaPass) {
                 const passValid = await AuthController.compararPass(user.pass, usuario.password);
                 if (!passValid) {
                     throw new Error('La contraseña actual no es válida');
                 }
-                const nuevaPass = await AuthController.hashPassword(user.newPassword);
-                usuario.set({
-                    password: nuevaPass,
-                });
-            } else {
-                usuario.set(user);
-            };
-            console.log(usuario);
+            }
+            usuario.set({
+                first_name: userValido.first_name,
+                last_name: userValido.last_name,
+                gender: userValido.gender,
+                sex: userValido.sex,
+                document: userValido.document,
+                email: userValido.email,
+                phone: userValido.phone,
+                address: userValido.address,
+                birth_at: userValido.birth_at,
+                city_id:userValido.city_id
+            });
             await usuario.save();
             return usuario;
         } catch (error) {
@@ -162,7 +176,7 @@ class UserController {
             throw error;
         }
     }
-
+    
 }
 
 export default UserController;

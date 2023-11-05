@@ -16,6 +16,7 @@ import config from './config.js';
 /**
  * modulos uso gral
  */
+import SequelizeStoreImport from 'connect-session-sequelize'
 import express from 'express';
 import session from 'express-session';
 import compression from 'compression';
@@ -31,7 +32,8 @@ import path from 'path';
 import AuthServer from './middlewares/authServer.js';
 /***
  * modulos routes
- */
+*/
+import Session from './models/session.js';
 import LoginRouter from './routes/loginRouter.js';
 import UserRouter from './routes/userRouter.js';
 import ExamRouter from './routes/examRouter.js';
@@ -40,21 +42,36 @@ import OrderRouter from './routes/orderRouter.js';
 import SampleTypeRouter from './routes/sampleTypeRouter.js';
 import ExamReferenceValuesRouter from './routes/examReferenceValueRouter.js';
 import StudieResultRouter from './routes/studieResultRouter.js';
+import Conexion from './models/conexion.js';
+
 /**
  * variables y constantes App
  */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-//console.clear();
+console.clear();
 class App {
     constructor() {
         console.log("APP instanciada");
         this.app = express();
     }
+    
     /**
     * Configuracion del servidor
     */
     configureServer() {
+        // const SequelizeStore = SequelizeStoreImport(session.Store)
+        // const sessionStore = new SequelizeStore({
+        //     db: Conexion.sequelize,
+        //     expiration: 86400000,
+        //     table: 'session', 
+        //     model: Session
+        // });
+        this.app.use(session({
+            secret: config.APP_SECRET,
+            resave: false,
+            saveUninitialized: false
+        }));
         const corsOptions = {
             origin: '*', // Origen permitido
             methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
@@ -66,15 +83,10 @@ class App {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(compression());
         this.app.set('view engine', 'pug');
-        console.log(__dirname);
+       // console.log(__dirname);
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.use(cookieParser());
         this.app.use(cors(corsOptions));
-        this.app.use(session({
-            secret: config.APP_SECRET,
-            resave: false,
-            saveUninitialized: true
-        }));
         /**
          * instancias de Ruteo
          */
@@ -86,7 +98,7 @@ class App {
         this.orderRouter = new OrderRouter();
         this.examReferenceValuesRouter = new ExamReferenceValuesRouter();
         this.sampleTypeRouter = new SampleTypeRouter();
-        this.StudieResultRouter= new StudieResultRouter();
+        this.StudieResultRouter = new StudieResultRouter();
     }
     /**
      * Ruteo de peticiones  
@@ -98,21 +110,22 @@ class App {
          * Ruteo de peticiones estaticas
          */
         this.app.use(express.static('./src/public'));
+        this.app.use('/', this.loginRouter.getRouter())
 
-        /**
-        * Ruteo de peticiones  default index
-        */
-        this.app.get('/', (req, res) => {
-            res.render('index.pug', { title: config.APP_TITLE });
+        this.app.use((req, res,next) => {
+            if (req.session && req.session.usuario) {
+                console.log('Cookie de sesión existente:', req.session.usuario);
+                next();
+            } else {
+                console.log('No se encontró una cookie de sesión.');
+                res.render('login.pug', { title: config.APP_TITLE });
+            }
         });
-        /**
+      /*
        * Ruteo de autenticacion
        */
-        //        this.app.use(this.authServer.auth);
-
-
-
-
+        // this.app.use(this.authServer.auth);
+        
         /**
          * Ruteo de peticiones user
          */

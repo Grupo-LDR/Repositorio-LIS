@@ -1,31 +1,46 @@
 import Express from "express";
+import User from "../models/userModel.js";
 import authController from '../controllers/authController.js';
 class LoginRouter {
     constructor() {
         this.router = Express.Router();
         this.router.get('/', this.getLogin);
-        this.router.post('/user', this.postLogin);
+        this.router.post('/verificar', this.postLogin);
 
     }
-    postLogin(req, res) {
+    async postLogin(req, res) {
         const { user, pass } = req.body;
-        console.log("--------------->" + user)
-        console.log("--------------->" + pass)
-        if (user == 'root@example.com' && pass == '1234') {
-            console.log("ENTREE AL POST-LOGIN")
-            res.redirect('/user');
-        } else {
-            res.render("login", { title: "Laboratorio" });
+        // if (user === 'root@example.com' && pass === "1234") {
+        //     console.log('INGRESÓ COMO ADMINISTRADOR');
+        //     // Puedes almacenar información del usuario en la sesión aquí si es necesario.
+        //     req.session.usuario = { email: 'root@example.com', role: 'admin' };
+        //     console.log(req.session.usuario)
+        //     res.render('index.pug');
+        // } else {
+            const usuario = await User.findOne({ where: { email: user } });
+            if (usuario) {
+                const passwordMatch = await authController.compararPass(pass, usuario.password);
+                if (passwordMatch) {
+                    console.log("ENTREE AL POST-LOGIN");
+                    // Almacenar información del usuario en la sesión si es necesario.
+                    req.session.usuario = { email: usuario.email, role: 'user' };
+                    console.log(req.session.usuario)
+                    res.render('index.pug');
+                    // res.redirect('/');
+                } else {
+                    res.render("login.pug", { title: "Laboratorio" });
+                }
+            } else {
+                res.render("login.pug", { title: "Laboratorio" });
+            // }
         }
-        console.log(user, pass);
     }
+    
     getLogin(req, res) {
-        // console.log("ENTRE A GET LOGIN")
-        // console.log("Get Login ->" + req.body)
-        res.render("login", { title: "Laboratorio" });
+    
+     res.render("login", { title: "Laboratorio" });
     }
     getRouter() {
-        console.log("ENTRE A GET ROUTER")
         return this.router;
     }
 }

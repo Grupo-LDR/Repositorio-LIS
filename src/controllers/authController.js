@@ -10,12 +10,6 @@ class AuthController {
     return bcrypt.compare(passActual, passHash);
   }
 
-
-
-
-
-
-
   
 /**
  * login

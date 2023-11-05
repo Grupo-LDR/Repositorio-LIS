@@ -42,7 +42,7 @@ class UserRouter {
                     user.orders = ord;
                 })
             });
-            console.log(usuarios);
+            // console.log(usuarios);
             res.render('./user/usersView.pug', { usuarios });
         } catch (error) {
             console.error(error);
@@ -144,7 +144,7 @@ class UserRouter {
         try {
 
             //            const id=
-            console.log(req.body);
+            // console.log(req.body);
             await UserController.updateUsuario(usuario);
             res.status(200).send('ok');
             //res.redirect('/user')
