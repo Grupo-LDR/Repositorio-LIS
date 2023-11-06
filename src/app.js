@@ -101,16 +101,20 @@ class App {
          */
         this.app.use(express.static('./src/public'));
         this.app.use('/verificar', this.loginRouter.getRouter());
+        if (config.APP_DEV) {
+            this.app.use((req, res, next) => {
+                //                console.log(req.session.usuario);
 
-        this.app.use((req, res, next) => {
-            if (req.session && req.session.usuario) {
-                console.log('Cookie de sesión existente:', req.session.usuario);
-                next();
-            } else {
-                console.log('No se encontró una cookie de sesión.');
-                res.render('login.pug', { title: config.APP_TITLE });
-            }
-        });
+                if (req.session && req.session.usuario) {
+                    console.log('Cookie de sesión existente:', req.session.usuario);
+                    next();
+                } else {
+                    console.log('No se encontró una cookie de sesión.');
+                    res.render('login.pug', { title: config.APP_TITLE });
+                }
+            });
+
+        }
         // this.app.use('/', (req, res) => {
         //     res.render('index.pug', { title: config.APP_TITLE });
         // });

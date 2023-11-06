@@ -18,7 +18,7 @@ class UserRouter {
         this.router.post('/new', this.postNewUser);
         //this.router.post('/edit', this.postEditUser);
         //NEW
-        this.router.get('/order/new/:id', this.getNewOrderUser);
+        this.router.get('/order/new/:id/:empl_id', this.getNewOrderUser);
         this.router.get('/order/list/:id', this.listarOrdenPaciente);
         this.router.get('/userOrders', this.userConOrder);
 
@@ -71,6 +71,8 @@ class UserRouter {
 
         try {
             const id = req.params.id;
+            const empl_id = req.params.empl_id;
+
             // validacion si usairo exite
             const user = await UserController.findUser(id);
             // verificacion
@@ -79,7 +81,7 @@ class UserRouter {
             }
             const orderData = {
                 patient_id: id,
-                employee_id: 2
+                employee_id: parseInt(empl_id, 10)
             }
             // creacion orden
             await orderController.crearNuevaOrden(orderData);
@@ -88,7 +90,7 @@ class UserRouter {
 
             const baseUrl = req.protocol + '://' + req.get('host');
             const exams = await ExamController.listExams();
-            res.render('./order/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl, orderNewId: orderNewId });
+            res.render('./orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl, orderNewId: orderNewId });
             // res.status(200).json(user)
         } catch (error) {
             console.error('Error al obtener usuarios:', error);

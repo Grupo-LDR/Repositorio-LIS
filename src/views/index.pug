@@ -8,7 +8,7 @@ block contenido
             nav.navbar.navbar-expand-md
 
                 .nav-container
-                    button logout       
+
 
                     button.navbar-toggler.nav-button(type='button' data-bs-toggle='collapse' data-bs-target='#navbarLis' aria-controls='navbarTogglerDemo01' aria-expanded='false')
                         span.navbar-toggler-icon
@@ -21,8 +21,9 @@ block contenido
                             li.nav-item
                                 p.nav-link#order Ordenes
 
-                .nav-container
-
+                .nav-container               
+                    button(type="button" class="btn btn-warning  m-2" name="button_cancel" id="button_cancel") Logout
+                .nav-container             
                     img#lis-logo(src="./assets/img/lis1.png" alt="Logo Laboratorio")
             main.col-md-12
                 .info-alert
@@ -72,4 +73,4 @@ block contenido
                                             i(class=`fa-solid fa-folder-open ${sta} px-2 userLink` empId=employee id=order.id order=order.id user=user_id route=`order/viewOrder/${order.id}`) #{order.id}
                                     td(class="text-center align-middle userEdit nowrap-column")
                                         i(class="fa-solid fa-pen-to-square px-2 userLink" empId=employee user=user.id route=`user/editUser/${user.id}/${employee}`)
-                                        i(class="fa-solid fa-folder-plus px-2 userLink" empId=employee user=user.id route=`order/newOrder/${user.id}/${employee}`)
+                                        i(class="fa-solid fa-folder-plus px-2 userLink" empId=employee user=user.id route=`user/order/new/${user.id}/${employee}`)

@@ -12,15 +12,16 @@ class LoginRouter {
         const { user, pass } = req.body;
         console.log('linea13');
         if (user === 'root@example.com' && pass === "1234") {
-
             console.log('INGRESÓ COMO ADMINISTRADOR');
             // Puedes almacenar información del usuario en la sesión aquí si es necesario.
-            req.session.usuario = { email: 'root@example.com', role: 'admin' };
+            req.session.usuario = { email: 'root@example.com', role: 'admin', authenticated: true, access_auth: 8 };
+            console.log(req.session)
             console.log(req.session.usuario)
             res.redirect('/');
             //            res.render('index.pug');
         } else {
             const usuario = await User.findOne({ where: { email: user } });
+            console.log(usuario);
             if (usuario) {
                 const passwordMatch = await authController.compararPass(pass, usuario.password);
                 if (passwordMatch) {

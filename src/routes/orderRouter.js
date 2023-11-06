@@ -6,14 +6,14 @@ class OrderRouter {
     constructor() {
         this.router = Express.Router();
         this.router.get('/', this.listOrder);
-        this.router.get('/samples', this.verMuestra);
-        this.router.get('/sample/pending', this.muestraPendiente);
-        this.router.post('/sample', this.addSample);
-        this.router.get('/list/:id', this.informDate);
+        // this.router.get('/samples', this.verMuestra);
+        // this.router.get('/sample/pending', this.muestraPendiente);
+        //  this.router.post('/sample', this.addSample);
+        //  this.router.get('/list/:id', this.informDate);
         //        this.router.get('/new/:id', this.getOrder);
-        this.router.post('/', this.postNewOrder);
-        this.router.get('/new/:id', this.getNewOrder);
-        this.router.post('/edit/:id', this.editOrder);
+        // this.router.post('/', this.postNewOrder);
+        //  this.router.get('/new/:id', this.getNewOrder);
+        //  this.router.post('/edit/:id', this.editOrder);
         /** V2  */
         this.router.get('/newOrder/:id/:employee', this.getNewOrder2);
         this.router.get('/viewOrder/:id', this.getViewOrder2);
@@ -91,7 +91,6 @@ class OrderRouter {
             res.status(500).json({ error: 'Hubo un error al obtener la orden.' });
         }
     }
-
     async editOrder(req, res) {
         try {
             const id = req.body.id;
@@ -162,7 +161,7 @@ class OrderRouter {
             await orderController.crearNuevaOrden(orderData);
             // verificacion orden
             const orderNewId = await orderController.ultimaOrden(orderData.employee_id);
-            res.render('./orders/orderView.pug', { order: orderNewId });
+            res.render('./orderView.pug', { order: orderNewId });
             //            res.status(200).json(orderNewId);
         } catch (error) {
             // Manejo de errores
@@ -190,8 +189,9 @@ class OrderRouter {
             await orderController.crearNuevaOrden(orderData);
             // verificacion orden
             const orderNewId = await orderController.ultimaOrden(orderData.employee_id);
-            //  res.render('./orderView.pug', { order: orderNewId });
-            res.status(200).json(orderNewId);
+            res
+            // res.render('./orderView.pug', { order: orderNewId });
+            //res.status(200).json(orderNewId);
         } catch (error) {
             // Manejo de errores
             console.error(error);
@@ -212,6 +212,37 @@ class OrderRouter {
     }
 
 }
+/**
+async getNewOrderUser(req, res) {
+
+        try {
+            const id = req.params.id;
+            // validacion si usairo exite
+            const user = await UserController.findUser(id);
+            // verificacion
+            if (!user) {
+                return res.status(404).send('Usuario no encontrado');
+            }
+            const orderData = {
+                patient_id: id,
+                employee_id: 2
+            }
+            // creacion orden
+            await orderController.crearNuevaOrden(orderData);
+            // verificacion orden
+            const orderNewId = await orderController.ultimaOrden(orderData.employee_id);
+
+            const baseUrl = req.protocol + '://' + req.get('host');
+            const exams = await ExamController.listExams();
+            res.render('./order/orderNewView.pug', { employee_id: '2', user: user, exams: exams, baseUrl: baseUrl, orderNewId: orderNewId });
+            // res.status(200).json(user)
+        } catch (error) {
+            console.error('Error al obtener usuarios:', error);
+            res.status(500).send('Error interno del servidor');
+        }
+    }  
+
+ */
 
 export default OrderRouter;
 
