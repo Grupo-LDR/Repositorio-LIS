@@ -55,7 +55,7 @@ class App {
         console.log("APP instanciada");
         this.app = express();
     }
-    
+
     /**
     * Configuracion del servidor
     */
@@ -83,7 +83,7 @@ class App {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(compression());
         this.app.set('view engine', 'pug');
-       // console.log(__dirname);
+        // console.log(__dirname);
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.use(cookieParser());
         this.app.use(cors(corsOptions));
@@ -110,9 +110,9 @@ class App {
          * Ruteo de peticiones estaticas
          */
         this.app.use(express.static('./src/public'));
-        this.app.use('/', this.loginRouter.getRouter())
+        this.app.use('/verificar', this.loginRouter.getRouter());
 
-        this.app.use((req, res,next) => {
+        this.app.use((req, res, next) => {
             if (req.session && req.session.usuario) {
                 console.log('Cookie de sesión existente:', req.session.usuario);
                 next();
@@ -121,11 +121,14 @@ class App {
                 res.render('login.pug', { title: config.APP_TITLE });
             }
         });
-      /*
-       * Ruteo de autenticacion
-       */
+        this.app.use('/', (req, res) => {
+            res.render('index.pug', { title: config.APP_TITLE });
+        });
+        /*
+         * Ruteo de autenticacion
+         */
         // this.app.use(this.authServer.auth);
-        
+
         /**
          * Ruteo de peticiones user
          */
