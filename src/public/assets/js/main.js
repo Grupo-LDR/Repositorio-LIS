@@ -75,7 +75,7 @@ const pacientesI = () => {
             console.log('User:', user);
             console.log('Route:', route);
             console.log('Employee:', employee);
-            accionOpenEnvent(`/${route}`);
+            //   accionOpenEnvent(`/${route}`);
 
 
         });
