@@ -121,7 +121,7 @@ class App {
                 res.render('login.pug', { title: config.APP_TITLE });
             }
         });
-        this.app.use('/', (req, res) => {
+        this.app.get('/', (req, res) => {
             res.render('index.pug', { title: config.APP_TITLE });
         });
         /*
