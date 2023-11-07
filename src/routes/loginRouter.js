@@ -10,11 +10,11 @@ class LoginRouter {
     }
     async postLogin(req, res) {
         const { user, pass } = req.body;
-        console.log('linea13');
+        // console.log('linea13');
         if (user === 'root@example.com' && pass === "1234") {
             console.log('INGRESÓ COMO ADMINISTRADOR');
             // Puedes almacenar información del usuario en la sesión aquí si es necesario.
-            req.session.usuario = { email: 'root@example.com', role: 'admin', authenticated: true, access_auth: 8 };
+            req.session.usuario = { email: 'root@example.com', role: 'admin', authenticated: true, access_auth: 4 };
             console.log(req.session)
             console.log(req.session.usuario)
             res.redirect('/');
@@ -27,7 +27,7 @@ class LoginRouter {
                 if (passwordMatch) {
                     console.log("ENTREE AL POST-LOGIN");
                     // Almacenar información del usuario en la sesión si es necesario.
-                    req.session.usuario = { email: usuario.email, role: 'user' };
+                    req.session.usuario = { email: usuario.email, role: req.session.role };
                     console.log(req.session.usuario)
                     //res.render('index.pug');
                     res.redirect('/');

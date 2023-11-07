@@ -28,7 +28,7 @@ function calcSeed(secret) {
         seed += secret[seedAleatorio];
     }
     seed = btoa(seed);
-    console.trace(seed);
+    // console.trace(seed);
     return seed;
 }
 export default config;
