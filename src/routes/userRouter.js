@@ -185,7 +185,7 @@ class UserRouter {
             const usuario = req.body;
             await UserController.crearUsuario(usuario);
             console.trace("Usuario Creado -> EXITOSO");
-            res.status(200).json(usuario);
+            res.redirect('/');
         } catch (error) {
             //  if (error.name === "SequelizeValidationError") {
             // Si el error es una validación de Sequelize, devolvemos un JSON con los mensajes de error.

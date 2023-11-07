@@ -101,7 +101,7 @@ class App {
          */
         this.app.use(express.static('./src/public'));
         this.app.use('/verificar', this.loginRouter.getRouter());
-        if (!config.APP_DEV) {
+        if (config.APP_DEV) {
             this.app.use((req, res, next) => {
                 //                console.log(req.session.usuario);
                 if (req.session && req.session.usuario) {

@@ -253,12 +253,12 @@ class orderController {
   static async informarFecha(order_id) {
     const query = `
     SELECT
-DATE_FORMAT(DATE_ADD(NOW(),INTERVAL MAX(e.time) DAY), '%d-%m-%Y') AS fecha_de_entrega
-FROM users AS u
-INNER JOIN orders AS o ON o.patient_id = u.id
-INNER JOIN studies AS s ON s.order_id = o.id
-INNER JOIN exams AS e ON e.id = s.exams_id
-WHERE o.id = :order_id;
+    DATE_FORMAT(DATE_ADD(NOW(),INTERVAL MAX(e.time) DAY), '%d-%m-%Y') AS fecha
+    FROM users AS u
+    INNER JOIN orders AS o ON o.patient_id = u.id
+    INNER JOIN studies AS s ON s.order_id = o.id
+    INNER JOIN exams AS e ON e.id = s.exams_id
+    WHERE o.id = :order_id;
 `;
     try {
       const results = await Conexion.sequelize.query(query, {

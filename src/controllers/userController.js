@@ -10,7 +10,7 @@ import zxcvbn from 'zxcvbn';
  * ✅(Hecho) || ❌(sin hacer) || ⏳ (en proceso)
  */
 class UserController {
-    //    static userSchema = z.object({
+       static userSchema = z.object({
     // id: z.number(),
     // first_name: z.string().min(4).max(80).optional(),
     // last_name: z.string().min(4).max(80).optional(),
@@ -29,7 +29,7 @@ class UserController {
     //     message: 'La contraseña debe tener al menos una puntuación de seguridad de 2.'
     // }),
     // pregnant: z.literal(0).or(z.literal(1)).optional()
-    //   });
+      });
     /**
      * verificacion de contraseña
       const password = 'mi_contraseña_secreta';
@@ -39,7 +39,7 @@ class UserController {
     // crear un nuevo usuario con validacion
     static async crearUsuario(user) { //✅
         try {
-            //  const nuevaPass = await AuthController.hashPassword(user.password);
+            // const nuevaPass = await AuthController.hashPassword(user.password);
             const { first_name,
                 last_name,
                 gender,
@@ -56,14 +56,12 @@ class UserController {
                 create_at,
                 update_at,
                 pregnant } = user;
-            //  const usuariosValido = this.userSchema.parse(user);
-            const nuevoUsuario = await User.create({ user });
+            const nuevoUsuario = await User.create(user);
             return nuevoUsuario;
         } catch (error) {
             throw error;
         }
     };
-
     /**
      * Buscar Usuarios
      * @returns 

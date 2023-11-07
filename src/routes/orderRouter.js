@@ -307,15 +307,13 @@ class OrderRouter {
             const data = await orderController.informarFecha(id);
             let fechaDeEntrega;
             if (data.length > 0) {
-                fechaDeEntrega = data[0].fecha;
-                console.log(fechaDeEntrega);
-            }
-            if (fechaDeEntrega == null) {
+                 fechaDeEntrega = data[0].fecha;
+                console.log(fechaDeEntrega); 
+              }
+              if(fechaDeEntrega==null){
                 fechaDeEntrega = "ESPERANDO INFORME DE RESULTADOS"
-            }
-            //            {"id":8,"patient_id":2,"diagnosis_id":null,"observation":null,"status":true,"employee_id":3,"doctor_id":1,"created_at":"2023-11-07T13:54:15.000Z","updated_at":"2023-11-07T13:54:15.000Z","create_user_id":null,"update_user_id":null,"validate_users_id":null,"User":null}
+              }
             res.render('./orderView.pug', { order, fechaDeEntrega });
-            //res.status(200).json(order);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error });

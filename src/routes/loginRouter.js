@@ -32,9 +32,11 @@ class LoginRouter {
                     //res.render('index.pug');
                     res.redirect('/');
                 } else {
+                    console.log("PASSWORD INCORRECTO");
                     res.render("login.pug", { title: "Laboratorio" });
                 }
             } else {
+                console.log("USUARIO NO ENCONTRADO");
                 res.render("login.pug", { title: "Laboratorio" });
             }
         }

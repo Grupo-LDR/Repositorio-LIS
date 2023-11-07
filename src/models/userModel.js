@@ -39,7 +39,7 @@ User.init({
   },
   first_name: {
     type: DataTypes.STRING(80),
-    allowNull: false,
+    allowNull: true,
     /*  validate: {
         notEmpty: {
           msg: 'El nombre no puede estar vacío.'
@@ -56,7 +56,7 @@ User.init({
   },
   last_name: {
     type: DataTypes.STRING(80),
-    allowNull: false,
+    allowNull: true,
     /*    validate: {
           notEmpty: {
             msg: 'El Apellido no puede estar vacío.',
@@ -73,22 +73,22 @@ User.init({
   },
   gender: {
     type: DataTypes.ENUM('M', 'F', 'X'),
-    allowNull: false,
+    allowNull: true,
     comment: "M: masculino, F: femenino, X: gen x"
   },
   sex: {
     type: DataTypes.ENUM('M', 'F'),
-    allowNull: false
+    allowNull: true
   },
   active: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
     defaultValue: 1,
     comment: "0: inactivo, 1: activo"
   },
   document: {
     type: DataTypes.STRING(9),
-    allowNull: false,
+    allowNull: true,
     unique: {
       args: true,
       msg: 'El documento ya existe en la base de datos.',
@@ -96,11 +96,11 @@ User.init({
   },
   phone: {
     type: DataTypes.STRING(15),
-    allowNull: false
+    allowNull: true
   },
   email: {
     type: DataTypes.STRING(80),
-    allowNull: false,
+    allowNull: true,
     unique: {
       args: true,
       msg: 'El correo electrónico ya existe en la base de datos.',
@@ -113,7 +113,7 @@ User.init({
   },
   address: {
     type: DataTypes.STRING(80),
-    allowNull: false
+    allowNull: true
   },
   birth_at: {
     type: DataTypes.DATEONLY,
