@@ -28,7 +28,7 @@ class MainRouter {
                     user.orders = ord;
                 })
             });
-            console.log(usuarios);
+            // console.log(usuarios);
             res.render('./index.pug', { usuarios });
         } catch (error) {
             console.error(error);

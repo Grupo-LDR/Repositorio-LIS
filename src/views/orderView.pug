@@ -1,33 +1,35 @@
-include head
-div(class="container mt-5")
-    div(class="row justify-content-center")
-        div(class="col-12")
-            div(class="rounded p-1 border table-container")
-                table(class="table table-striped table-hoverdisplay display responsive nowrap justify-content-center" id="usersTable" )                    
-                    thead(class="table-primary")
-                        tr
-                            td(class="text-center align-middle fs-6") #
-                            td(class="text-center align-middle fs-6") Edit Patient
-                            //- td(class="text-center align-middle fs-6") New Order
-                            //- td(class="text-center align-middle fs-6") View Orders                           
-                            td(class="text-center align-middle fs-6") User
-                            td(class="text-center align-middle fs-6") Email
-                            td(class="text-center align-middle fs-6") Document
-                            td(class="text-center align-middle fs-6") Phone
-                    tbody()      
-                        each user in usuarios
-                            tr(class="tableTr")
-                                td(class="text-center align-middle fs-5")  #{user.id}
-                                td(class="text-center align-middle userEdit")
-                                    i(class="fa-solid fa-pen-to-square px-2   userLink"  name=user.id accion="editUser")
-                                    i(class="fa-solid fa-folder-plus fa-beat  px-2   userLink" name=user.id accion="newOrderUser")
-                                    i(class="fa-regular fa-folder-open fa-beat  px-2   userLink" name=user.id accion="viewOrdersUser")                                                            
-                                //- td(class="text-center align-middle userOrder" )
-                                    i(class="fa-solid fa-folder-plus fa-beat  px-1 text-dark fs-6" name=user.id accion="newOrderUser")
-                                //- td(class="text-center align-middle userOrders" )    
-                                    i(class="fa-regular fa-folder-open fa-beat  px-1 text-dark fs-6" name=user.id accion="viewOrdersUser")                                                            
-                                td 
-                                    p(class="w-100 h-100 -usuario" id="search"+user.id name=user.id) #{user.first_name}, #{user.last_name}
-                                td(class="fs-6 " ) #{user.email}
-                                td(class="text-center align-middle fs-6") #{user.document}
-                                td(class="text-center align-middle fs-6") #{user.phone}
+extends head
+
+block contenido
+    div(class="container mt-5")
+        div(class="row justify-content-center")
+            div(class="col-8")
+                div(class="rounded p-4 border table-container")
+                    h2 Informarcion de la orden del paciente: 
+                    h4 #{order.paciente.first_name} #{order.paciente.last_name}
+                    form(action="/editar-orden" method="post" id="form_edit_orden")
+                        div(class="form-group")
+                            label(for="codigo") Numero de orden:
+                            p(type="text" class="form-control" id="codigo" name="id") #{order.id}
+                        div(class="form-group")
+                            label(for="descripcion") Descripción:
+                            p(type="text" class="form-control" id="observation" name="observation") #{order.observation}
+                        div(class="form-group")
+                            label(for="fecha") Fecha de Entrega:
+                            p(type="text" class="form-control" id="date" name="date") #{fechaDeEntrega}
+                        div(class="form-group")
+                            label(for="usuario") Atentido por el doctor:
+                            p(type="text" class="form-control" id="doctor" name="doctor") #{order.doctor.first_name}
+                        div(class="form-group")
+                            label(for="estado") Estado:
+                            p(id="estado" name="estado" class="form-control") #{order.status}
+                        //-         option(value="pendiente" selected=order.status === 'pendiente') Pendiente
+                        //-         option(value="en_proceso" selected=order.status === 'en_proceso') En Proceso
+                        //-         option(value="completada" selected=order.status === 'completada') Completada
+                        //- div(class="form-group")
+                        //-     p(type="hidden" id="id_orden" name="id" value=order.id)
+                        //- button(type="button" class="btn btn-primary m-2" name="button_edit_orden" id="button_edit_orden") Edit
+                        //- button(type="button" class="btn btn-primary d-none m-2" name="button_confirm_orden" id="button_confirm_orden" onclick="event.preventDefault();") Send
+                        button(type="button" class="btn btn-warning m-2" name="print" id="printResult") Consultar Resultados
+
+                        

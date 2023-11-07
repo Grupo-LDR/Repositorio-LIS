@@ -128,8 +128,8 @@ Order.init({
  * relaiones
  */
 Order.belongsTo(User, {as:'paciente',foreignKey: "patient_id"});
-Order.belongsTo(User, {foreignKey: "employee_id"});
-Order.belongsTo(User, {foreignKey: "doctor_id"});
+Order.belongsTo(User, {as:'empleado', foreignKey: "employee_id"});
+Order.belongsTo(User, {as:'doctor', foreignKey: "doctor_id"});
 Order.belongsTo(User,{foreignKey:"validate_users_id"});
 User.hasMany(Order,{foreignKey:"patient_id"});
 User.hasMany(Order,{foreignKey:"employee_id"});
@@ -137,6 +137,5 @@ User.hasMany(Order,{foreignKey:"doctor_id"});
 User.hasMany(Order,{foreignKey:"validate_users_id"});
 Order.hasMany(Studie,{foreignKey: "order_id"});
 Studie.belongsTo(Order,{foreignKey:"order_id"})
-Diagnostico.belongsTo(Order, { foreignKey: 'diagnostico_id' });
-Order.hasMany(Diagnostico, { foreignKey: 'diagnostico_id' });
+Order.hasOne(Diagnostico, {foreignKey: 'diagnosis_id',as: 'diagnostico'});
 export default Order;

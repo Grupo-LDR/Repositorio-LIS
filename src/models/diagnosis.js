@@ -17,7 +17,6 @@ Diagnostico.init({
     }
 },{  
     sequelize:Conexion.sequelize,
-    modelName:'diagnosis',
     tableName:'diagnosis',
     timestamps:true
 });

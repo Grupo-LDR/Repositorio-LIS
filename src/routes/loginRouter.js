@@ -1,47 +1,51 @@
 import Express from "express";
 import User from "../models/userModel.js";
 import authController from '../controllers/authController.js';
+import Profile from "../models/profileModel.js";
 class LoginRouter {
     constructor() {
         this.router = Express.Router();
         this.router.get('/', this.getLogin);
         this.router.post('/', this.postLogin);
-
     }
     async postLogin(req, res) {
         const { user, pass } = req.body;
-        console.log('linea13');
-        if (user === 'root@example.com' && pass === "1234") {
-            console.log('INGRESÓ COMO ADMINISTRADOR');
-            // Puedes almacenar información del usuario en la sesión aquí si es necesario.
-            req.session.usuario = { email: 'root@example.com', role: 'admin', authenticated: true, access_auth: 8 };
-            console.log(req.session)
-            console.log(req.session.usuario)
-            res.redirect('/');
-            //            res.render('index.pug');
-        } else {
-            const usuario = await User.findOne({ where: { email: user } });
-            console.log(usuario);
-            if (usuario) {
-                const passwordMatch = await authController.compararPass(pass, usuario.password);
-                if (passwordMatch) {
-                    console.log("ENTREE AL POST-LOGIN");
-                    // Almacenar información del usuario en la sesión si es necesario.
-                    req.session.usuario = { email: usuario.email, role: 'user' };
-                    console.log(req.session.usuario)
-                    //res.render('index.pug');
-                    res.redirect('/');
-                } else {
-                    res.render("login.pug", { title: "Laboratorio" });
-                }
+        try {
+            if (user === 'root@example.com' && pass === "1234") {
+                req.session.usuario = { email: 'root@example.com', role: 'admin', access_auth: 4 };
             } else {
-                res.render("login.pug", { title: "Laboratorio" });
+                const usuario = await User.findOne({ where: { email: user } });
+                if (!usuario) {
+                    console.log('Usuario no encontrado en la base de datos, vas al login de nuevo');
+                    return res.render("login.pug", { title: "Laboratorio" });
+                }
+                const passwordMatch = await authController.compararPass(pass, usuario.password);
+                if (!passwordMatch) {
+                    console.log('Contraseña incorrecta, vas al login de nuevo');
+                    return res.render("login.pug", { title: "Laboratorio" });
+                }
+                const profile = await Profile.findOne({ where: { users_id: usuario.id } });
+                if (profile.access_auth < 4) {
+                    req.session.usuario = { email: usuario.email, role: profile.name, access_auth: profile.access_auth };
+                    console.log('Usuario con acceso regular');
+                } else {
+                    req.session.usuario = { email: usuario.email, role: profile.name, access_auth: profile.access_auth };
+                    console.log('Usuario con acceso especial');
+                }
+                req.session.usuario = { email: usuario.email, role: profile.name, access_auth: 1 };
             }
+            res.redirect('/');
+        } catch (error) {
+            console.error('Error en la base de datos:', error);
+            res.status(500).json({ mensaje: "Erroooooooooooor" });
+
         }
     }
 
-    getLogin(req, res) {
 
+
+
+    getLogin(req, res) {
         res.render("login", { title: "Laboratorio" });
     }
     getRouter() {

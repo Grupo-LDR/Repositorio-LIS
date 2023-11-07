@@ -2,6 +2,7 @@ import Order from "../models/orderModel.js";
 import User from "../models/userModel.js";
 import Conexion from "../models/conexion.js";
 import { z } from 'zod';
+import Diagnostico from "../models/diagnosis.js";
 class orderController {
   static orderSchema = z.object({
     diagnosis_id: z.number().optional(),
@@ -125,17 +126,22 @@ class orderController {
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-            // as: 'perteneceA'
+            as: 'paciente'
           },
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-            // as: 'creadoPor'
+            as: 'empleado'
           },
           {
             model: User,
             attributes: ['first_name', 'last_name'],
-            // as: 'Doctor'
+            as: 'doctor'
+          },
+          {
+            model: Diagnostico,
+            attributes:['name'],
+            as:"diagnostico"
           }
         ]
       });
@@ -249,11 +255,23 @@ class orderController {
       throw error;
     }
   }
+
+  /**
+   * estados validos
+   * 0: Inactivo
+    1: Activo
+    2: Ingresada
+    3: Toma de muestra
+    4: Analítica
+    5: Paso a firma
+    6: Firmada
+    7: Entregada
+   */
   // Aviso de Fecha de entrega de resultados
   static async informarFecha(order_id) {
     const query = `
     SELECT
-DATE_FORMAT(DATE_ADD(NOW(),INTERVAL MAX(e.time) DAY), '%d-%m-%Y') AS fecha_de_entrega
+DATE_FORMAT(DATE_ADD(NOW(),INTERVAL MAX(e.time) DAY), '%d-%m-%Y') AS fecha
 FROM users AS u
 INNER JOIN orders AS o ON o.patient_id = u.id
 INNER JOIN studies AS s ON s.order_id = o.id

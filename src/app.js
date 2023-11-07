@@ -1,18 +1,7 @@
 /**
- * configuracion
- * @ true: development
- * @false: dproduction
- *   
- */
-// gitignore del orto
-const __DEV = false;
-
-/**
  * modulo configuracion
  */
 import config from './config.js';
-// import Config from './config.js';
-// const config = new Config(__DEV);
 /**
  * modulos uso gral
  */
@@ -46,7 +35,7 @@ import StudieResultRouter from './routes/studieResultRouter.js';
  */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-//console.clear();
+// console.clear();
 class App {
     constructor() {
         console.log("APP instanciada");
@@ -67,15 +56,16 @@ class App {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(compression());
         this.app.set('view engine', 'pug');
-        console.log(__dirname);
+        // console.log(__dirname);
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.use(cookieParser());
         this.app.use(cors(corsOptions));
-        this.app.use(session({
-            secret: config.APP_SECRET,
-            resave: false,
-            saveUninitialized: true
-        }));
+       
+        // this.app.use(session({
+        //     secret: config.APP_SECRET,
+        //     resave: false,
+        //     saveUninitialized: false
+        // }));
         /**
          * instancias de Ruteo
          */
@@ -93,18 +83,20 @@ class App {
     /**
      * Ruteo de peticiones  
      */
-
     appServerRoute() {
         this.app.use(morgan('dev'));
         /**
          * Ruteo de peticiones estaticas
          */
         this.app.use(express.static('./src/public'));
-        this.app.use('/verificar', this.loginRouter.getRouter());
-        if (config.APP_DEV) {
+        this.app.use('/verificar', session({
+            secret: config.APP_SECRET,
+            resave: false,
+            saveUninitialized: false
+        }), this.loginRouter.getRouter());
+        // dev = true = produccion
+        if (!config.APP_DEV) {
             this.app.use((req, res, next) => {
-                //                console.log(req.session.usuario);
-
                 if (req.session && req.session.usuario) {
                     console.log('Cookie de sesión existente:', req.session.usuario);
                     next();
@@ -113,20 +105,8 @@ class App {
                     res.render('login.pug', { title: config.APP_TITLE });
                 }
             });
-
         }
-        // this.app.use('/', (req, res) => {
-        //     res.render('index.pug', { title: config.APP_TITLE });
-        // });
-        /*
-       * Ruteo de autenticacion
-       */
-        //        this.app.use(this.authServer.auth);
-        /**
-        * Ruteo MAIN  peticiones  default index
-        */
-        this.app.get('/', this.mainRouter.getRouter());
-
+        this.app.use('/', this.mainRouter.getRouter());
         /**
          * Ruteo de peticiones user
          */

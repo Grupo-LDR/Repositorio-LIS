@@ -1,4 +1,23 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const notificacion = document.getElementById('alert');
 
+    notificacion.addEventListener('click', () => {
+        Toastify({
+            text: "This is a toast",
+            duration: 3000,
+            destination: "/",
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+            onClick: function () { }
+        }).showToast();
+    });
+});
 $(document).ready(function () {
     const table = $('#usersTable').DataTable({
         //  "dom": '<"top"Bf>rt<"bottom"lip>',
@@ -70,12 +89,12 @@ const pacientesI = () => {
             const user = $(this).attr('user');
             const route = $(this).attr('route');
             const employee = $(this).attr('empId');
-            console.log('Elemento i clicado:');
-            console.log('ID:', id);
-            console.log('User:', user);
-            console.log('Route:', route);
-            console.log('Employee:', employee);
-            //   accionOpenEnvent(`/${route}`);
+            // console.log('Elemento i clicado:');
+            // console.log('ID:', id);
+            // console.log('User:', user);
+            // console.log('Route:', route);
+            // console.log('Employee:', employee);
+            accionOpenEnvent(`/${route}`);
 
 
         });

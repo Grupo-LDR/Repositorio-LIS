@@ -46,7 +46,7 @@ class UserRouter {
                     user.orders = ord;
                 })
             });
-            console.log(usuarios);
+            // console.log(usuarios);
             res.render('./user/usersView.pug', { usuarios });
         } catch (error) {
             console.error(error);
@@ -115,12 +115,12 @@ class UserRouter {
      *  responde peticion /users con listado de usuarios
      */
     async getEditUser(req, res) {
-        console.log('linea112');
+        // console.log('linea112');
         try {
             const id = req.params.id;
             const employee_id = req.params.employee;
             const user = await UserController.findUser(id);
-            console.log(user);
+            // console.log(user);
             if (!user) {
                 return res.status(404).send('Usuario no encontrado');
             }
@@ -150,14 +150,14 @@ class UserRouter {
 
     async postEditUser(req, res) {
         const usuario = req.body;
-        console.log(req.body);
+        // console.log(req.body);
         //  res.status(200).send('ok');
         //  return;
 
         try {
 
             //            const id=
-            console.log(req.body);
+            // console.log(req.body);
             await UserController.updateUsuario(usuario);
             //     res.status(200).send('ok');
             //res.redirect('/user')
@@ -174,7 +174,7 @@ class UserRouter {
             console.log(req.body);
             const usuario = req.body;
             await UserController.crearUsuario(usuario);
-            console.trace("Usuario Creado -> EXITOSO");
+            // console.trace("Usuario Creado -> EXITOSO");
             res.status(200).json(usuario);
         } catch (error) {
             if (error.name === "SequelizeValidationError") {

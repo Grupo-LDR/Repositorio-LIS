@@ -202,15 +202,21 @@ class OrderRouter {
         try {
             const id = req.params.id;
             const order = await orderController.listarRegistrosPorId(id);
-            res.status(200).json(order);
+            const data = await orderController.informarFecha(id);
+            let fechaDeEntrega;
+            if (data.length > 0) {
+                 fechaDeEntrega = data[0].fecha;
+                console.log(fechaDeEntrega); 
+              }
+              if(fechaDeEntrega==null){
+                fechaDeEntrega = "ESPERANDO INFORME DE RESULTADOS"
+              }
+            res.render('./orderView.pug', { order, fechaDeEntrega });
         } catch (error) {
-            // Manejo de errores
             console.error(error);
-            res.status(500).json({ error: 'GET Hubo un error al crear la nueva orden.' });
+            res.status(500).json({ error });
         }
-
     }
-
 }
 /**
 async getNewOrderUser(req, res) {
