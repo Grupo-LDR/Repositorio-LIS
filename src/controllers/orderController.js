@@ -2,7 +2,6 @@ import Order from "../models/orderModel.js";
 import User from "../models/userModel.js";
 import Conexion from "../models/conexion.js";
 import { z } from 'zod';
-import Diagnostico from "../models/diagnosis.js";
 class orderController {
   static orderSchema = z.object({
     diagnosis_id: z.number().optional(),
@@ -137,11 +136,6 @@ class orderController {
             model: User,
             attributes: ['first_name', 'last_name'],
             as: 'doctor'
-          },
-          {
-            model: Diagnostico,
-            attributes:['name'],
-            as:"diagnostico"
           }
         ]
       });
