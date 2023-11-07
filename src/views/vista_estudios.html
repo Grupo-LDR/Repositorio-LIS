@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        #name {
+            list-style: none;
+            padding: 0;
+            border: 1px solid #ccc;
+            display: none;
+        }
+
+        #name li {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        #name li:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="campoBusqueda" placeholder="Buscar...">
+    <input type="text" id="campoBusqueda2" placeholder="Buscar...">
+    <ul id="name"></ul>
+    <ul id="id"></ul>
+
+    <script>
+        const datos = [
+            { nombre: "Manzana", id: 1 },
+            { nombre: "Banana", id: 2 },
+            { nombre: "Cereza", id: 3 },
+            { nombre: "Damasco", id: 4 },
+            // Agrega más objetos aquí
+        ];
+
+        const campoBusqueda = document.getElementById('campoBusqueda');
+        const campoBusqueda2 = document.getElementById('campoBusqueda2');
+        const name = document.getElementById('name');
+
+        campoBusqueda.addEventListener('input', () => {
+            const valorBusqueda = campoBusqueda.value.toLowerCase();
+            const nameFiltradas = datos.filter(obj => obj.nombre.toLowerCase().includes(valorBusqueda));
+
+            name.innerHTML = '';
+
+            nameFiltradas.forEach(sugerencia => {
+                const li = document.createElement('li');
+                li.textContent = sugerencia.nombre;
+                li.addEventListener('click', () => {
+                    campoBusqueda.value = sugerencia.nombre;
+                    campoBusqueda2.value = sugerencia.id;
+                    name.innerHTML = '';
+                });
+                name.appendChild(li);
+            });
+
+            if (nameFiltradas.length > 0) {
+                name.style.display = 'block';
+            } else {
+                name.style.display = 'none';
+            }
+        });
+
+        campoBusqueda.addEventListener('blur', () => {
+            setTimeout(() => {
+                name.innerHTML = '';
+                name.style.display = 'none';
+            }, 200);
+        });
+
+    </script>
+</body>
+
+</html>

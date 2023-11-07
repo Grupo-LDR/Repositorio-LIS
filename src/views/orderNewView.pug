@@ -1,0 +1,153 @@
+extends head
+block contenido
+
+    - const examDate = new Date();
+
+    - let sangre=false
+    - let orina=false
+    - let heces=false
+    div(class="container mt-5")
+        div(class="row justify-content-center")
+            div(class="col-12")
+                div(class="rounded p-1 border ") 
+                    h1 New Order  for Patient: #{user.last_name}, #{user.first_name} 
+                    p Date:  #{examDate.toLocaleDateString()} 
+                    div(class="block")
+                        button(class="btn btn-primary m-2" id="btnFiltrar") PreView 
+                        button(type="submit" class="btn btn-primary m-2" id="sendButton" form="form_new_order") Send
+                        form( action="/order/edit" method ="post" id="form_new_order") 
+                            //- { employee_id: empl_id, user: user, exams: exams, baseUrl: baseUrl, orderNewId: orderNewId });
+                            div(class="col-md-6 text-right")
+                                div(class="form-group p-2")
+                                    label(for="diagnostico") Diagnostico
+                                    input(id="diagnosis" name="diagnosis" class="form-control" type="text" placeholder="Diagnostico" required)
+                                div(class="form-group p-2")
+                                    label(for="doctor") Doctor
+                                    input(id="doctor" name="doctor_id" class="form-control" type="text" placeholder="Doctor" value="1" required)    
+                                div(class="form-group p-2")     
+                                    label(for="comment") Comments
+                                    textarea(id="comment" name="comment" class="form-control" type="text" placeholder="Comentarios"  required)
+                                    input(type="text" name="user_id" class="" value=user.id hidden )   
+                                    input(type="text" name="user_name" class="" value=orderNewId hidden )   
+                                    input(type="text" name="employee_id" class="" value=employee_id  readonly hidden ) 
+                            table(class="table table-striped table-hoverdisplay display responsive nowrap justify-content-center" id="orderTable" )                    
+                                thead(class="table-primary")
+                                    tr
+                                        td(class="text-center align-middle fs-6") Select
+                                        td(class="text-center align-middle fs-6") #
+                                        td(class="text-center align-middle fs-6") Description
+                                tbody()      
+                                    each exam in examsAll
+                                        - const isChecked = exams && exams.some(e => e.id === exam.id)
+                                        if(isChecked)
+
+
+                                        tr(class="row-exam" id=`tr${exam.id}`)
+                                            td(class="text-center align-middle fs-5")
+                                                input(class="seleccion" type="checkbox", id=`orderNew${exam.id}`, name="orderNew", value=exam.id, checked=isChecked)
+                                            td(class="text-center align-middle fs-6") #{exam.id}
+                                            td(class="align-middle fs-6") #{exam.detail}
+
+            script(src="/assets/js/exam.js" defer )                  
+                //- script(src="/assets/js/diagnosis.js" defer )                  
+                script.
+                    document.getElementById("sendButton").addEventListener("click", function() {
+                        var confirm = window.confirm("¿Seguro de que deseas enviar el formulario?");
+                        if (confirm) {
+                            var form = document.getElementById("form_new_order");
+                            form.submit();
+                        }
+                    });
+                    const datos = [
+                        // aca van diagnosticos recibidos desde OrderRoute
+                            ];
+                                const campoBusqueda = document.getElementById('campoBusqueda');
+                                const campoBusqueda2 = document.getElementById('campoBusqueda2');
+                                const name = document.getElementById('name1');
+                                    campoBusqueda.addEventListener('input', () => {
+                                        const valorBusqueda = campoBusqueda.value.toLowerCase();
+                                        const nameFiltradas = datos.filter(obj => obj.nombre.toLowerCase().includes(valorBusqueda));
+
+                                        name.innerHTML = '';
+
+                                        nameFiltradas.forEach(sugerencia => {
+                                            const li = document.createElement('li');
+                                            li.textContent = sugerencia.nombre;
+                                            li.addEventListener('click', () => {
+                                                campoBusqueda.value = sugerencia.nombre;
+                                                campoBusqueda2.value = sugerencia.id;
+                                                name.innerHTML = '';
+                                            });
+                                            name.appendChild(li);
+                                        });
+
+                                        if (nameFiltradas.length > 0) {
+                                            name.style.display = 'block';
+                                        } else {
+                                            name.style.display = 'none';
+                                        }
+                                    });
+
+                                    campoBusqueda.addEventListener('blur', () => {
+                                        setTimeout(() => {
+                                            name.innerHTML = '';
+                                            name.style.display = 'none';
+                                        }, 200);
+                                    });
+
+
+            //-   each exam in examsAll
+            //-   - const isChecked = exams.some(e => e.id === exam.id)
+            //-   input(type='checkbox' name='selectedExams', value=exam.id, checked=isChecked)
+            //-   label(for=`exam${exam.id}`) #{exam.name}
+            //-   br
+
+
+            //- class Order extends Model { }
+            //- Order.init({
+            //-     id: {
+            //-         autoIncrement: true,
+            //-         type: DataTypes.INTEGER.UNSIGNED,
+            //-         allowNull: false,
+            //-         primaryKey: true
+            //-     },
+            //-     diagnostico: {
+            //-         type: DataTypes.STRING(250),
+            //-         allowNull: false
+            //-     },
+            //-     comment:{
+            //-         type: DataTypes.STRING(250),
+            //-         allowNull: false
+            //-     },
+            //-     status: {
+            //-         type: DataTypes.BOOLEAN,
+            //-         allowNull: false,
+            //-         defaultValue: 1,
+            //-         comment: "0: inactivo, 1: activo"
+            //-     },
+            //-     date_create_at: {
+            //-         type: DataTypes.DATE,
+            //-         allowNull: false,
+            //-         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            //-     },
+            //-     user_id: {
+            //-         type: DataTypes.INTEGER.UNSIGNED,
+            //-         allowNull: false,
+            //-     },
+            //-     employee_id: {
+            //-         type: DataTypes.INTEGER.UNSIGNED,
+            //-         allowNull: false,
+            //-     },
+
+            //-     doctor_id: {
+            //-         type: DataTypes.INTEGER.UNSIGNED,
+            //-         allowNull: false,
+            //-     }
+
+            //- }, {
+            //-     sequelize: Conexion.sequelize,
+            //-     modelName: 'Order',
+            //-     tableName: 'orders',
+            //-     timestamps:false
+            //- });
+            //- export default Order;

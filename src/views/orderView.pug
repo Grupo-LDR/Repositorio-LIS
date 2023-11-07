@@ -1,0 +1,37 @@
+extends head
+//-{"id":8,"patient_id":2,"diagnosis_id":null,"observation":null,"status":true,"employee_id":3,"doctor_id":1,"created_at":"2023-11-07T13:54:15.000Z","updated_at":"2023-11-07T13:54:15.000Z","create_user_id":null,"update_user_id":null,"validate_users_id":null,"User":null}
+block contenido
+    div(class="container mt-5")
+        div(class="row justify-content-center")
+            div(class="col-8")
+                div(class="rounded p-4 border table-container")
+                    h2 Informarcion de la orden del paciente: 
+                    h4 #{order.paciente.first_name} #{order.paciente.last_name}
+                    form(action="/editar-orden" method="post" id="form_edit_orden")
+                        div(class="row") 
+                            div(class="form-group")
+                                label(for="codigo") Numero de orden:
+                                p(type="text" class="form-control" id="codigo" name="id") #{order.id}
+                            div(class="form-group")
+                                label(for="descripcion") Descripción:
+                                p(type="text" class="form-control" id="observation" name="observation") #{order.observation}
+                            div(class="form-group")
+                                label(for="fecha") Fecha de Entrega:
+                                p(type="text" class="form-control" id="date" name="date") #{fechaDeEntrega}
+                            div(class="form-group")
+                                label(for="usuario") Atentido por el doctor:
+                                p(type="text" class="form-control" id="doctor" name="doctor") #{order.doctor.first_name}
+                            div(class="form-group")
+                                label(for="estado") Estado:
+                                p(id="estado" name="estado" class="form-control") #{order.status}
+                            //-         option(value="pendiente" selected=order.status === 'pendiente') Pendiente
+                            //-         option(value="en_proceso" selected=order.status === 'en_proceso') En Proceso
+                            //-         option(value="completada" selected=order.status === 'completada') Completada
+                            //- div(class="form-group")
+                            //-     p(type="hidden" id="id_orden" name="id" value=order.id)
+                            //- button(type="button" class="btn btn-primary m-2" name="button_edit_orden" id="button_edit_orden") Edit
+                            //- button(type="button" class="btn btn-primary d-none m-2" name="button_confirm_orden" id="button_confirm_orden" onclick="event.preventDefault();") Send
+                            //-- button(type="button" class="btn btn-warning m-2" name="print" id="printResult") Consultar Resultados
+                        div(class="row") 
+                            button(type="button" class="btn btn-warning  m-2" name="cancel" id="cancel" onclick="window.location.href='/'") Cancel
+
