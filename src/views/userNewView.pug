@@ -1,6 +1,6 @@
 extends head
 block contenido
-    script(src='/assets/js/userEdit.js' defer)
+    script(src='/assets/js/userNew.js' defer)
     div(class="container mt-5")
         div(class="row justify-content-center")
             div(class="col-8")
@@ -28,13 +28,13 @@ block contenido
                             div(class="form-group col-md-4 p-2")
                                 label(class="p2 m-2") Gender:                     
                                 div(class="form-check form-check-inline")
-                                    input(type="radio" class="form-check-input" id="male" name="gender" value="M" )
+                                    input(type="radio" class="form-check-input" id="g_male" name="gender" value="M" )
                                     label(class="form-check-label" for="male" ) Male
                                 div(class="form-check form-check-inline")
-                                    input(type="radio" class="form-check-input " id="female" name="gender" value="F" )
+                                    input(type="radio" class="form-check-input " id="g_female" name="gender" value="F" )
                                     label(class="form-check-label " for="female" ) Female
                                 div(class="form-check form-check-inline")
-                                    input(type="radio" class="form-check-input " id="other" name="gender" value="X" )
+                                    input(type="radio" class="form-check-input " id="g_other" name="gender" value="X" )
                                     label(class="form-check-label" for="other" ) Other
                             div(class="form-group col-md-4 p-2")
                                 label(class="p2 m-2") Active:                     
@@ -43,14 +43,22 @@ block contenido
                                     label(class="form-check-label" for="male") Active
                                 div(class="form-check form-check-inline")
                                     input(type="radio" class="form-check-input" id="inactive" name="active" value=false )
-                                    label(class="form-check-label" for="female") Inactive        
+                                    label(class="form-check-label" for="female") Inactive 
+                            div(class="form-group col-md-4 p-2  d-none" id="pregnant")
+                                label(class="p2 m-2") Pregnant:                     
+                                div(class="form-check form-check-inline")
+                                    input(type="radio" class="form-check-input " id="preg_active" name="pregnant" value=true ) 
+                                    label(class="form-check-label" for="preg_active") Yes
+                                div(class="form-check form-check-inline")                                    
+                                    input(type="radio" class="form-check-input " id="preg_inactive" name="pregnant" value=false checked)
+                                    label(class="form-check-label" for="preg_inactive") No
                         div(class="row")            
                             div(class="form-group col-md-4")
                                 label(for="document ") Document:
-                                    input(type="text" class="form-control" id="document" name="document" placeholder="Document" value="")
+                                    input(type="number" class="form-control" id="document" name="document" placeholder="Document" value="")
                             div(class="form-group col-md-4")
                                 label(for="phone") Phone:
-                                input(type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="user.phone")
+                                input(type="number" class="form-control" id="phone" name="phone" placeholder="Phone" value="")
                             div(class="row")            
                                 div(class="form-group col-md-4")
                                     label(for="address ") Address:
@@ -65,7 +73,5 @@ block contenido
                                     input(type="date" class="form-control" id="birdth_at" name="birdth_at" placeholder="Date birth" value="")
                                 div(class="form-group p-2" id="div_button")    
                                     input(hidden="true" id="id_user" name="id" value="")    
-                                    //- label(for="button_confirm" class="p-4") Edit User:
-                                    //- button(type="button" class="btn btn-primary m-2" name="edit" id="edit" ) Edit
                                 button(type="submit" class="btn btn-primary m-2" name="confirm" id="confirm"  ) Send
                                 button(type="button" class="btn btn-warning  m-2" name="cancel" id="cancel" onclick="window.location.href='/'") Cancel
