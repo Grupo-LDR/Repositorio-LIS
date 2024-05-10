@@ -2,12 +2,12 @@
 <br/>
 <div align="center">
 
-  <a href="https://github.com/Codo-a-Codo-Grupo-8">
-    <img src="https://avatars.githubusercontent.com/u/169118228?s=200&v=4" alt="Logo" width="200" height="200">
+  <a href="https://github.com/Grupo-LDR/Repositorio-LIS">
+    <img src="https://github.com/Grupo-LDR/Repositorio-LIS/blob/main/ulp.png" alt="Logo" width="200" height="200">
   </a>
   <div>
-  <h1  align="center">Codo a Codo </h1>
-  <h2>Full stack Nodejs</h2>
+  <h1  align="center">Laboratorio II</h1>
+  <h2>Practico Integrador 2C LIS</h2>
 </div>
  <div align="right">
 
@@ -15,25 +15,24 @@
 
 </div> 
   <div align="left">
-   <ul><h2>Profesor: </h2>
-    <li> Jean Paul Ferreira </li>
+   <ul><h2>Profesores: </h2>
+    <li> Fernando Daniel Saez Bonilla </li>
+    <li>Pedro Ernesto Blanco </li>
+    <li> Mariano Torres Quintero</li>
  </ul>
   
 </div>
 <div align="center">
-  <a href="https://codo-a-codo-grupo-8.github.io/tp-1-html-js/">Deploy</a>
 <div>
 <div align="left">
   <ul><h2>Integrantes</h2>
-    <li> Daniel Spinela</li>
-    <li> Cecilia Bohorquez</li>
-    <li> Agustina Arias </li>
-    <li> E. Rafael Lopez  </li>    
+    <li> Toloza Santiago Leonel </li>
+    <li> Lopez Enrique Rafael </li>
  </ul>
-</div>  
+</div>
 <p align="right">((<a href="#readme-top"> Regresar al comienzo </a>))</p>
 <!--enlaces-->
 
 [contributors-shield]: https://img.shields.io/badge/Contribuidores-11-orange?style=for-the-badge&logo=appveyor
 
-[contributors-url]: https://github.com/Codo-a-Codo-Grupo-8/tp-1-html-js/graphs/contributors
+[contributors-url]: https://github.com/Grupo-LDR/Repositorio-LIS/graphs/contributors
